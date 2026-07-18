@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile & Settings - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 900px; margin-left: 0;">
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">Profile & System Configurations</h1>
+            <p class="text-secondary">Manage credentials, toggle dark mode, and set up your preferred LLM provider.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Settings Form Panel -->
+        <div class="col-12">
+            <div class="glass-panel p-4">
+                <form action="{{ url_for('profile_page') }}" method="POST">
+                    
+                    <!-- Account Overview Section -->
+                    <div class="mb-5">
+                        <h4 class="text-white border-bottom border-glass pb-3 mb-4"><i class="fa-solid fa-user me-2 text-primary"></i>Account Details</h4>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-secondary small">Username</label>
+                                <input type="text" class="form-control form-control-custom" value="{{ session.get('username') }}" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-secondary small">Email Address</label>
+                                <input type="email" class="form-control form-control-custom" value="{{ session.get('email') }}" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Configuration Section -->
+                    <div class="mb-5">
+                        <h4 class="text-white border-bottom border-glass pb-3 mb-4"><i class="fa-solid fa-microchip me-2 text-cyan"></i>AI Processing Engine</h4>
+                        <p class="text-secondary small mb-4">Select which LLM provider will synthesize answers for natural language Q&A and document summaries.</p>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label text-secondary small">LLM Provider</label>
+                                <select name="api_provider" id="api_provider" class="form-select form-control-custom">
+                                    <option value="local" {% if settings.api_provider == 'local' %}selected{% endif %}>Local CPU Fallback (Extractive AI - No Key Needed)</option>
+                                    <option value="gemini" {% if settings.api_provider == 'gemini' %}selected{% endif %}>Google Gemini API (Generative Q&A)</option>
+                                    <option value="openai" {% if settings.api_provider == 'openai' %}selected{% endif %}>OpenAI GPT-4o API (Generative Q&A)</option>
+                                    <option value="ollama" {% if settings.api_provider == 'ollama' %}selected{% endif %}>Ollama Local Server (Generative Q&A)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6" id="api_key_group">
+                                <label class="form-label text-secondary small" id="key_label">API Key / Endpoint URL</label>
+                                <input type="password" name="api_key" id="api_key" class="form-control form-control-custom" value="{{ settings.api_key }}" placeholder="Paste your API key here">
+                                <div class="form-text text-muted small mt-1" id="key_help">Settings will encrypt API keys locally.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferences Section -->
+                    <div class="mb-4">
+                        <h4 class="text-white border-bottom border-glass pb-3 mb-4"><i class="fa-solid fa-sliders me-2 text-accent"></i>Visual Preferences</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label text-secondary small">App Theme</label>
+                                <select name="theme" class="form-select form-control-custom">
+                                    <option value="dark" {% if settings.theme == 'dark' %}selected{% endif %}>Default Cyber Dark Mode</option>
+                                    <option value="light" {% if settings.theme == 'light' %}selected{% endif %}>Minimal Clean Light Mode</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="text-end border-top border-glass pt-4 mt-4">
+                        <button type="submit" class="btn btn-primary-custom">
+                            Save System Settings <i class="fa-solid fa-save ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const providerSelect = document.getElementById('api_provider');
+        const keyGroup = document.getElementById('api_key_group');
+        const keyLabel = document.getElementById('key_label');
+        const keyInput = document.getElementById('api_key');
+        const keyHelp = document.getElementById('key_help');
+
+        function toggleFields() {
+            const provider = providerSelect.value;
+            if (provider === 'local') {
+                keyGroup.style.display = 'none';
+                keyInput.required = false;
+            } else {
+                keyGroup.style.display = 'block';
+                keyInput.required = true;
+                
+                if (provider === 'gemini') {
+                    keyLabel.innerText = "Gemini API Key";
+                    keyInput.placeholder = "AIzaSy...";
+                    keyHelp.innerText = "API key obtained from Google AI Studio.";
+                } else if (provider === 'openai') {
+                    keyLabel.innerText = "OpenAI API Key";
+                    keyInput.placeholder = "sk-proj-...";
+                    keyHelp.innerText = "Secret key from OpenAI Developer Platform.";
+                } else if (provider === 'ollama') {
+                    keyLabel.innerText = "Ollama Endpoint URL";
+                    keyInput.placeholder = "http://localhost:11434";
+                    keyHelp.innerText = "URL of your local running Ollama instance (default: http://localhost:11434).";
+                }
+            }
+        }
+
+        providerSelect.addEventListener('change', toggleFields);
+        toggleFields(); // Initial trigger
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocMind AI – Intelligent Document Organizer and Information Finder</title>
+  <link rel="stylesheet" href="styles.css?v=6">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- 1. LANDING PAGE (DEFAULT ACTIVE) -->
+    <section class="landing-view active" id="view-landing">
+      <div class="landing-container">
+        
+        <header class="landing-header">
+          <a href="#" class="logo">
+            <div class="logo-celestial">
+              <i class="fa-solid fa-water logo-moon"></i>
+              <i class="fa-solid fa-sun logo-star"></i>
+            </div>
+            <div class="logo-text">
+              <h1 class="gradient-title">DocMind AI</h1>
+              <span class="cursive-text" style="font-size: 0.78rem; text-shadow: none;">sea & sand wisdom</span>
+            </div>
+          </a>
+          <button class="btn-primary" id="landing-btn-enter-header">
+            Launch Workspace <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+          </button>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="landing-hero">
+          <h2 class="gradient-title">Intelligent Document Hub</h2>
+          <span class="cursive-text">where knowledge meets intelligence</span>
+          <p class="hero-desc">
+            Upload course notes, let Python NLP modelers parse your academic materials, extract key formulas, and consult the AI chat.
+          </p>
+          <div class="hero-ctas">
+            <button class="btn-primary" id="landing-btn-enter-hero" style="padding: 12px 28px; font-size: 1rem;">
+              Get Started Now
+            </button>
+            <button class="btn-secondary" id="landing-btn-settings" style="padding: 12px 24px; font-size: 1rem;">
+              Configure API Keys
+            </button>
+          </div>
+        </div>
+
+        <!-- Detailed Platform Explanation -->
+        <div class="landing-desc-block">
+          <h3>Bridging the Gap in Document Storage</h3>
+          <p>
+            Students often struggle with managing 100+ PDF note files, lecture presentations, and research articles. Finding specific definitions, formulas, or schedules across disorganized folders becomes a major bottleneck. DocMind AI solves this problem by creating an intelligent, offline-first digital library.
+          </p>
+          <p>
+            By combining high-performance client-side text extraction (PDF.js) with a dedicated Python NLP backend, DocMind AI automatically indexes the words in your documents, scores sentence importance, extracts key keywords, compiles checklist summaries, and allows you to chat directly with your files. Your files remain completely secure, running locally on your computer with optional cloud AI support.
+          </p>
+        </div>
+
+        <!-- 5-Category Scroll Features Section -->
+        <h3 class="categories-section-title">The 5 Dimensions of DocMind</h3>
+        <div class="features-scroll-section">
+          <div class="feature-slide-card">
+            <div class="feature-slide-num">01</div>
+            <div class="feature-slide-details">
+              <h4><i class="fa-solid fa-cloud-arrow-up"></i> Instant Document Ingestion</h4>
+              <p>Drag and drop multi-page PDF notes. The client extracts and processes text page-by-page in the browser, bypassing server limits and maintaining absolute privacy.</p>
+            </div>
+          </div>
+          <div class="feature-slide-card">
+            <div class="feature-slide-num">02</div>
+            <div class="feature-slide-details">
+              <h4><i class="fa-solid fa-chart-pie"></i> Local TF-IDF Modeling</h4>
+              <p>Our Python Flask service calculates term-frequency densities, cleaning out stopwords and sorting primary technical terms to map the core themes of your documents.</p>
+            </div>
+          </div>
+          <div class="feature-slide-card">
+            <div class="feature-slide-num">03</div>
+            <div class="feature-slide-details">
+              <h4><i class="fa-solid fa-list-check"></i> Key Takeaway Checklist</h4>
+              <p>Automatically scans sentence structures to isolate high-scoring phrases containing major keywords, listing key formulas, dates, or principles as a checklist.</p>
+            </div>
+          </div>
+          <div class="feature-slide-card">
+            <div class="feature-slide-num">04</div>
+            <div class="feature-slide-details">
+              <h4><i class="fa-solid fa-comments"></i> Cosine Similarity Chatbot</h4>
+              <p>Consult your files directly. The overlap similarity engine matches your questions against sentence vectors to highlight context passages and provide answers.</p>
+            </div>
+          </div>
+          <div class="feature-slide-card">
+            <div class="feature-slide-num">05</div>
+            <div class="feature-slide-details">
+              <h4><i class="fa-solid fa-folder-tree"></i> Glassmorphic File Cabinet</h4>
+              <p>File documents into color-coded folders and searchable tags. Fast metadata indexing lets you look up documents, categories, and keyword occurrences instantly.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="categories-section-title">Select a Knowledge Space</h3>
+        
+        <!-- 6 Categories Grid -->
+        <div class="categories-grid">
+          <div class="category-box" data-folder="f-lectures">
+            <div class="category-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <h4>Lecture Notes</h4>
+            <p>Decipher presentation slides, extract key formulas, and review lesson objectives.</p>
+          </div>
+          <div class="category-box" data-folder="f-exam">
+            <div class="category-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h4>Study Guides</h4>
+            <p>Condense textbook chapters into readable reviews and exam study materials.</p>
+          </div>
+          <div class="category-box" data-folder="f-research">
+            <div class="category-icon"><i class="fa-solid fa-flask"></i></div>
+            <h4>Research Papers</h4>
+            <p>Scan academic journals, track citations, and extract complex research theories.</p>
+          </div>
+          <div class="category-box" data-folder="f-syllabus">
+            <div class="category-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <h4>Syllabus Planners</h4>
+            <p>Index module contents, schedule assignment deadlines, and view exam dates.</p>
+          </div>
+          <div class="category-box" data-folder="f-records">
+            <div class="category-icon"><i class="fa-solid fa-briefcase"></i></div>
+            <h4>Office Records</h4>
+            <p>Organize corporate manuals, review project memos, and parse spreadsheets.</p>
+          </div>
+          <div class="category-box" data-folder="f-reference">
+            <div class="category-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+            <h4>Reference Guides</h4>
+            <p>Store textbook glossaries, dictionary lookups, and index data indexes.</p>
+          </div>
+        </div>
+
+        <!-- About Us and Technical Description Grid (Footer Area) -->
+        <section class="about-us-section">
+          <div class="about-us-grid">
+            <div class="about-col">
+              <h4><i class="fa-solid fa-user-astronaut"></i> Balaji & Team</h4>
+              <p>
+                DocMind AI was developed by Balaji & team of AI systems engineers to simplify document research. We believe information shouldn't be trapped in giant, unsearchable files; it should be interactive, private, and accessible instantly.
+              </p>
+            </div>
+            <div class="about-col">
+              <h4><i class="fa-solid fa-code"></i> Local Tech Stack</h4>
+              <p>
+                Built using vanilla web components, IndexedDB browser storage, and a pure Python Flask backend server. All TF-IDF calculation models and text overlap engines run offline on your machine, ensuring 100% data security.
+              </p>
+            </div>
+            <div class="about-col">
+              <h4><i class="fa-solid fa-circle-half-stroke"></i> Design Philosophy</h4>
+              <p>
+                Designed with glassmorphic cards and a fixed wallpaper backdrop (`download (5).jpg`) using sea teal and sand gold gradients. Optimized for eye-pleasing study and research sessions.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Landing Page Footer -->
+        <footer class="landing-footer">
+          <div class="footer-credits">
+            © 2026 <span>DocMind AI</span>. Designed with love by <span class="cursive-text" style="font-size: 1rem; text-shadow: none;">Balaji & Team</span>
+          </div>
+          <div style="display: flex; gap: 20px; align-items: center;">
+            <span style="font-weight: 500;"><i class="fa-brands fa-python" style="color: var(--accent-gold); margin-right: 6px;"></i> Pure Python Server</span>
+            <span style="color: var(--text-muted);">|</span>
+            <span style="font-weight: 500;"><i class="fa-solid fa-cube" style="color: var(--accent-teal); margin-right: 6px;"></i> TF-IDF NLP Modeling</span>
+          </div>
+        </footer>
+
+      </div>
+    </section>
+
+    <!-- 2. SIDEBAR -->
+    <aside class="sidebar" id="sidebar" style="display: none;">
+      <div class="sidebar-header">
+        <a href="#" class="logo" id="sidebar-logo-link">
+          <div class="logo-celestial">
+            <i class="fa-solid fa-water logo-moon"></i>
+            <i class="fa-solid fa-sun logo-star"></i>
+          </div>
+          <div class="logo-text">
+            <h1>DocMind AI</h1>
+            <span class="cursive-text" style="font-size: 0.75rem; text-shadow: none;">sea & sand wisdom</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-nav">
+        <!-- Main Navigation -->
+        <div>
+          <div class="nav-section-title">Navigation</div>
+          <ul class="nav-links">
+            <li>
+              <button class="nav-item-btn active" id="nav-dashboard">
+                <i class="fa-solid fa-chart-simple"></i>
+                Dashboard
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" id="nav-reader" disabled>
+                <i class="fa-solid fa-book-open"></i>
+                Document Workspace
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Folders Section -->
+        <div>
+          <div class="nav-section-title">Folders</div>
+          <ul class="nav-links" id="folders-list">
+            <!-- Dynamic folders list -->
+          </ul>
+          <button class="add-folder-btn" id="btn-add-folder-modal">
+            <i class="fa-solid fa-plus"></i> New Folder
+          </button>
+        </div>
+
+        <!-- Tags Section -->
+        <div>
+          <div class="nav-section-title">Tags</div>
+          <div class="tag-pills-list" id="tags-list">
+            <!-- Dynamic tags list -->
+          </div>
+          <button class="add-tag-btn" id="btn-add-tag-modal">
+            <i class="fa-solid fa-plus"></i> New Tag
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="storage-info">
+          <div style="display: flex; justify-content: space-between;">
+            <span>Storage Used</span>
+            <span id="storage-text">0 KB / 50 MB</span>
+          </div>
+          <div class="storage-bar-outer">
+            <div class="storage-bar-inner" id="storage-bar"></div>
+          </div>
+        </div>
+
+        <div class="footer-buttons">
+          <button class="footer-action-btn" id="btn-theme-toggle" title="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          <button class="footer-action-btn" id="btn-settings-modal" title="API & App Settings">
+            <i class="fa-solid fa-sliders"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 3. MAIN WORKSPACE -->
+    <main class="main-workspace" id="main-workspace" style="display: none;">
+      
+      <!-- HEADER -->
+      <header class="header">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button class="mobile-menu-toggle" id="mobile-sidebar-toggle">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <button class="btn-secondary" id="btn-back-to-landing" style="padding: 6px 12px; font-size: 0.85rem;">
+            <i class="fa-solid fa-chevron-left" style="margin-right: 6px;"></i> Landing Page
+          </button>
+        </div>
+
+        <div class="search-container">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" class="search-input" id="search-input" placeholder="Search title or text contents...">
+        </div>
+
+        <div class="header-right">
+          <div id="filter-indicator" style="display: none; font-size: 0.8rem; padding: 4px 10px; background-color: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); align-items: center; gap: 8px;">
+            <span id="filter-text">Filtering</span>
+            <i class="fa-solid fa-xmark" id="clear-filter-btn" style="cursor: pointer; color: var(--danger);"></i>
+          </div>
+          
+          <div id="api-status-badge" style="font-size: 0.75rem; padding: 4px 10px; border-radius: 12px; font-weight: 500; display: flex; align-items: center; gap: 6px;">
+            <!-- Dynamic API Mode Status badge -->
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW 2A: DASHBOARD (ALL NOTES VIEW) -->
+      <section class="workspace-view active" id="view-dashboard">
+        <div class="dashboard-title-row">
+          <h2>Intelligence Hub</h2>
+          <span class="cursive-text" style="font-size: 1.15rem; margin-top: 4px;">Welcome back, Scholar. Your starlight library awaits...</span>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <div class="stat-info">
+              <h4>Documents</h4>
+              <p id="stat-docs-count">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-folder"></i></div>
+            <div class="stat-info">
+              <h4>Folders</h4>
+              <p id="stat-folders-count">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-tags"></i></div>
+            <div class="stat-info">
+              <h4>Unique Tags</h4>
+              <p id="stat-tags-count">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-message"></i></div>
+            <div class="stat-info">
+              <h4>AI Consults</h4>
+              <p id="stat-consults-count">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- File Upload Area -->
+        <div class="upload-wrapper">
+          <div class="upload-zone" id="upload-zone">
+            <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+            <h3>Drag & Drop PDF notes here</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">or click to browse from your computer (Max 15MB)</p>
+            <input type="file" id="file-input" accept="application/pdf" multiple style="display: none;">
+            
+            <div class="upload-options" onclick="event.stopPropagation();">
+              <select class="upload-select" id="upload-folder-select" title="Destination Folder">
+                <option value="">No Folder (Unassigned)</option>
+              </select>
+              <select class="upload-select" id="upload-tag-select" title="Tag association">
+                <option value="">No Tag</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Document Grid Section -->
+        <div class="document-grid-section">
+          <h3 id="doc-grid-header-text"><i class="fa-solid fa-clock-rotate-left"></i> Recent Materials</h3>
+          
+          <div class="document-grid" id="document-grid">
+            <!-- Dynamic document cards go here -->
+          </div>
+
+          <div class="empty-state" id="dashboard-empty-state">
+            <i class="fa-solid fa-file-invoice empty-state-icon"></i>
+            <p>No documents uploaded yet.</p>
+            <p style="font-size: 0.85rem; margin-top: -8px;">Drop a PDF above to let DocMind read it!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2A-1: LECTURES SPACE PAGE (NOTEBOOK) -->
+      <section class="workspace-view" id="view-lectures-space">
+        <div class="dashboard-title-row" style="margin-bottom: 30px;">
+          <h2>Lectures Workspace</h2>
+          <span class="cursive-text" style="font-size: 1.15rem; margin-top: 4px;">Flip through slides and notebook logs...</span>
+        </div>
+
+        <div class="workspace-grid-layout">
+          <!-- Left Visual Concept: Lined Notebook binder -->
+          <div class="lecture-notebook-container">
+            <div class="notebook-spiral-rings">
+              <div class="notebook-ring"></div>
+              <div class="notebook-ring"></div>
+              <div class="notebook-ring"></div>
+              <div class="notebook-ring"></div>
+              <div class="notebook-ring"></div>
+              <div class="notebook-ring"></div>
+              <div class="notebook-ring"></div>
+              <div class="notebook-ring"></div>
+            </div>
+            <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold); margin-bottom: 20px;">Notebook Index</h3>
+            <p class="cursive-text" style="font-size: 1.25rem; margin-bottom: 12px;">“Active learning prepares the mind for recall.”</p>
+            <div id="notebook-quick-stats" style="margin-top: 24px; font-size: 0.95rem;">
+              <p>• <strong>Lectures Tracked:</strong> <span id="num-lecture-notes">0</span> notes</p>
+              <p style="margin-top: 8px;">• <strong>Technical Highlights:</strong> Extracted formulas and terminology will map here dynamically.</p>
+            </div>
+            <div id="notebook-terms-highlights" style="margin-top: 30px; font-style: italic; color: var(--text-muted);">
+              No files parsed in this notebook section yet.
+            </div>
+          </div>
+
+          <!-- Right System Column: Upload & Files list -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="space-upload-wrapper">
+              <div class="space-upload-zone" id="upload-zone-lectures">
+                <i class="fa-solid fa-cloud-arrow-up space-upload-icon"></i>
+                <h4>Upload Lecture Slides</h4>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">Files will automatically file under Lecture Notes</p>
+                <input type="file" id="file-input-lectures" accept="application/pdf" multiple style="display: none;">
+              </div>
+            </div>
+            <div class="space-files-card">
+              <h4 class="space-files-title"><i class="fa-solid fa-file-invoice"></i> Lecture Files</h4>
+              <div class="document-grid" id="lectures-grid"></div>
+              <p class="empty-state" id="lectures-empty-state" style="font-size: 0.85rem; padding: 20px;">No slides filed under this category yet.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2A-2: STUDY GUIDES SPACE PAGE (FLASHCARDS) -->
+      <section class="workspace-view" id="view-study-space">
+        <div class="dashboard-title-row" style="margin-bottom: 30px;">
+          <h2>Study Desk</h2>
+          <span class="cursive-text" style="font-size: 1.15rem; margin-top: 4px;">Practice flashcards and review term meters...</span>
+        </div>
+
+        <div class="workspace-grid-layout">
+          <!-- Left Visual Concept: Flashcard Desk & circular progress widgets -->
+          <div class="study-desk-container">
+            <div class="progress-dial-row">
+              <div class="progress-dial-card">
+                <div class="circle-progress-wrapper">
+                  <svg class="circle-progress-svg">
+                    <circle class="circle-bg" cx="45" cy="45" r="40"></circle>
+                    <circle class="circle-fill-gold" cx="45" cy="45" r="40"></circle>
+                  </svg>
+                  <span class="circle-val">75%</span>
+                </div>
+                <h5 style="font-size: 0.9rem;">Recall Retention</h5>
+                <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Based on similarity matching metrics</p>
+              </div>
+              <div class="progress-dial-card">
+                <div class="circle-progress-wrapper">
+                  <svg class="circle-progress-svg">
+                    <circle class="circle-bg" cx="45" cy="45" r="40"></circle>
+                    <circle class="circle-fill-teal" cx="45" cy="45" r="40"></circle>
+                  </svg>
+                  <span class="circle-val">50%</span>
+                </div>
+                <h5 style="font-size: 0.9rem;">Guides Coverage</h5>
+                <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Percentage of study logs reviewed</p>
+              </div>
+            </div>
+
+            <!-- Flashcard Card Widget -->
+            <div class="flashcard-card-widget">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="font-size: 1.05rem; color: var(--accent-gold);"><i class="fa-solid fa-clone"></i> Recall Flashcard</h4>
+                <span id="flashcard-index-tracker" style="font-size: 0.75rem; color: var(--text-muted);">Card 1 of 3</span>
+              </div>
+              <div class="flashcard-wrapper" id="btn-flashcard-flip">
+                <div class="flashcard-inner" id="flashcard-inner-box">
+                  <div class="flashcard-front">
+                    <p style="font-weight: 600; font-size: 0.95rem;" id="flashcard-front-text">What does TF-IDF calculate in NLP?</p>
+                    <span class="cursive-text" style="font-size: 0.85rem; margin-top: 14px;">Click to flip</span>
+                  </div>
+                  <div class="flashcard-back">
+                    <p id="flashcard-back-text">Term Frequency - Inverse Document Frequency. It measures how important a word is to a document in a corpus.</p>
+                    <span class="cursive-text" style="font-size: 0.85rem; margin-top: 14px; color: var(--accent-teal);">Question face</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <button class="btn-secondary" id="btn-flashcard-prev" style="padding: 6px 12px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Prev</button>
+                <button class="btn-secondary" id="btn-flashcard-next" style="padding: 6px 12px; font-size: 0.8rem;">Next <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right System Column: Upload & Files list -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="space-upload-wrapper">
+              <div class="space-upload-zone" id="upload-zone-study">
+                <i class="fa-solid fa-cloud-arrow-up space-upload-icon"></i>
+                <h4>Upload Study Guides</h4>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">Files will automatically file under Study Guides</p>
+                <input type="file" id="file-input-study" accept="application/pdf" multiple style="display: none;">
+              </div>
+            </div>
+            <div class="space-files-card">
+              <h4 class="space-files-title"><i class="fa-solid fa-file-invoice"></i> Guide Materials</h4>
+              <div class="document-grid" id="study-grid"></div>
+              <p class="empty-state" id="study-empty-state" style="font-size: 0.85rem; padding: 20px;">No guides filed under this category yet.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2A-3: RESEARCH PAPERS SPACE PAGE (CITATIONS) -->
+      <section class="workspace-view" id="view-research-space">
+        <div class="dashboard-title-row" style="margin-bottom: 30px;">
+          <h2>Research Desk</h2>
+          <span class="cursive-text" style="font-size: 1.15rem; margin-top: 4px;">Build bibliography formats and citations...</span>
+        </div>
+
+        <div class="workspace-grid-layout">
+          <!-- Left Visual Concept: Academic citation generator -->
+          <div class="research-desk-container">
+            <div class="citation-generator-card">
+              <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold); font-size: 1.2rem; margin-bottom: 12px;"><i class="fa-solid fa-quote-right"></i> Dynamic Citation Generator</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                Select any research paper uploaded to this workspace to automatically formulate a standard bibliography reference.
+              </p>
+              
+              <div class="form-group" style="margin-top: 20px;">
+                <label class="form-label">Select Document</label>
+                <select class="upload-select" id="citation-doc-select" style="width: 100%; background: rgba(10, 22, 24, 0.9);">
+                  <option value="">No papers uploaded yet</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-top: 14px;">
+                <label class="form-label">Citation Standard</label>
+                <div style="display: flex; gap: 8px;">
+                  <button class="tag-pill active" id="btn-cite-apa">APA 7th</button>
+                  <button class="tag-pill" id="btn-cite-mla">MLA 9th</button>
+                  <button class="tag-pill" id="btn-cite-chicago">Chicago</button>
+                </div>
+              </div>
+
+              <div class="citation-output-box" id="citation-result-box">
+                Please select a document above to generate citation logs.
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; font-style: italic;">
+                Click inside box to select and copy references.
+              </p>
+            </div>
+            
+            <div class="citation-generator-card" style="padding: 24px;">
+              <h5 style="color: var(--accent-aqua); font-size: 0.95rem; margin-bottom: 8px;">Technical Abstracts</h5>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;" id="research-abstract-preview">
+                Upload articles to index technical summaries and citation codes.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right System Column: Upload & Files list -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="space-upload-wrapper">
+              <div class="space-upload-zone" id="upload-zone-research">
+                <i class="fa-solid fa-cloud-arrow-up space-upload-icon"></i>
+                <h4>Upload Research Papers</h4>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">Files will automatically file under Research Papers</p>
+                <input type="file" id="file-input-research" accept="application/pdf" multiple style="display: none;">
+              </div>
+            </div>
+            <div class="space-files-card">
+              <h4 class="space-files-title"><i class="fa-solid fa-file-invoice"></i> Scientific Papers</h4>
+              <div class="document-grid" id="research-grid"></div>
+              <p class="empty-state" id="research-empty-state" style="font-size: 0.85rem; padding: 20px;">No papers filed under this category yet.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2A-4: SYLLABUS PLANNERS SPACE PAGE (TIMELINE) -->
+      <section class="workspace-view" id="view-syllabus-space">
+        <div class="dashboard-title-row" style="margin-bottom: 30px;">
+          <h2>Syllabus Desk</h2>
+          <span class="cursive-text" style="font-size: 1.15rem; margin-top: 4px;">Organize tasks, timetables, and timelines...</span>
+        </div>
+
+        <div class="workspace-grid-layout">
+          <!-- Left Visual Concept: Schedule Timeline list -->
+          <div class="syllabus-planner-container">
+            <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold); font-size: 1.25rem;"><i class="fa-solid fa-route"></i> Course Milestone Timeline</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Timetable checklist automatically generated from your syllabus planners.</p>
+            
+            <div class="planner-milestones-list" id="syllabus-milestone-list">
+              <div class="milestone-item">
+                <div class="milestone-checkbox-wrap">
+                  <input type="checkbox" class="milestone-checkbox" id="check-ms1">
+                </div>
+                <div class="milestone-info">
+                  <h5>Module 1 Core Concepts Review</h5>
+                  <p>Check off when lecture notes are parsed and summarized.</p>
+                </div>
+              </div>
+              <div class="milestone-item">
+                <div class="milestone-checkbox-wrap">
+                  <input type="checkbox" class="milestone-checkbox" id="check-ms2">
+                </div>
+                <div class="milestone-info">
+                  <h5>Midterm Preparation Review</h5>
+                  <p>Practice mock questions using the AI chatbot consults.</p>
+                </div>
+              </div>
+              <div class="milestone-item">
+                <div class="milestone-checkbox-wrap">
+                  <input type="checkbox" class="milestone-checkbox" id="check-ms3">
+                </div>
+                <div class="milestone-info">
+                  <h5>Final Project Milestone</h5>
+                  <p>Compile citations and outlines under the Research Desk.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right System Column: Upload & Files list -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="space-upload-wrapper">
+              <div class="space-upload-zone" id="upload-zone-syllabus">
+                <i class="fa-solid fa-cloud-arrow-up space-upload-icon"></i>
+                <h4>Upload Syllabus Planners</h4>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">Files will automatically file under Syllabus Planners</p>
+                <input type="file" id="file-input-syllabus" accept="application/pdf" multiple style="display: none;">
+              </div>
+            </div>
+            <div class="space-files-card">
+              <h4 class="space-files-title"><i class="fa-solid fa-file-invoice"></i> Planner Files</h4>
+              <div class="document-grid" id="syllabus-grid"></div>
+              <p class="empty-state" id="syllabus-empty-state" style="font-size: 0.85rem; padding: 20px;">No planners filed under this category yet.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2A-5: OFFICE RECORDS SPACE PAGE (SPREADSHEET LEDGER) -->
+      <section class="workspace-view" id="view-office-space">
+        <div class="dashboard-title-row" style="margin-bottom: 30px;">
+          <h2>Office Archival Ledger</h2>
+          <span class="cursive-text" style="font-size: 1.15rem; margin-top: 4px;">Examine spreadsheet databases and records indexes...</span>
+        </div>
+
+        <div class="workspace-grid-layout">
+          <!-- Left Visual Concept: Tabular Ledger and metric bars -->
+          <div class="office-records-container">
+            <div class="ledger-card">
+              <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold); font-size: 1.2rem; margin-bottom: 16px;"><i class="fa-solid fa-table"></i> Archives Index Sheet</h3>
+              
+              <div class="ledger-table-wrap">
+                <table class="ledger-table">
+                  <thead>
+                    <tr>
+                      <th>Document</th>
+                      <th>Size</th>
+                      <th>Upload Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ledger-files-body">
+                    <tr>
+                      <td colspan="4" style="text-align: center; color: var(--text-muted);">No records cataloged yet.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Bar Metrics -->
+            <div class="records-metrics-card">
+              <h5 style="color: var(--accent-aqua); font-size: 0.95rem; margin-bottom: 14px;">Audit Metrics</h5>
+              
+              <div class="bar-metric-row">
+                <div class="bar-metric-labels">
+                  <span>Record Completeness</span>
+                  <span>80%</span>
+                </div>
+                <div class="metric-bar-outer">
+                  <div class="metric-bar-fill" style="width: 80%;"></div>
+                </div>
+              </div>
+
+              <div class="bar-metric-row">
+                <div class="bar-metric-labels">
+                  <span>Information Density Index</span>
+                  <span>65%</span>
+                </div>
+                <div class="metric-bar-outer">
+                  <div class="metric-bar-fill" style="width: 65%; background: linear-gradient(to right, var(--accent-rose), var(--accent-gold));"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right System Column: Upload & Files list -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="space-upload-wrapper">
+              <div class="space-upload-zone" id="upload-zone-office">
+                <i class="fa-solid fa-cloud-arrow-up space-upload-icon"></i>
+                <h4>Upload Office Records</h4>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">Files will automatically file under Office Records</p>
+                <input type="file" id="file-input-office" accept="application/pdf" multiple style="display: none;">
+              </div>
+            </div>
+            <div class="space-files-card">
+              <h4 class="space-files-title"><i class="fa-solid fa-file-invoice"></i> Corporate Records</h4>
+              <div class="document-grid" id="office-grid"></div>
+              <p class="empty-state" id="office-empty-state" style="font-size: 0.85rem; padding: 20px;">No records filed under this category yet.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2A-6: REFERENCE GUIDES SPACE PAGE (GLOSSARY INDEX) -->
+      <section class="workspace-view" id="view-reference-space">
+        <div class="dashboard-title-row" style="margin-bottom: 30px;">
+          <h2>Reference Library</h2>
+          <span class="cursive-text" style="font-size: 1.15rem; margin-top: 4px;">Look up indices, glossaries, and references...</span>
+        </div>
+
+        <div class="workspace-grid-layout">
+          <!-- Left Visual Concept: Alphabet glossary searcher -->
+          <div class="reference-shelf-container">
+            <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold); font-size: 1.2rem;"><i class="fa-solid fa-book"></i> Reference Glossary Finder</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Click on a letter to query glossary definitions and terms extracted from guides.</p>
+            
+            <div class="alphabet-index-row" id="alphabet-index-list">
+              <button class="alphabet-pill active" data-letter="ALL">All</button>
+              <button class="alphabet-pill" data-letter="A">A</button>
+              <button class="alphabet-pill" data-letter="C">C</button>
+              <button class="alphabet-pill" data-letter="D">D</button>
+              <button class="alphabet-pill" data-letter="F">F</button>
+              <button class="alphabet-pill" data-letter="G">G</button>
+              <button class="alphabet-pill" data-letter="I">I</button>
+              <button class="alphabet-pill" data-letter="K">K</button>
+              <button class="alphabet-pill" data-letter="L">L</button>
+              <button class="alphabet-pill" data-letter="M">M</button>
+              <button class="alphabet-pill" data-letter="N">N</button>
+              <button class="alphabet-pill" data-letter="P">P</button>
+              <button class="alphabet-pill" data-letter="R">R</button>
+              <button class="alphabet-pill" data-letter="S">S</button>
+              <button class="alphabet-pill" data-letter="T">T</button>
+            </div>
+
+            <div class="glossary-results-box" id="glossary-results-container">
+              <div class="glossary-item-card">
+                <h6>Artificial Intelligence (AI)</h6>
+                <p>Computers mimicking cognitive tasks such as problem-solving, document reading, and sentence-level similarity queries.</p>
+              </div>
+              <div class="glossary-item-card">
+                <h6>Cosine Similarity</h6>
+                <p>A metric used to calculate overlapping terms between vector spaces, frequently powering document search chatbots.</p>
+              </div>
+              <div class="glossary-item-card">
+                <h6>Term Frequency (TF)</h6>
+                <p>The statistical count of a word inside a target PDF pages, highlighting core subjects.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right System Column: Upload & Files list -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="space-upload-wrapper">
+              <div class="space-upload-zone" id="upload-zone-reference">
+                <i class="fa-solid fa-cloud-arrow-up space-upload-icon"></i>
+                <h4>Upload Reference Guides</h4>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">Files will automatically file under Reference Guides</p>
+                <input type="file" id="file-input-reference" accept="application/pdf" multiple style="display: none;">
+              </div>
+            </div>
+            <div class="space-files-card">
+              <h4 class="space-files-title"><i class="fa-solid fa-file-invoice"></i> Reference Books</h4>
+              <div class="document-grid" id="reference-grid"></div>
+              <p class="empty-state" id="reference-empty-state" style="font-size: 0.85rem; padding: 20px;">No references filed under this category yet.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2B: READER & AI WORKSPACE -->
+      <section class="workspace-view reader-workspace" id="view-reader">
+        
+        <!-- Left Pane: PDF Document Text Reader -->
+        <div class="reader-left-pane">
+          <div class="pane-header">
+            <div class="pane-title">
+              <i class="fa-solid fa-file-pdf" style="color: var(--danger); font-size: 1.25rem;"></i>
+              <h3 id="reader-document-title">Document Name.pdf</h3>
+            </div>
+            <div class="pane-actions">
+              <button class="btn-secondary" id="reader-btn-back">
+                <i class="fa-solid fa-arrow-left"></i> Dashboard
+              </button>
+            </div>
+          </div>
+
+          <div class="doc-viewer-scroll" id="reader-scroll-container">
+            <!-- Extracted pages render here as paper cards -->
+          </div>
+        </div>
+
+        <!-- Right Pane: AI Operations Panel -->
+        <div class="reader-right-pane">
+          <!-- Workspace Tab switcher -->
+          <nav class="tabs-navigation">
+            <button class="tab-btn active" data-tab="tab-chat">
+              <i class="fa-solid fa-comments"></i>
+              <span>AI Chat</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-summary">
+              <i class="fa-solid fa-align-left"></i>
+              <span>Summary</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-takeaways">
+              <i class="fa-solid fa-list-check"></i>
+              <span>Takeaways</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-keywords">
+              <i class="fa-solid fa-hashtag"></i>
+              <span>Keywords</span>
+            </button>
+          </nav>
+
+          <div class="tab-contents-container">
+            <!-- Chat Pane -->
+            <div class="tab-pane-content active" id="tab-chat">
+              <div class="chat-messages-scroll" id="chat-messages-container">
+                <!-- Chat history bubbles -->
+              </div>
+              
+              <div class="chat-suggestions" id="chat-suggestions-container">
+                <!-- Helper prompt options -->
+                <button class="suggestion-pill">Summarize this page</button>
+                <button class="suggestion-pill">What are the core concepts?</button>
+                <button class="suggestion-pill">List actionable steps</button>
+              </div>
+
+              <div class="chat-input-wrapper">
+                <textarea class="chat-text-area" id="chat-input" placeholder="Ask AI anything about this document..."></textarea>
+                <button class="chat-send-btn" id="btn-chat-send" title="Send message">
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Summary Pane -->
+            <div class="tab-pane-content" id="tab-summary">
+              <div class="summary-container" id="summary-view-container">
+                <!-- Autogenerated Summary block -->
+              </div>
+            </div>
+
+            <!-- Takeaways Pane -->
+            <div class="tab-pane-content" id="tab-takeaways">
+              <div class="takeaways-list" id="takeaways-view-container">
+                <!-- Autogenerated Bullet Checklist -->
+              </div>
+            </div>
+
+            <!-- Keywords Pane -->
+            <div class="tab-pane-content" id="tab-keywords">
+              <div class="keywords-container">
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">
+                  We found these important keywords in the document. Click any keyword to scroll and highlight it in the reader.
+                </p>
+                <div class="keyword-grid" id="keywords-view-container">
+                  <!-- Autogenerated keyword list -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+      
+    </main>
+  </div>
+
+  <!-- CREATE FOLDER MODAL -->
+  <div class="modal-overlay" id="modal-folder">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h3>Create New Folder</h3>
+        </div>
+        <button class="modal-close-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="folder-name-input">Folder Name</label>
+          <input type="text" class="form-input" id="folder-name-input" placeholder="e.g. Biology Semester 1, Office Records">
+        </div>
+        <div class="form-group">
+          <div class="color-picker-grid" id="folder-color-options">
+            <div class="color-option selected" style="background-color: hsl(38, 90%, 55%);" data-color="hsl(38, 90%, 55%)"></div>
+            <div class="color-option" style="background-color: hsl(175, 80%, 40%);" data-color="hsl(175, 80%, 40%)"></div>
+            <div class="color-option" style="background-color: hsl(180, 80%, 70%);" data-color="hsl(180, 80%, 70%)"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary modal-close">Cancel</button>
+        <button class="btn-primary" id="btn-save-folder">Create Folder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATE TAG MODAL -->
+  <div class="modal-overlay" id="modal-tag">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h3>Create New Tag</h3>
+        </div>
+        <button class="modal-close-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="tag-name-input">Tag Name</label>
+          <input type="text" class="form-input" id="tag-name-input" placeholder="e.g. Exam-Prep, Quick-Read, Reference">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary modal-close">Cancel</button>
+        <button class="btn-primary" id="btn-save-tag">Create Tag</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay" id="modal-settings">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h3>Settings & API Keys</h3>
+        </div>
+        <button class="modal-close-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="gemini-api-key-input">Gemini API Key</label>
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" class="form-input" id="gemini-api-key-input" placeholder="AIZA..." style="width: 100%; padding-right: 40px;">
+            <button class="footer-action-btn" id="btn-toggle-key-visibility" style="position: absolute; right: 6px; padding: 4px;" title="Show API Key">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+            Get a free API key from the <a href="https://aistudio.google.com/" target="_blank" style="color: var(--accent-gold); text-decoration: none;">Google AI Studio</a>. 
+            If no key is entered, DocMind will fall back to its internal, offline semantic text analyser (mock engine).
+          </p>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Data Management</label>
+          <button class="btn-secondary" id="btn-clear-all-data" style="border-color: var(--danger); color: var(--danger); font-weight: 600;">
+            <i class="fa-solid fa-trash-can"></i> Clear All Stored Data
+          </button>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+            This will permanently remove all PDFs, folders, and settings from your local browser database.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary modal-close">Close</button>
+        <button class="btn-primary" id="btn-save-settings">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- App Main Scripts -->
+  <script src="app.js?v=6"></script>
+</body>
+</html>

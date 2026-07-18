@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header banner -->
+    <div class="row mb-5 align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-5 text-white mb-2 font-weight-bold">Intellectual Knowledge Panel</h1>
+            <p class="text-secondary lead">Manage documents, query semantic vectors, and extract summaries with AI models.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <a href="{{ url_for('upload_page') }}" class="btn btn-primary-custom">
+                <i class="fa-solid fa-cloud-arrow-up me-2"></i>Upload Document
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Stats row -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="glass-panel stat-card">
+                <div>
+                    <h5 class="text-secondary small mb-1">Total Documents</h5>
+                    <h2 class="text-white mb-0 Outfit font-weight-bold">{{ total_docs }}</h2>
+                </div>
+                <div class="stat-icon icon-purple">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-panel stat-card">
+                <div>
+                    <h5 class="text-secondary small mb-1">AI Ready Files</h5>
+                    <h2 class="text-white mb-0 Outfit font-weight-bold">{{ processed_docs }}</h2>
+                </div>
+                <div class="stat-icon icon-cyan">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-panel stat-card">
+                <div>
+                    <h5 class="text-secondary small mb-1">Knowledge Queries</h5>
+                    <h2 class="text-white mb-0 Outfit font-weight-bold">{{ total_queries }}</h2>
+                </div>
+                <div class="stat-icon icon-blue">
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <!-- Recent Documents Panel -->
+        <div class="col-lg-8">
+            <div class="glass-panel p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="text-white mb-0 font-weight-semibold">Recent Uploads</h4>
+                    <a href="{{ url_for('library_page') }}" class="text-secondary small text-decoration-none">
+                        View All Library <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+                
+                {% if documents %}
+                    <div class="table-responsive">
+                        <table class="table table-custom align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Filename</th>
+                                    <th>Status</th>
+                                    <th>Uploaded</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for doc in documents %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <i class="fa-solid {% if doc.file_type == 'pdf' %}fa-file-pdf text-danger{% else %}fa-file-word text-primary{% endif %} fs-4"></i>
+                                                <div>
+                                                    <div class="text-white font-weight-semibold">{{ doc.filename }}</div>
+                                                    <div class="text-secondary small">{{ (doc.file_size / 1024) | round(1) }} KB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge-status {% if doc.status == 'completed' %}badge-completed{% elif doc.status == 'failed' %}badge-failed{% else %}badge-processing{% endif %}">
+                                                <i class="fa-solid {% if doc.status == 'completed' %}fa-circle-check{% elif doc.status == 'failed' %}fa-circle-xmark{% else %}fa-spinner fa-spin{% endif %} me-1"></i>
+                                                {{ doc.status | capitalize }}
+                                            </span>
+                                        </td>
+                                        <td class="text-secondary small">{{ doc.uploaded_at.split(' ')[0] }}</td>
+                                        <td class="text-end">
+                                            {% if doc.status == 'completed' %}
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary-custom btn-sm dropdown-toggle py-1" type="button" data-bs-toggle="dropdown">
+                                                        Explore
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                                        <li><a class="dropdown-item" href="{{ url_for('chat_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-comments me-2 text-secondary"></i>Ask Q&A</a></li>
+                                                        <li><a class="dropdown-item" href="{{ url_for('summary_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-align-left me-2 text-secondary"></i>Summary</a></li>
+                                                        <li><a class="dropdown-item" href="{{ url_for('keywords_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-tags me-2 text-secondary"></i>Keywords</a></li>
+                                                        <li><a class="dropdown-item" href="{{ url_for('highlights_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-star me-2 text-secondary"></i>Highlights</a></li>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li><a class="dropdown-item" href="{{ url_for('download_report', doc_id=doc.id) }}" target="_blank"><i class="fa-solid fa-file-export me-2 text-secondary"></i>Export Report</a></li>
+                                                    </ul>
+                                                </div>
+                                            {% else %}
+                                                <button class="btn btn-secondary-custom btn-sm py-1" disabled>Indexing...</button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5 border-glass-glow rounded" style="border: 1px dashed rgba(255,255,255,0.05)">
+                        <i class="fa-solid fa-file-circle-plus display-6 text-muted mb-3"></i>
+                        <p class="text-secondary mb-0">No documents found. Start by uploading study materials.</p>
+                        <a href="{{ url_for('upload_page') }}" class="btn btn-primary-custom btn-sm mt-3">Upload Now</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right Tag Cloud / Keywords Panel -->
+        <div class="col-lg-4">
+            <div class="glass-panel p-4 h-100">
+                <h4 class="text-white mb-4 font-weight-semibold">System-Wide Topics</h4>
+                <p class="text-secondary small mb-4">Extracted semantic keywords across all uploaded documents.</p>
+                
+                {% if top_keywords %}
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for kw, count in top_keywords %}
+                            <a href="{{ url_for('keywords_page') }}" class="keyword-tag">
+                                {{ kw }}
+                                <span class="score">{{ count }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fa-solid fa-tags text-muted display-6 mb-3"></i>
+                        <p class="text-secondary small">No keywords indexed yet. Upload documents to construct your semantic network.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

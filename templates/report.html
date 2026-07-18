@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocMind AI Summary Report - {{ doc.filename }}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #1e293b;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .report-header {
+            border-bottom: 3px double #cbd5e1;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .section-title {
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #3b82f6;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .summary-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 1rem;
+        }
+        .tag-badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .item-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #ffffff;
+        }
+        .qa-pair {
+            border-bottom: 1px dashed #e2e8f0;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .qa-pair:last-child {
+            border-bottom: none;
+        }
+        
+        /* Interactive Action FAB */
+        .print-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Print Media Overrides */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12px;
+            }
+            .print-fab {
+                display: none !important;
+            }
+            .item-card {
+                page-break-inside: avoid;
+            }
+            .qa-pair {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Print floating button -->
+    <button onclick="window.print()" class="btn btn-primary print-fab rounded-circle p-3" style="width: 56px; height: 56px;" title="Print Report">
+        <i class="fa-solid fa-print fs-5"></i>
+    </button>
+
+    <div class="container" style="max-width: 850px;">
+        
+        <!-- Header -->
+        <header class="report-header d-flex justify-content-between align-items-end flex-wrap gap-3">
+            <div>
+                <h1 class="display-6 mb-1">DocMind AI Analysis Report</h1>
+                <p class="text-muted mb-0">System compiled intellectual extraction summary.</p>
+            </div>
+            <div class="text-md-end text-muted small">
+                <div><strong>Document:</strong> {{ doc.filename }}</div>
+                <div><strong>Size:</strong> {{ (doc.file_size / 1024) | round(1) }} KB</div>
+                <div><strong>Date Generated:</strong> {{ doc.uploaded_at }}</div>
+            </div>
+        </header>
+
+        {% if features %}
+            <!-- Summary section -->
+            <section>
+                <h3 class="section-title"><i class="fa-solid fa-align-left"></i> Summarization</h3>
+                
+                <div class="mb-4">
+                    <h5 class="text-secondary small font-weight-bold">Executive Highlights:</h5>
+                    <div class="summary-box" style="white-space: pre-line;">{{ features.summary_short }}</div>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="text-secondary small font-weight-bold">Analysis Synthesis:</h5>
+                    <p style="text-align: justify; text-justify: inter-word;">{{ features.summary_medium }}</p>
+                </div>
+            </section>
+
+            <!-- Keywords section -->
+            <section>
+                <h3 class="section-title"><i class="fa-solid fa-tags"></i> Domain Keywords</h3>
+                <div class="mb-4">
+                    {% if features.keywords %}
+                        {% for item in features.keywords %}
+                            <span class="tag-badge">{{ item.keyword }} ({{ item.score }})</span>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">No keywords indexed.</p>
+                    {% endif %}
+                </div>
+            </section>
+
+            <!-- Highlights section -->
+            <section>
+                <h3 class="section-title"><i class="fa-solid fa-star"></i> Key Highlights</h3>
+                
+                <!-- Definitions -->
+                <div class="mb-4">
+                    <h5 class="text-secondary small font-weight-bold">Extracted Definitions:</h5>
+                    {% if features.definitions %}
+                        <div class="row g-3">
+                            {% for item in features.definitions %}
+                                <div class="col-md-6">
+                                    <div class="item-card">
+                                        <strong class="text-primary">{{ item.term }}</strong>
+                                        <div class="text-muted small mt-1">{{ item.definition }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted small">No definitions found.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Formulas -->
+                <div class="mb-4">
+                    <h5 class="text-secondary small font-weight-bold">Formula Indexes:</h5>
+                    {% if features.formulas %}
+                        {% for item in features.formulas %}
+                            <div class="item-card">
+                                <code class="text-dark font-weight-bold" style="font-size:1.05rem;">{{ item.formula }}</code>
+                                <div class="text-muted small mt-1">{{ item.description }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted small">No formulas found.</p>
+                    {% endif %}
+                </div>
+            </section>
+        {% endif %}
+
+        <!-- Q&A Logs Section -->
+        <section class="mt-4">
+            <h3 class="section-title"><i class="fa-solid fa-comments"></i> Query & Answers Log</h3>
+            {% if history %}
+                <div class="mt-3">
+                    {% for item in history %}
+                        <div class="qa-pair">
+                            <div class="mb-1"><strong>Q: {{ item.question }}</strong></div>
+                            <div class="text-muted small mb-2" style="white-space: pre-line;">A: {{ item.answer }}</div>
+                            {% if item.sources %}
+                                <div class="text-muted" style="font-size:11px;">
+                                    <strong>Sources Cited:</strong> 
+                                    {% for src in item.sources %}
+                                        <span>Page {{ src.page }} (Snippet: "{{ src.snippet }}")</span>{% if not loop.last %}; {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted small">No queries logged for this document index.</p>
+            {% endif %}
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-5 pt-3 border-top text-center text-muted small">
+            Report generated by DocMind AI Platform. All rights reserved.
+        </footer>
+
+    </div>
+
+</body>
+</html>

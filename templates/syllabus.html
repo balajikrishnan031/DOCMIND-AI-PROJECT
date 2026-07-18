@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block title %}Syllabus mapping - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 1000px; margin-left: 0;">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-md-8">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">Syllabus Coverage Tracker</h1>
+            <p class="text-secondary mb-0">Upload university curriculum syllabuses to semantically map textbook pages and monitor learning progress.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            {% if syllabus %}
+                <button onclick="triggerMapping()" id="mapBtn" class="btn btn-primary-custom">
+                    <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Map to Textbooks
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Upload Syllabus Card (Only if no syllabus is uploaded yet) -->
+    {% if not syllabus %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="glass-panel p-5 text-center">
+                    <i class="fa-solid fa-file-invoice-dollar display-5 text-primary mb-3"></i>
+                    <h4 class="text-white mb-3">No Syllabus Uploaded Yet</h4>
+                    <p class="text-secondary small max-width-600 mx-auto mb-4">Upload your university syllabus PDF/TXT to extract study topics and automatically trace where each head is located in your uploaded library.</p>
+                    
+                    <form action="{{ url_for('upload_syllabus') }}" method="POST" enctype="multipart/form-data" class="d-inline-block">
+                        <div class="d-flex gap-2">
+                            <input type="file" name="syllabus_file" class="form-control form-control-custom" accept=".pdf,.txt" required>
+                            <button type="submit" class="btn btn-primary-custom">Upload Syllabus</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Syllabus Progress Statistics -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <div class="glass-panel p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <h6 class="text-secondary small mb-1">Topics Coverage</h6>
+                        <h2 class="text-white mb-0 font-weight-bold" id="coverageVal">0%</h2>
+                    </div>
+                    <div class="progress" style="width: 120px; height: 10px; background: rgba(255,255,255,0.05); border-radius: 10px;">
+                        <div class="progress-bar" id="coverageBar" role="progressbar" style="width: 0%; background: var(--secondary-gradient);"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="glass-panel p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <h6 class="text-secondary small mb-1">Curriculum Status</h6>
+                        <h5 class="text-white mb-0 font-weight-semibold" id="statusText">Awaiting Vector Mapping</h5>
+                    </div>
+                    <form action="{{ url_for('clear_syllabus_route') }}" method="POST" onsubmit="return confirm('Clear the parsed syllabus?')">
+                        <button type="submit" class="btn btn-secondary-custom btn-sm text-danger">
+                            <i class="fa-solid fa-trash-can me-1"></i> Clear Syllabus
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Syllabus structure mapping view -->
+        <div class="row">
+            <div class="col-12">
+                <div class="accordion-custom">
+                    {% for unit in syllabus %}
+                        <div class="accordion-item-custom">
+                            <div class="accordion-header-custom" onclick="toggleAccordion(this)">
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="badge bg-dark text-cyan">Unit {{ unit.unit_index }}</span>
+                                    <span class="text-white font-weight-semibold">{{ unit.unit_title }}</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-secondary small"></i>
+                            </div>
+                            <div class="accordion-content-custom px-4 py-3" style="display: block;">
+                                <div class="list-group list-group-flush" style="background:transparent;">
+                                    {% for topic in unit.topics %}
+                                        <div class="list-group-item d-flex justify-content-between align-items-center py-3 border-glass bg-transparent text-secondary px-0">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <i class="fa-solid {% if topic.status == 'covered' %}fa-circle-check text-success{% else %}fa-circle-question text-muted{% endif %} fs-6"></i>
+                                                <span class="text-white-50 small">{{ topic.topic_name }}</span>
+                                            </div>
+                                            <div>
+                                                {% if topic.status == 'covered' %}
+                                                    <span class="badge bg-dark text-cyan border border-glass cursor-pointer" onclick="showSourceContext('{{ topic.filename }}', '{{ topic.page_number }}')">
+                                                        <i class="fa-solid fa-file-invoice me-1"></i> {{ topic.filename }} (Page {{ topic.page_number }})
+                                                    </span>
+                                                {% else %}
+                                                    <span class="badge bg-secondary-subtle text-muted text-uppercase small" style="font-size:10px;">Pending</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Source Context Details Modal -->
+<div class="modal fade" id="contextModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content glass-panel-glow" style="background: var(--bg-sidebar);">
+            <div class="modal-header border-glass">
+                <h5 class="modal-title text-white"><i class="fa-solid fa-book-open text-primary me-2"></i>Syllabus Matching Reference</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-secondary small" style="line-height:1.7;">
+                <div class="mb-3">
+                    <strong class="text-white d-block">Source Document:</strong>
+                    <span id="modalDocName" class="text-cyan">document.pdf</span> (Page <span id="modalPageNum" class="text-cyan">1</span>)
+                </div>
+                <div class="p-3 rounded border-glass" style="background: rgba(0,0,0,0.15);" id="modalContentText">
+                    Content mapping reference text goes here...
+                </div>
+            </div>
+            <div class="modal-footer border-glass">
+                <button type="button" class="btn btn-secondary-custom btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        calculateStats();
+    });
+
+    function toggleAccordion(header) {
+        const item = header.parentElement;
+        const content = item.querySelector('.accordion-content-custom');
+        const icon = header.querySelector('i');
+        
+        const isOpen = content.style.display === 'block';
+        content.style.display = isOpen ? 'none' : 'block';
+        icon.className = isOpen ? 'fa-solid fa-chevron-down text-secondary small' : 'fa-solid fa-chevron-up text-primary small';
+    }
+
+    function calculateStats() {
+        const totalTopics = document.querySelectorAll('.list-group-item').length;
+        if (totalTopics === 0) return;
+        
+        const coveredTopics = document.querySelectorAll('.fa-circle-check').length;
+        const percentage = Math.round((coveredTopics / totalTopics) * 100);
+        
+        const covVal = document.getElementById('coverageVal');
+        const covBar = document.getElementById('coverageBar');
+        const statusText = document.getElementById('statusText');
+        
+        if (covVal) covVal.innerText = percentage + '%';
+        if (covBar) covBar.style.width = percentage + '%';
+        
+        if (statusText) {
+            if (percentage === 100) {
+                statusText.innerText = "Curriculum 100% Covered!";
+                statusText.className = "text-success mb-0 font-weight-semibold";
+            } else if (percentage > 0) {
+                statusText.innerText = `${percentage}% of Syllabus Mapped`;
+                statusText.className = "text-cyan mb-0 font-weight-semibold";
+            } else {
+                statusText.innerText = "Awaiting Vector Mapping";
+            }
+        }
+    }
+
+    function triggerMapping() {
+        const btn = document.getElementById('mapBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Mapping...';
+
+        fetch('/api/syllabus/map', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Syllabus mapping completed successfully! Check the covered topics below.');
+                    window.location.reload();
+                } else {
+                    alert('Mapping failed: ' + (data.error || 'Unknown error'));
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles me-2"></i>Map to Textbooks';
+                }
+            })
+            .catch(err => {
+                alert('An error occurred during mapping.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles me-2"></i>Map to Textbooks';
+            });
+    }
+
+    function showSourceContext(filename, page) {
+        // Find best match chunk from DOM/database or query matching route
+        fetch(`/api/syllabus/reference?filename=${encodeURIComponent(filename)}&page=${page}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('modalDocName').innerText = filename;
+                document.getElementById('modalPageNum').innerText = page;
+                document.getElementById('modalContentText').innerText = data.content || "No reference context found.";
+                const contextModal = new bootstrap.Modal(document.getElementById('contextModal'));
+                contextModal.show();
+            })
+            .catch(err => console.error("Error loading reference:", err));
+    }
+</script>
+{% endblock %}

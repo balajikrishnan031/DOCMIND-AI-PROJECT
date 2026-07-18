@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block title %}Study Flashcards - DocMind AI{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* 3D Flipping Card Styling */
+    .flashcard-deck {
+        perspective: 1000px;
+        width: 100%;
+        max-width: 460px;
+        height: 280px;
+        margin: 0 auto;
+        cursor: pointer;
+    }
+    
+    .flashcard-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d;
+    }
+    
+    .flashcard-deck.flipped .flashcard-inner {
+        transform: rotateY(180deg);
+    }
+    
+    .flashcard-front, .flashcard-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: var(--radius-md);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .flashcard-front {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.25);
+        color: #fff;
+    }
+    
+    .flashcard-back {
+        background: rgba(13, 15, 23, 0.95);
+        border: 1px solid rgba(6, 182, 212, 0.25);
+        color: var(--text-secondary);
+        transform: rotateY(180deg);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 900px; margin-left: 0;">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">Active Recall Flashcards</h1>
+            <p class="text-secondary">Click the cards to flip them. Test your memory and review key terms dynamically.</p>
+        </div>
+    </div>
+
+    <!-- Active Document Selection -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-panel p-3 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-filter text-primary"></i>
+                    <span class="text-secondary small font-weight-semibold">Active Document:</span>
+                </div>
+                <div class="flex-grow-1" style="max-width: 500px;">
+                    <select class="form-select form-control-custom" id="docSelect" onchange="loadFlashcards(this.value)">
+                        <option value="">-- Select a completed document --</option>
+                        {% for doc in documents %}
+                            <option value="{{ doc.id }}" {% if selected_doc and selected_doc.id == doc.id %}selected{% endif %}>{{ doc.filename }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flashcards Display Area -->
+    <div class="row justify-content-center">
+        <div class="col-12">
+            {% if selected_doc %}
+                {% if flashcards %}
+                    <!-- Render Card Carousel Deck -->
+                    <div class="glass-panel p-5 text-center">
+                        <div class="mb-4">
+                            <span class="badge bg-dark text-cyan">Card <span id="cardIndex">1</span> of {{ flashcards|len }}</span>
+                        </div>
+
+                        <!-- 3D Card wrapper -->
+                        <div class="flashcard-deck mb-4" id="cardDeck" onclick="flipCard()">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">
+                                    <span class="text-secondary small mb-3 text-uppercase font-weight-bold">Concept/Term</span>
+                                    <h3 class="text-white font-weight-semibold" id="cardFrontText">Front text</h3>
+                                    <span class="text-muted small mt-4"><i class="fa-solid fa-arrow-rotate-right me-1"></i> Click to Reveal Answer</span>
+                                </div>
+                                <div class="flashcard-back">
+                                    <span class="text-cyan small mb-3 text-uppercase font-weight-bold">Definition/Explanation</span>
+                                    <p class="small leading-loose" id="cardBackText">Back explanation text</p>
+                                    <span class="text-muted small mt-4"><i class="fa-solid fa-arrow-rotate-left me-1"></i> Click to Show Front</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carousel actions navigation -->
+                        <div class="d-flex justify-content-center gap-3">
+                            <button class="btn btn-secondary-custom btn-sm" onclick="prevCard()">
+                                <i class="fa-solid fa-chevron-left me-1"></i> Previous
+                            </button>
+                            <button class="btn btn-secondary-custom btn-sm" onclick="nextCard()">
+                                Next <i class="fa-solid fa-chevron-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Show Generate Card button -->
+                    <div class="glass-panel text-center p-5 border-glass-glow">
+                        <i class="fa-solid fa-address-card text-muted display-5 mb-3"></i>
+                        <h4 class="text-white mb-2">No Study Cards Generated Yet</h4>
+                        <p class="text-secondary small max-width-600 mx-auto mb-4">Click below to parse the document text and extract active recall review cards automatically using AI.</p>
+                        <button onclick="generateMaterials('{{ selected_doc.id }}')" id="genBtn" class="btn btn-primary-custom">
+                            <i class="fa-solid fa-bolt me-2"></i> Generate Study Cards
+                        </button>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="glass-panel text-center py-5 border-glass-glow">
+                    <i class="fa-solid fa-address-card text-muted display-5 mb-3"></i>
+                    <h5 class="text-white">Select a document to begin</h5>
+                    <p class="text-secondary small px-3">Flashcards are parsed on-demand. Choose a file from the list above to view or generate cards.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function loadFlashcards(docId) {
+        if (docId) {
+            window.location.href = `{{ url_for('flashcards_page') }}?doc_id=${docId}`;
+        } else {
+            window.location.href = `{{ url_for('flashcards_page') }}`;
+        }
+    }
+
+    function generateMaterials(docId) {
+        const btn = document.getElementById('genBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Generating...';
+
+        fetch(`/api/study/generate/${docId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Study cards generated successfully!');
+                    window.location.reload();
+                } else {
+                    alert('Generation failed: ' + (data.error || 'Unknown error'));
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-bolt me-2"></i> Generate Study Cards';
+                }
+            })
+            .catch(err => {
+                alert('An error occurred during generation.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-bolt me-2"></i> Generate Study Cards';
+            });
+    }
+
+    // Flashcards slide management logic
+    {% if flashcards %}
+        const cards = {{ flashcards|tojson }};
+        let currentIdx = 0;
+
+        function updateCardDisplay() {
+            const deck = document.getElementById('cardDeck');
+            // Reset flipping status before update
+            deck.classList.remove('flipped');
+            
+            setTimeout(() => {
+                document.getElementById('cardIndex').innerText = currentIdx + 1;
+                document.getElementById('cardFrontText').innerText = cards[currentIdx].front;
+                document.getElementById('cardBackText').innerText = cards[currentIdx].back;
+            }, 150); // slight delay to map rotation time
+        }
+
+        function flipCard() {
+            document.getElementById('cardDeck').classList.toggle('flipped');
+        }
+
+        function nextCard() {
+            currentIdx = (currentIdx + 1) % cards.length;
+            updateCardDisplay();
+        }
+
+        function prevCard() {
+            currentIdx = (currentIdx - 1 + cards.length) % cards.length;
+            updateCardDisplay();
+        }
+
+        // Initialize display content
+        updateCardDisplay();
+    {% endif %}
+</script>
+{% endblock %}

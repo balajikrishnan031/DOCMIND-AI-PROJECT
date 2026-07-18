@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block title %}Practice Quiz - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 950px; margin-left: 0;">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">Practice Exams & Quizzes</h1>
+            <p class="text-secondary">Take AI-generated multiple choice question quizzes to evaluate your learning progress and review logs.</p>
+        </div>
+    </div>
+
+    <!-- Active Document Selection -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-panel p-3 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-filter text-primary"></i>
+                    <span class="text-secondary small font-weight-semibold">Active Document:</span>
+                </div>
+                <div class="flex-grow-1" style="max-width: 500px;">
+                    <select class="form-select form-control-custom" id="docSelect" onchange="loadQuiz(this.value)">
+                        <option value="">-- Select a completed document --</option>
+                        {% for doc in documents %}
+                            <option value="{{ doc.id }}" {% if selected_doc and selected_doc.id == doc.id %}selected{% endif %}>{{ doc.filename }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% if selected_doc %}
+            <!-- Left Quiz Workspace -->
+            <div class="col-lg-8">
+                {% if quizzes %}
+                    <div class="glass-panel p-4" id="quizWorkspace">
+                        <form id="quizForm" onsubmit="submitExam(event)">
+                            <div class="d-flex flex-column gap-4">
+                                {% for q in quizzes %}
+                                    <div class="p-3 rounded border-glass question-card" id="q-card-{{ loop.index0 }}" style="background: rgba(255,255,255,0.01);">
+                                        <h6 class="text-white mb-3 d-flex align-items-start gap-2">
+                                            <span class="badge bg-dark text-secondary mt-1" style="font-size: 11px;">Q{{ loop.index }}</span>
+                                            <span class="text-break">{{ q.question }}</span>
+                                        </h6>
+                                        
+                                        <div class="d-flex flex-column gap-2 ps-3">
+                                            {% for option in q.options %}
+                                                <div class="form-check">
+                                                    <input class="form-check-input option-input" type="radio" name="question-{{ parent_loop_index0 if parent_loop_index0 is defined else loop.index0 - 1 if loop.index0 > 0 else 0 }}" id="q-{{ parent_loop_index0 if parent_loop_index0 is defined else loop.index0 - 1 if loop.index0 > 0 else 0 }}-opt-{{ loop.index0 }}" value="{{ loop.index0 }}" required>
+                                                    <label class="form-check-label text-secondary small text-break" for="q-{{ parent_loop_index0 if parent_loop_index0 is defined else loop.index0 - 1 if loop.index0 > 0 else 0 }}-opt-{{ loop.index0 }}">
+                                                        {{ option }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        
+                                        <!-- Feedback explanation text (Hidden initially) -->
+                                        <div class="explanation-box mt-3 p-3 bg-dark border-glass rounded small text-secondary" style="display: none;">
+                                            <strong class="text-white d-block mb-1"><i class="fa-solid fa-circle-info text-cyan me-1"></i>Explanation:</strong>
+                                            <span>{{ q.explanation }}</span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="text-end border-top border-glass pt-4 mt-4">
+                                <button type="submit" class="btn btn-primary-custom" id="submitBtn">
+                                    Submit Exam <i class="fa-solid fa-paper-plane ms-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                {% else %}
+                    <!-- Show Generate Quiz button -->
+                    <div class="glass-panel text-center p-5 border-glass-glow">
+                        <i class="fa-solid fa-graduation-cap text-muted display-5 mb-3"></i>
+                        <h4 class="text-white mb-2">No Practice Exams Generated</h4>
+                        <p class="text-secondary small max-width-600 mx-auto mb-4">Click below to parse the document chapters and generate mock exam questions automatically using AI.</p>
+                        <button onclick="generateMaterials('{{ selected_doc.id }}')" id="genBtn" class="btn btn-primary-custom">
+                            <i class="fa-solid fa-bolt me-2"></i> Generate Practice Quiz
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Right Attempt History Logs -->
+            <div class="col-lg-4">
+                <div class="glass-panel p-4 h-100">
+                    <h5 class="text-white mb-4"><i class="fa-solid fa-chart-line text-accent me-2"></i>Score Board</h5>
+                    <p class="text-secondary small mb-4">Tracks your recent exam grades and grading metrics.</p>
+                    
+                    {% if attempts %}
+                        <div class="d-flex flex-column gap-3 overflow-y-auto" style="max-height: 450px;">
+                            {% for a in attempts %}
+                                <div class="p-3 rounded border-glass d-flex justify-content-between align-items-center" style="background: rgba(255,255,255,0.01);">
+                                    <div>
+                                        <div class="text-white font-weight-semibold" style="font-size:0.9rem;">Attempt #{{ attempts|length - loop.index0 }}</div>
+                                        <div class="text-secondary small mt-1">{{ a.attempted_at.split(' ')[0] }}</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <h4 class="mb-0 {% if (a.score / a.total) >= 0.7 %}text-success{% else %}text-warning{% endif %} font-weight-bold">{{ a.score }}/{{ a.total }}</h4>
+                                        <span class="text-secondary small">{{ ((a.score / a.total) * 100) | round | int }}%</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-history display-6 mb-3 opacity-25"></i>
+                            <p class="small mb-0">No attempts logged yet.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <div class="glass-panel text-center py-5 border-glass-glow">
+                    <i class="fa-solid fa-circle-question text-muted display-5 mb-3"></i>
+                    <h5 class="text-white">Select a document to begin</h5>
+                    <p class="text-secondary small px-3">Quizzes are auto-generated on demand. Select a textbook from the list above to view or generate questions.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function loadQuiz(docId) {
+        if (docId) {
+            window.location.href = `{{ url_for('quiz_page') }}?doc_id=${docId}`;
+        } else {
+            window.location.href = `{{ url_for('quiz_page') }}`;
+        }
+    }
+
+    function generateMaterials(docId) {
+        const btn = document.getElementById('genBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Generating...';
+
+        fetch(`/api/study/generate/${docId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Practice quiz questions generated successfully!');
+                    window.location.reload();
+                } else {
+                    alert('Generation failed: ' + (data.error || 'Unknown error'));
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-bolt me-2"></i> Generate Practice Quiz';
+                }
+            })
+            .catch(err => {
+                alert('An error occurred during generation.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-bolt me-2"></i> Generate Practice Quiz';
+            });
+    }
+
+    {% if quizzes %}
+        const examQuestions = {{ quizzes|tojson }};
+
+        function submitExam(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            
+            let score = 0;
+            const total = examQuestions.length;
+
+            examQuestions.forEach((q, qIdx) => {
+                // Find chosen option input selection
+                const inputs = document.getElementsByName(`question-${qIdx}`);
+                let chosenOpt = -1;
+                
+                for (let i = 0; i < inputs.length; i++) {
+                    if (inputs[i].checked) {
+                        chosenOpt = parseInt(inputs[i].value);
+                        break;
+                    }
+                }
+
+                const card = document.getElementById(`q-card-${qIdx}`);
+                const expBox = card.querySelector('.explanation-box');
+                const labels = card.querySelectorAll('.form-check-label');
+
+                // Color coding outputs
+                labels.forEach((lbl, oIdx) => {
+                    lbl.classList.remove('text-success', 'text-danger', 'font-weight-semibold');
+                    if (oIdx === q.correct_option) {
+                        lbl.classList.add('text-success', 'font-weight-semibold'); // correct is green
+                    } else if (oIdx === chosenOpt) {
+                        lbl.classList.add('text-danger', 'font-weight-semibold'); // incorrect is red
+                    }
+                });
+
+                if (chosenOpt === q.correct_option) {
+                    score++;
+                    card.style.borderColor = 'rgba(16, 185, 129, 0.4)'; // green border
+                } else {
+                    card.style.borderColor = 'rgba(239, 68, 68, 0.4)'; // red border
+                }
+
+                // Show feedback boxes
+                expBox.style.display = 'block';
+            });
+
+            // Log attempt to backend DB
+            fetch(`/api/study/quiz/submit/{{ selected_doc.id }}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ score: score, total: total })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Quiz completed! You scored ${score} out of ${total}. View details below.`);
+                    // Refresh history sidebar after slight delay
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2500);
+                } else {
+                    console.error("Failed to log score attempt:", data.error);
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    {% endif %}
+</script>
+{% endblock %}

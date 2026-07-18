@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Documents - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 900px; margin-left: 0;">
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">Knowledge Ingestion Center</h1>
+            <p class="text-secondary">Drag and drop PDFs or DOCX files here to index them into your semantic knowledge base.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12">
+            <!-- Drag and Drop Area -->
+            <div class="glass-panel p-5 text-center" style="position: relative;">
+                <div id="dropzone" class="dropzone-container">
+                    <div class="dropzone-icon">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <h4 class="text-white mb-2 font-weight-semibold">Drag & Drop Document</h4>
+                    <p class="text-secondary mb-3 small">Supported formats: <strong>PDF, DOCX, TXT</strong> (Max 32MB)</p>
+                    <button type="button" class="btn btn-primary-custom" onclick="document.getElementById('fileInput').click()">
+                        Browse Files
+                    </button>
+                    <input type="file" id="fileInput" class="d-none" accept=".pdf,.docx,.txt">
+                </div>
+
+                <!-- Processing States Panel (Hidden initially) -->
+                <div id="processingPanel" class="mt-4 p-4 border-glass-glow rounded text-start" style="display: none;">
+                    <h5 class="text-white mb-3 d-flex align-items-center">
+                        <i class="fa-solid fa-gear fa-spin text-primary me-2"></i>
+                        Ingestion In Progress: <span id="fileNameDisplay" class="ms-1 text-cyan font-weight-semibold">document.pdf</span>
+                    </h5>
+                    
+                    <!-- Progress Bar -->
+                    <div class="progress mb-4" style="height: 6px; background: rgba(255,255,255,0.05);">
+                        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%; background: var(--primary-gradient);" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    
+                    <!-- Progress Checklists -->
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex align-items-center justify-content-between" id="step-upload">
+                            <span class="text-secondary"><i class="fa-solid fa-circle-notch fa-spin me-2 text-muted"></i>Uploading raw file to storage...</span>
+                            <span class="badge bg-dark text-secondary status-val">0%</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between text-muted" id="step-extract">
+                            <span><i class="fa-solid fa-circle me-2 text-muted"></i>Parsing structure and text extraction...</span>
+                            <span class="badge bg-dark text-secondary status-val">Pending</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between text-muted" id="step-embed">
+                            <span><i class="fa-solid fa-circle me-2 text-muted"></i>Vectorizing chunks & indexing embeddings...</span>
+                            <span class="badge bg-dark text-secondary status-val">Pending</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between text-muted" id="step-features">
+                            <span><i class="fa-solid fa-circle me-2 text-muted"></i>AI summarizing, keyword & insight extraction...</span>
+                            <span class="badge bg-dark text-secondary status-val">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const processingPanel = document.getElementById('processingPanel');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const progressBar = document.getElementById('progressBar');
+        
+        const stepUpload = document.getElementById('step-upload');
+        const stepExtract = document.getElementById('step-extract');
+        const stepEmbed = document.getElementById('step-embed');
+        const stepFeatures = document.getElementById('step-features');
+
+        // Drag events
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropzone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+            }, false);
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length) handleUpload(files[0]);
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) handleUpload(fileInput.files[0]);
+        });
+
+        function updateStep(element, status, text, badgeText) {
+            element.classList.remove('text-muted', 'text-white', 'text-success', 'text-danger');
+            const icon = element.querySelector('i');
+            icon.className = '';
+            
+            if (status === 'pending') {
+                element.classList.add('text-muted');
+                icon.className = 'fa-solid fa-circle me-2 text-muted';
+            } else if (status === 'active') {
+                element.classList.add('text-white');
+                icon.className = 'fa-solid fa-circle-notch fa-spin me-2 text-primary';
+            } else if (status === 'success') {
+                element.classList.add('text-success');
+                icon.className = 'fa-solid fa-circle-check me-2 text-success';
+            } else if (status === 'failed') {
+                element.classList.add('text-danger');
+                icon.className = 'fa-solid fa-circle-xmark me-2 text-danger';
+            }
+            
+            if (badgeText) {
+                element.querySelector('.status-val').innerText = badgeText;
+            }
+        }
+
+        function handleUpload(file) {
+            // Validation
+            const allowedExtensions = /(\.pdf|\.docx|\.txt)$/i;
+            if (!allowedExtensions.exec(file.name)) {
+                alert('Please upload PDF, DOCX or TXT files only.');
+                return;
+            }
+
+            // UI Setup
+            dropzone.style.display = 'none';
+            processingPanel.style.display = 'block';
+            fileNameDisplay.innerText = file.name;
+            progressBar.style.width = '0%';
+            
+            updateStep(stepUpload, 'active', null, '0%');
+            updateStep(stepExtract, 'pending', null, 'Pending');
+            updateStep(stepEmbed, 'pending', null, 'Pending');
+            updateStep(stepFeatures, 'pending', null, 'Pending');
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/upload', true);
+
+            // Progress callback for file upload
+            xhr.upload.onprogress = (e) => {
+                if (e.lengthComputable) {
+                    const percentage = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = (percentage * 0.25) + '%';
+                    updateStep(stepUpload, 'active', null, percentage + '%');
+                }
+            };
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    progressBar.style.width = '25%';
+                    updateStep(stepUpload, 'success', null, 'Completed');
+                    
+                    // Trigger the server-side indexing/processing
+                    processDocument(response.doc_id);
+                } else {
+                    const response = JSON.parse(xhr.responseText);
+                    updateStep(stepUpload, 'failed', null, 'Failed');
+                    alert(response.error || 'Upload failed.');
+                    resetUpload();
+                }
+            };
+
+            xhr.onerror = () => {
+                updateStep(stepUpload, 'failed', null, 'Failed');
+                alert('An error occurred during file upload.');
+                resetUpload();
+            };
+
+            xhr.send(formData);
+        }
+
+        function processDocument(docId) {
+            progressBar.style.width = '30%';
+            updateStep(stepExtract, 'active', null, 'Processing');
+            
+            // Call the parsing API
+            fetch(`/api/process/${docId}/extract`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        progressBar.style.width = '60%';
+                        updateStep(stepExtract, 'success', null, 'Completed');
+                        updateStep(stepEmbed, 'active', null, 'Processing');
+                        
+                        // Proceed to embedding & indexing
+                        return fetch(`/api/process/${docId}/embed`, { method: 'POST' });
+                    } else {
+                        throw new Error(data.error || 'Extraction failed');
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        progressBar.style.width = '80%';
+                        updateStep(stepEmbed, 'success', null, 'Completed');
+                        updateStep(stepFeatures, 'active', null, 'Processing');
+                        
+                        // Proceed to feature summaries
+                        return fetch(`/api/process/${docId}/features`, { method: 'POST' });
+                    } else {
+                        throw new Error(data.error || 'Vector indexing failed');
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        progressBar.style.width = '100%';
+                        updateStep(stepFeatures, 'success', null, 'Completed');
+                        
+                        setTimeout(() => {
+                            alert('Ingestion completed successfully! Your document is now AI Ready.');
+                            window.location.href = '/library';
+                        }, 800);
+                    } else {
+                        throw new Error(data.error || 'AI features extraction failed');
+                    }
+                })
+                .catch(err => {
+                    alert(err.message || 'An error occurred during ingestion.');
+                    resetUpload();
+                });
+        }
+
+        function resetUpload() {
+            setTimeout(() => {
+                dropzone.style.display = 'block';
+                processingPanel.style.display = 'none';
+            }, 3000);
+        }
+    });
+</script>
+{% endblock %}

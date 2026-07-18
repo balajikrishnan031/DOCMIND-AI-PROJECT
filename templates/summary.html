@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Summaries - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 1000px; margin-left: 0;">
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">AI Document Summarization</h1>
+            <p class="text-secondary">Extract key takeaways from your study materials in bullet points, medium, or detailed contexts.</p>
+        </div>
+    </div>
+
+    <!-- Selection Dropdown Card -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-panel p-3 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-filter text-primary"></i>
+                    <span class="text-secondary small font-weight-semibold">Active Document:</span>
+                </div>
+                <div class="flex-grow-1" style="max-width: 500px;">
+                    <select class="form-select form-control-custom" id="docSelect" onchange="loadSummary(this.value)">
+                        <option value="">-- Select a completed document --</option>
+                        {% for doc in documents %}
+                            <option value="{{ doc.id }}" {% if selected_doc and selected_doc.id == doc.id %}selected{% endif %}>{{ doc.filename }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    {% if selected_doc %}
+                        <a href="{{ url_for('download_report', doc_id=selected_doc.id) }}" target="_blank" class="btn btn-secondary-custom btn-sm">
+                            <i class="fa-solid fa-file-export me-1"></i> Export Report
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Display Area -->
+    <div class="row">
+        <div class="col-12">
+            {% if selected_doc and features %}
+                <div class="glass-panel p-4">
+                    <div class="d-flex align-items-center gap-3 mb-4 border-bottom border-glass pb-3">
+                        <div class="stat-icon icon-purple" style="width:42px; height:42px; font-size:1.2rem;">
+                            <i class="fa-solid fa-align-left"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white mb-0 font-weight-semibold">{{ selected_doc.filename }}</h4>
+                            <span class="text-secondary small">Uploaded: {{ selected_doc.uploaded_at }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Summary Tabs Navigation -->
+                    <ul class="nav nav-pills mb-4" id="summaryTabs" role="tablist" style="background: rgba(255,255,255,0.02); padding: 5px; border-radius: 8px; width: fit-content;">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-white active" id="tab-short" data-bs-toggle="pill" data-bs-target="#pane-short" type="button" role="tab">
+                                Key Bullet Points
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-white" id="tab-medium" data-bs-toggle="pill" data-bs-target="#pane-medium" type="button" role="tab">
+                                Standard Summary
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-white" id="tab-detailed" data-bs-toggle="pill" data-bs-target="#pane-detailed" type="button" role="tab">
+                                Comprehensive Analysis
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Summary Contents -->
+                    <div class="tab-content" id="summaryTabsContent" style="min-height: 250px;">
+                        <!-- Bullet point summary -->
+                        <div class="tab-pane fade show active text-secondary" id="pane-short" role="tabpanel" style="white-space: pre-line; line-height: 1.8;">
+                            {{ features.summary_short if features.summary_short else 'No bullet summary extracted.' }}
+                        </div>
+                        
+                        <!-- Medium summary -->
+                        <div class="tab-pane fade text-secondary" id="pane-medium" role="tabpanel" style="line-height: 1.8;">
+                            {{ features.summary_medium if features.summary_medium else 'No standard summary extracted.' }}
+                        </div>
+                        
+                        <!-- Detailed summary -->
+                        <div class="tab-pane fade text-secondary" id="pane-detailed" role="tabpanel" style="line-height: 1.8;">
+                            {{ features.summary_long if features.summary_long else 'No detailed summary extracted.' }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="glass-panel text-center py-5 border-glass-glow">
+                    <i class="fa-solid fa-file-invoice text-muted display-5 mb-3"></i>
+                    <h5 class="text-white">Select a document to begin</h5>
+                    <p class="text-secondary small px-3">Summaries are auto-generated when files are processed. Choose a file from the list above to view analysis.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function loadSummary(docId) {
+        if (docId) {
+            window.location.href = `{{ url_for('summary_page') }}?doc_id=${docId}`;
+        } else {
+            window.location.href = `{{ url_for('summary_page') }}`;
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}My Documents - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header row with search bar -->
+    <div class="row mb-5 align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">Document Library</h1>
+            <p class="text-secondary mb-0">Browse, search, and manage your uploaded files and study materials.</p>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <div class="d-inline-flex gap-2">
+                <input type="text" id="libSearch" class="form-control form-control-custom" style="width: 250px;" placeholder="Search files by name...">
+                <a href="{{ url_for('upload_page') }}" class="btn btn-primary-custom">
+                    <i class="fa-solid fa-plus me-1"></i> Add New
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Library Content Panel -->
+    <div class="row">
+        <div class="col-12">
+            <div class="glass-panel p-4">
+                {% if documents %}
+                    <div class="table-responsive">
+                        <table class="table table-custom align-middle mb-0" id="libraryTable">
+                            <thead>
+                                <tr>
+                                    <th>Document Details</th>
+                                    <th>Format</th>
+                                    <th>Status</th>
+                                    <th>Date Added</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for doc in documents %}
+                                    <tr class="document-row" data-name="{{ doc.filename | lower }}">
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="stat-icon {% if doc.file_type == 'pdf' %}icon-purple{% elif doc.file_type == 'docx' %}icon-blue{% else %}icon-cyan{% endif %}" style="width:40px; height:40px; font-size:1.1rem;">
+                                                    <i class="fa-solid {% if doc.file_type == 'pdf' %}fa-file-pdf{% elif doc.file_type == 'docx' %}fa-file-word{% else %}fa-file-lines{% endif %}"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-white font-weight-semibold text-break">{{ doc.filename }}</div>
+                                                    <div class="text-secondary small">{{ (doc.file_size / 1024) | round(1) }} KB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-secondary text-uppercase small font-weight-bold">{{ doc.file_type }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge-status {% if doc.status == 'completed' %}badge-completed{% elif doc.status == 'failed' %}badge-failed{% else %}badge-processing{% endif %}">
+                                                <i class="fa-solid {% if doc.status == 'completed' %}fa-circle-check{% elif doc.status == 'failed' %}fa-circle-xmark{% else %}fa-spinner fa-spin{% endif %} me-1"></i>
+                                                {{ doc.status | capitalize }}
+                                            </span>
+                                        </td>
+                                        <td class="text-secondary small">{{ doc.uploaded_at.split(' ')[0] }}</td>
+                                        <td class="text-end">
+                                            <div class="d-inline-flex gap-2">
+                                                {% if doc.status == 'completed' %}
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary-custom btn-sm dropdown-toggle py-1" type="button" data-bs-toggle="dropdown">
+                                                            Actions
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                                            <li><a class="dropdown-item" href="{{ url_for('chat_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-comments me-2 text-secondary"></i>Ask AI</a></li>
+                                                            <li><a class="dropdown-item" href="{{ url_for('summary_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-align-left me-2 text-secondary"></i>Summary</a></li>
+                                                            <li><a class="dropdown-item" href="{{ url_for('keywords_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-tags me-2 text-secondary"></i>Keywords</a></li>
+                                                            <li><a class="dropdown-item" href="{{ url_for('highlights_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-star me-2 text-secondary"></i>Highlights</a></li>
+                                                            <li><hr class="dropdown-divider"></li>
+                                                            <li><a class="dropdown-item" href="{{ url_for('download_report', doc_id=doc.id) }}" target="_blank"><i class="fa-solid fa-file-export me-2 text-secondary"></i>Export Report</a></li>
+                                                        </ul>
+                                                    </div>
+                                                {% else %}
+                                                    <button class="btn btn-secondary-custom btn-sm py-1" disabled>Indexing</button>
+                                                {% endif %}
+                                                
+                                                <!-- Delete button and confirmation trigger -->
+                                                <button class="btn btn-secondary-custom btn-sm py-1 text-danger border-danger-subtle" onclick="confirmDelete('{{ doc.id }}', '{{ doc.filename | escape }}')">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5 border-glass-glow rounded" style="border: 1px dashed rgba(255,255,255,0.05)">
+                        <i class="fa-solid fa-folder-open display-5 text-muted mb-3"></i>
+                        <p class="text-secondary mb-0">Your library is currently empty.</p>
+                        <a href="{{ url_for('upload_page') }}" class="btn btn-primary-custom btn-sm mt-3">Upload First Document</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-panel-glow border-danger" style="background: var(--bg-sidebar);">
+            <div class="modal-header border-glass">
+                <h5 class="modal-title text-white"><i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>Delete Document</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-secondary mb-0">Are you sure you want to delete <strong class="text-white" id="deleteFileName">file.pdf</strong>? This will permanently remove its text vectors, summaries, and Q&A history logs from the server.</p>
+            </div>
+            <div class="modal-footer border-glass">
+                <button type="button" class="btn btn-secondary-custom btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="POST" action="">
+                    <button type="submit" class="btn btn-danger btn-sm">Confirm Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('libSearch');
+        const rows = document.querySelectorAll('.document-row');
+
+        // Dynamic library search filtering
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().strip();
+                rows.forEach(row => {
+                    const name = row.getAttribute('data-name');
+                    if (name.includes(query)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        }
+    });
+
+    function confirmDelete(docId, filename) {
+        document.getElementById('deleteFileName').innerText = filename;
+        document.getElementById('deleteForm').action = `/document/delete/${docId}`;
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    }
+</script>
+{% endblock %}

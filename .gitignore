@@ -1,0 +1,25 @@
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Local model caching (sentence-transformers models)
+.cache/
+
+# SQLite databases
+*.db
+database/database.db
+database/test_database.db
+database/test_upgrade_database.db
+
+# User uploaded materials
+uploads/
+temp_syllabus_*
+
+# Local environment
+venv/
+.venv/
+env/
+.env

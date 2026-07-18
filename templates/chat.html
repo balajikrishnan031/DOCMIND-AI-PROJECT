@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+
+{% block title %}Ask AI Q&A - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-3" style="height: calc(100vh - 4rem);">
+    <div class="chat-container">
+        
+        <!-- Left Selection Panel -->
+        <div class="glass-panel p-3 chat-sidebar d-none d-lg-flex">
+            <h5 class="text-white mb-3"><i class="fa-solid fa-square-poll-horizontal text-primary me-2"></i>Knowledge Source</h5>
+            <p class="text-secondary small mb-4">Select the specific document scope to constrain semantic Q&A queries.</p>
+            
+            <div class="flex-grow-1 overflow-y-auto mb-3" style="max-height: calc(100% - 100px);">
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="scopeRadio" id="scopeAll" value="" checked>
+                    <label class="form-check-label text-white small font-weight-semibold" for="scopeAll">
+                        <i class="fa-solid fa-globe text-secondary me-1"></i> Search All Library
+                    </label>
+                </div>
+                
+                <hr class="border-glass">
+                
+                <div class="d-flex flex-column gap-2" id="documentScopeList">
+                    {% for doc in documents %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="scopeRadio" id="scopeDoc{{ doc.id }}" value="{{ doc.id }}" {% if request.args.get('doc_id', type=int) == doc.id %}checked{% endif %}>
+                            <label class="form-check-label text-secondary small text-break" for="scopeDoc{{ doc.id }}">
+                                <i class="fa-solid fa-file-pdf text-danger-emphasis me-1"></i> {{ doc.filename }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Chat Box -->
+        <div class="glass-panel chat-main">
+            <!-- Header bar -->
+            <div class="p-3 border-bottom border-glass d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="user-avatar" style="width:36px; height:36px; font-size:0.95rem; background: var(--primary-gradient)">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-white mb-0 font-weight-semibold">Cognitive Agent</h6>
+                        <span class="text-secondary small" id="chatScopeDisplay">Scope: All Documents</span>
+                    </div>
+                </div>
+                <button class="btn btn-secondary-custom btn-sm py-1 text-secondary" id="clearHistoryBtn" onclick="clearHistory()">
+                    <i class="fa-solid fa-trash-can me-1"></i> Clear
+                </button>
+            </div>
+
+            <!-- Messages lists -->
+            <div class="chat-history" id="chatHistory">
+                <!-- Welcome prompt -->
+                <div class="chat-message assistant">
+                    <div class="message-avatar">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="chat-bubble">
+                        Hello! I am DocMind AI. Ask me any question about your uploaded books, lecture notes, or documents. 
+                        I will fetch the relevant details and cite source pages instantly.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input bar -->
+            <form id="chatForm" onsubmit="submitQuestion(event)" class="chat-input-area d-flex gap-2">
+                <input type="text" id="questionInput" class="form-control form-control-custom py-2" placeholder="Ask a question about the document..." required autocomplete="off">
+                <button type="submit" class="btn btn-primary-custom px-4" id="sendBtn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Right Citation Details Sidebar -->
+        <div class="glass-panel source-drawer d-none d-xl-block" id="sourceDrawer">
+            <h5 class="text-white mb-3 d-flex align-items-center"><i class="fa-solid fa-quote-right text-cyan me-2"></i>Source Citations</h5>
+            <p class="text-secondary small mb-4">Click citation numbers in answers to preview matching document context blocks below.</p>
+            
+            <div class="d-flex flex-column gap-3" id="citationsList">
+                <div class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-circle-info display-6 mb-3 opacity-25"></i>
+                    <p class="small mb-0">No citation selected.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let activeSources = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Handle radio selection change displays
+        const scopeRadios = document.querySelectorAll('input[name="scopeRadio"]');
+        const scopeDisplay = document.getElementById('chatScopeDisplay');
+        
+        function updateScopeText() {
+            let selectedText = "Scope: All Documents";
+            scopeRadios.forEach(radio => {
+                if (radio.checked && radio.value !== "") {
+                    const label = document.querySelector(`label[for="${radio.id}"]`);
+                    selectedText = `Scope: ${label.innerText.trim()}`;
+                }
+            });
+            scopeDisplay.innerText = selectedText;
+        }
+
+        scopeRadios.forEach(radio => radio.addEventListener('change', updateScopeText));
+        updateScopeText(); // Initial trigger
+    });
+
+    function appendMessage(role, text, sources = []) {
+        const history = document.getElementById('chatHistory');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message ${role}`;
+        
+        const avatar = document.createElement('div');
+        avatar.className = 'message-avatar';
+        avatar.innerHTML = role === 'user' ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-robot"></i>';
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble';
+        
+        if (role === 'assistant') {
+            // Render text with clickable source index badges
+            let formattedText = text;
+            
+            if (sources.length > 0) {
+                activeSources = sources;
+                // Highlight source numbers, e.g., [1]
+                formattedText = text.replace(/\[(\d+)\]/g, (match, number) => {
+                    const idx = parseInt(number) - 1;
+                    if (idx >= 0 && idx < sources.length) {
+                        return `<span class="citation-badge" onclick="showCitation(${idx})">[${number}]</span>`;
+                    }
+                    return match;
+                });
+                
+                // If there are citations, append list markers at the bottom
+                let citationListHtml = '<div class="mt-3 pt-2 border-top border-glass small text-secondary">';
+                sources.forEach((src, idx) => {
+                    citationListHtml += `<div><span class="citation-badge" onclick="showCitation(${idx})">[${idx+1}]</span> <span class="text-secondary">${src.document_name} (Page ${src.page})</span></div>`;
+                });
+                citationListHtml += '</div>';
+                formattedText += citationListHtml;
+            }
+            
+            bubble.innerHTML = formattedText;
+        } else {
+            bubble.innerText = text;
+        }
+        
+        msgDiv.appendChild(avatar);
+        msgDiv.appendChild(bubble);
+        history.appendChild(msgDiv);
+        
+        // Scroll chat to bottom
+        history.scrollTop = history.scrollHeight;
+    }
+
+    function submitQuestion(e) {
+        e.preventDefault();
+        const input = document.getElementById('questionInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const question = input.value.trim();
+        if (!question) return;
+
+        // Get selected document scope
+        const selectedRadio = document.querySelector('input[name="scopeRadio"]:checked');
+        const docId = selectedRadio ? selectedRadio.value : "";
+
+        appendMessage('user', question);
+        input.value = '';
+        
+        // Loading state
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+        fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: question, doc_id: docId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                appendMessage('assistant', `Error: ${data.error}`);
+            } else {
+                appendMessage('assistant', data.answer, data.sources);
+                // Auto-show first citation in sidebar
+                if (data.sources.length > 0) {
+                    populateSidebarCitations(data.sources);
+                    showCitation(0);
+                }
+            }
+        })
+        .catch(err => {
+            appendMessage('assistant', 'An error occurred during communication with AI server.');
+        })
+        .finally(() => {
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>';
+        });
+    }
+
+    function populateSidebarCitations(sources) {
+        const container = document.getElementById('citationsList');
+        container.innerHTML = '';
+        
+        sources.forEach((src, idx) => {
+            const card = document.createElement('div');
+            card.id = `citation-card-${idx}`;
+            card.className = 'p-3 rounded border-glass citation-item';
+            card.style.background = 'rgba(255,255,255,0.01)';
+            card.style.cursor = 'pointer';
+            card.onclick = () => showCitation(idx);
+            card.innerHTML = `
+                <div class="d-flex justify-content-between mb-2 small font-weight-semibold">
+                    <span class="text-cyan">Source [${idx+1}]</span>
+                    <span class="badge bg-dark text-secondary">Page ${src.page}</span>
+                </div>
+                <div class="text-white small mb-2 text-truncate">${src.document_name}</div>
+                <div class="text-secondary small style="line-height:1.5;">${src.snippet}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function showCitation(index) {
+        document.querySelectorAll('.citation-item').forEach(item => {
+            item.classList.remove('glass-panel-glow', 'border-primary');
+        });
+        
+        const card = document.getElementById(`citation-card-${index}`);
+        if (card) {
+            card.classList.add('glass-panel-glow', 'border-primary');
+            // Scroll sidebar card into view
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+
+    function clearHistory() {
+        if (confirm("Are you sure you want to clear your conversation history log?")) {
+            fetch('/api/chat', { method: 'DELETE' })
+                .then(res => res.json())
+                .then(() => {
+                    const history = document.getElementById('chatHistory');
+                    history.innerHTML = `
+                        <div class="chat-message assistant">
+                            <div class="message-avatar"><i class="fa-solid fa-robot"></i></div>
+                            <div class="chat-bubble">Conversation logs cleared. Ask a new question to start.</div>
+                        </div>`;
+                    document.getElementById('citationsList').innerHTML = `
+                        <div class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-circle-info display-6 mb-3 opacity-25"></i>
+                            <p class="small mb-0">No citation selected.</p>
+                        </div>`;
+                });
+        }
+    }
+</script>
+{% endblock %}

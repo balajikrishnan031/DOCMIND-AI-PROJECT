@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}Keywords - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 1000px; margin-left: 0;">
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">Semantic Keywords Cloud</h1>
+            <p class="text-secondary">Explore key concepts and query relevant text sections by clicking terms.</p>
+        </div>
+    </div>
+
+    <!-- Selection Dropdown -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-panel p-3 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-filter text-cyan"></i>
+                    <span class="text-secondary small font-weight-semibold">Active Document:</span>
+                </div>
+                <div class="flex-grow-1" style="max-width: 500px;">
+                    <select class="form-select form-control-custom" id="docSelect" onchange="loadKeywords(this.value)">
+                        <option value="">-- Select a completed document --</option>
+                        {% for doc in documents %}
+                            <option value="{{ doc.id }}" {% if selected_doc and selected_doc.id == doc.id %}selected{% endif %}>{{ doc.filename }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% if selected_doc and features %}
+            <!-- Keywords Cloud Column -->
+            <div class="col-md-5">
+                <div class="glass-panel p-4 h-100">
+                    <h5 class="text-white mb-3 font-weight-semibold">Concept Tags</h5>
+                    <p class="text-secondary small mb-4">Click any tag below to retrieve matching document sections.</p>
+                    
+                    {% if features.keywords %}
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for item in features.keywords %}
+                                <button class="keyword-tag text-start border-0 align-items-center" onclick="filterChunks('{{ item.keyword | escape }}')">
+                                    <span>{{ item.keyword }}</span>
+                                    <span class="score">{{ item.score }}</span>
+                                </button>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted small">No keywords could be extracted from this document.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Chunks Display Column -->
+            <div class="col-md-7">
+                <div class="glass-panel p-4 h-100 d-flex flex-column">
+                    <h5 class="text-white mb-2 font-weight-semibold">Matching Occurrences</h5>
+                    <p class="text-secondary small mb-4" id="occurrencesTitle">Select a keyword tag on the left to filter sections.</p>
+                    
+                    <!-- Chunks Wrapper -->
+                    <div class="d-flex flex-column gap-3 overflow-y-auto flex-1" id="chunksContainer" style="max-height: 400px; min-height: 250px; padding-right: 5px;">
+                        <div class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-tags display-6 mb-3 opacity-25"></i>
+                            <p class="small mb-0">Select a concept keyword to browse contextual sources.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <div class="glass-panel text-center py-5 border-glass-glow">
+                    <i class="fa-solid fa-tag text-muted display-5 mb-3"></i>
+                    <h5 class="text-white">Select a document to browse keywords</h5>
+                    <p class="text-secondary small px-3">Keywords are mapped automatically. Select a file from the list above to view analysis.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function loadKeywords(docId) {
+        if (docId) {
+            window.location.href = `{{ url_for('keywords_page') }}?doc_id=${docId}`;
+        } else {
+            window.location.href = `{{ url_for('keywords_page') }}`;
+        }
+    }
+
+    // Fetches chunks containing specific keyword matching from local sqlite data.
+    // To make this instantaneous, we will perform a quick search in the DOM or query
+    // a lightweight local client-side array since chunks are already registered on the database.
+    // Wait, we can fetch chunks for this document from the backend!
+    let docChunks = [];
+    
+    {% if selected_doc %}
+        // Fetch chunks for this document on load
+        fetch('/api/process/{{ selected_doc.id }}/chunks')
+            .then(res => res.json())
+            .then(data => {
+                docChunks = data.chunks || [];
+            })
+            .catch(err => console.error("Error loading chunks:", err));
+    {% endif %}
+
+    function filterChunks(keyword) {
+        // Toggle keyword active state
+        document.querySelectorAll('.keyword-tag').forEach(tag => {
+            if (tag.querySelector('span').innerText === keyword) {
+                tag.classList.add('glass-panel-glow', 'border-primary');
+            } else {
+                tag.classList.remove('glass-panel-glow', 'border-primary');
+            }
+        });
+
+        const container = document.getElementById('chunksContainer');
+        const title = document.getElementById('occurrencesTitle');
+        
+        container.innerHTML = '';
+        const lowerKw = keyword.toLowerCase();
+        
+        // Filter chunks containing term
+        const matchingChunks = docChunks.filter(c => c.content.toLowerCase().includes(lowerKw));
+        
+        title.innerText = `Found ${matchingChunks.length} sections matching "${keyword}":`;
+        
+        if (matchingChunks.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-circle-exclamation display-6 mb-3 opacity-25"></i>
+                    <p class="small mb-0">No raw chunks matched this specific word index.</p>
+                </div>`;
+            return;
+        }
+
+        matchingChunks.forEach(c => {
+            // Highlight keyword in content
+            const escapedKw = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            const highlightedText = c.content.replace(new RegExp(`(${escapedKw})`, 'gi'), '<mark class="bg-primary text-white p-0 rounded">$1</mark>');
+            
+            const card = document.createElement('div');
+            card.className = 'p-3 rounded border-glass';
+            card.style.background = 'rgba(255,255,255,0.01)';
+            card.innerHTML = `
+                <div class="d-flex justify-content-between mb-2 small text-secondary">
+                    <span>Section #${c.chunk_index + 1}</span>
+                    <span class="badge bg-dark text-cyan">Page ${c.page_number}</span>
+                </div>
+                <div class="text-secondary small" style="line-height:1.6;">${highlightedText}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+</script>
+{% endblock %}

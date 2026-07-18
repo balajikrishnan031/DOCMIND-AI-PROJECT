@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}Visual Mind Map - DocMind AI{% endblock %}
+
+{% block extra_css %}
+<!-- Vis.js CDN link for Network graph visualizer -->
+<style>
+    #mindmap-canvas {
+        width: 100%;
+        height: 550px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-glass);
+        border-radius: var(--radius-md);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 1000px; margin-left: 0;">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="display-6 text-white mb-2 font-weight-bold">Interactive Concept Mind Map</h1>
+            <p class="text-secondary">Explore visual nodes representing semantic definitions and keywords extracted by the AI pipeline.</p>
+        </div>
+    </div>
+
+    <!-- Active Document Selection -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-panel p-3 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-filter text-primary"></i>
+                    <span class="text-secondary small font-weight-semibold">Active Document:</span>
+                </div>
+                <div class="flex-grow-1" style="max-width: 500px;">
+                    <select class="form-select form-control-custom" id="docSelect" onchange="loadMindmap(this.value)">
+                        <option value="">-- Select a completed document --</option>
+                        {% for doc in documents %}
+                            <option value="{{ doc.id }}" {% if selected_doc and selected_doc.id == doc.id %}selected{% endif %}>{{ doc.filename }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mind Map Canvas area -->
+    <div class="row">
+        <div class="col-12">
+            {% if selected_doc %}
+                <div class="glass-panel p-4">
+                    <h5 class="text-white mb-3 font-weight-semibold d-flex align-items-center"><i class="fa-solid fa-circle-nodes text-primary me-2"></i>{{ selected_doc.filename }} Node Network</h5>
+                    <div id="mindmap-canvas"></div>
+                    <div class="text-muted small mt-3"><i class="fa-solid fa-circle-info me-1"></i> Zoom to focus, drag nodes to restructure, hover/click nodes for conceptual alignments.</div>
+                </div>
+            {% else %}
+                <div class="glass-panel text-center py-5 border-glass-glow">
+                    <i class="fa-solid fa-circle-nodes text-muted display-5 mb-3"></i>
+                    <h5 class="text-white">Select a document to visualize mind map</h5>
+                    <p class="text-secondary small px-3">Visual graphs map keywords and definitions together. Choose a textbook from the list above.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Include Vis.js Network component -->
+<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<script>
+    function loadMindmap(docId) {
+        if (docId) {
+            window.location.href = `{{ url_for('mindmap_page') }}?doc_id=${docId}`;
+        } else {
+            window.location.href = `{{ url_for('mindmap_page') }}`;
+        }
+    }
+
+    {% if selected_doc %}
+        // Load nodes and edges generated from backend features router
+        const rawNodes = {{ nodes|safe }};
+        const rawEdges = {{ edges|safe }};
+
+        // Format nodes visual attributes
+        const formattedNodes = rawNodes.map(node => {
+            let color = '#a855f7'; // default root purple
+            let shape = 'dot';
+            let size = 25;
+            
+            if (node.group === 'keyword_cat') {
+                color = '#3b82f6';
+                size = 18;
+            } else if (node.group === 'def_cat') {
+                color = '#06b6d4';
+                size = 18;
+            } else if (node.group === 'keyword') {
+                color = 'rgba(59, 130, 246, 0.15)';
+                shape = 'box';
+                size = 15;
+            } else if (node.group === 'definition') {
+                color = 'rgba(6, 182, 212, 0.15)';
+                shape = 'box';
+                size = 15;
+            }
+
+            return {
+                id: node.id,
+                label: node.label,
+                color: {
+                    background: color,
+                    border: '#ffffff33',
+                    highlight: { background: '#6366f1', border: '#ffffff66' }
+                },
+                font: { color: '#ffffff', face: 'Inter', size: 12 },
+                shape: shape,
+                size: size,
+                borderWidth: 1
+            };
+        });
+
+        // Initialize Vis network graph
+        const container = document.getElementById('mindmap-canvas');
+        const data = {
+            nodes: new vis.DataSet(formattedNodes),
+            edges: new vis.DataSet(rawEdges)
+        };
+        const options = {
+            edges: {
+                color: { color: '#ffffff22', highlight: '#6366f1' },
+                width: 1.5,
+                smooth: { type: 'continuous' }
+            },
+            physics: {
+                barnesHut: {
+                    gravitationalConstant: -2000,
+                    centralGravity: 0.3,
+                    springLength: 95,
+                    springConstant: 0.04
+                },
+                stabilization: { iterations: 150 }
+            }
+        };
+
+        const network = new vis.Network(container, data, options);
+    {% endif %}
+</script>
+{% endblock %}
