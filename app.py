@@ -23,7 +23,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 # Authentication Middleware
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'register', 'static']
+    allowed_routes = ['landing_page', 'login', 'register', 'static']
     if request.endpoint not in allowed_routes and 'user_id' not in session:
         return redirect(url_for('login'))
 
@@ -92,6 +92,9 @@ def logout():
 # ----------------- Dashboard & Layout Routes -----------------
 
 @app.route('/')
+def landing_page():
+    return render_template('landing.html')
+
 @app.route('/dashboard')
 def dashboard():
     user_id = session['user_id']
