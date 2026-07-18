@@ -9,7 +9,7 @@
      --glow-glow: 0 0 20px rgba(99, 102, 241, 0.15)
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@1,600;1,700&display=swap');
 
 :root {
     --bg-dark: #05070a;
@@ -47,7 +47,7 @@
 }
 
 body {
-    background: radial-gradient(rgba(5, 7, 10, 0.6) 0%, rgba(5, 7, 10, 0.92) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
+    background: radial-gradient(rgba(5, 7, 10, 0.65) 0%, rgba(5, 7, 10, 0.94) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
     background-size: cover;
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
@@ -61,26 +61,36 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
 }
 
+/* Page titles custom script/cursive look */
+h1.display-6, .cursive-h1 {
+    font-family: 'Dancing Script', cursive !important;
+    font-size: 2.8rem !important;
+    background: linear-gradient(135deg, #fff 30%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(6, 182, 212, 0.1);
+}
+
 /* Glassmorphism Styles */
 .glass-panel {
-    background: rgba(10, 12, 18, 0.45);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(10, 12, 18, 0.5);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
     transition: var(--transition);
 }
 
 .glass-panel:hover {
-    border-color: rgba(6, 182, 212, 0.2);
-    box-shadow: 0 8px 32px rgba(6, 182, 212, 0.05);
+    border-color: rgba(6, 182, 212, 0.25);
+    box-shadow: 0 8px 32px rgba(6, 182, 212, 0.08);
 }
 
 .glass-panel-glow {
     background: rgba(6, 182, 212, 0.02);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(6, 182, 212, 0.2);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(6, 182, 212, 0.25);
     border-radius: var(--radius-md);
     box-shadow: 0 0 25px rgba(6, 182, 212, 0.05);
 }
@@ -134,14 +144,24 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 800;
+    margin-bottom: 2.5rem;
+    text-decoration: none;
+}
+
+.brand-logo i {
+    font-size: 1.4rem;
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 2.5rem;
-    text-decoration: none;
+}
+
+.brand-logo span {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    font-weight: normal;
+    background: linear-gradient(135deg, #ffffff 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .sidebar-nav {
