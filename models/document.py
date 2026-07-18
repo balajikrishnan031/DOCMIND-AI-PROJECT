@@ -3,14 +3,14 @@ from models.db import get_db
 
 class Document:
     @staticmethod
-    def create(user_id, filename, file_path, file_size, file_type):
+    def create(user_id, filename, file_path, file_size, file_type, target_grade='College', target_role='Student'):
         db = get_db()
         cursor = db.cursor()
         try:
             cursor.execute(
-                """INSERT INTO documents (user_id, filename, file_path, file_size, file_type, status) 
-                   VALUES (?, ?, ?, ?, ?, 'processing')""",
-                (user_id, filename, file_path, file_size, file_type)
+                """INSERT INTO documents (user_id, filename, file_path, file_size, file_type, status, target_grade, target_role) 
+                   VALUES (?, ?, ?, ?, ?, 'processing', ?, ?)""",
+                (user_id, filename, file_path, file_size, file_type, target_grade, target_role)
             )
             db.commit()
             return cursor.lastrowid

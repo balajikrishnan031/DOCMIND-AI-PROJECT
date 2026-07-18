@@ -44,6 +44,7 @@
                                     <option value="local" {% if settings.api_provider == 'local' %}selected{% endif %}>Local CPU Fallback (Extractive AI - No Key Needed)</option>
                                     <option value="gemini" {% if settings.api_provider == 'gemini' %}selected{% endif %}>Google Gemini API (Generative Q&A)</option>
                                     <option value="openai" {% if settings.api_provider == 'openai' %}selected{% endif %}>OpenAI GPT-4o API (Generative Q&A)</option>
+                                    <option value="groq" {% if settings.api_provider == 'groq' %}selected{% endif %}>Groq API (Llama 3.1 70B - Lightning Fast Q&A)</option>
                                     <option value="ollama" {% if settings.api_provider == 'ollama' %}selected{% endif %}>Ollama Local Server (Generative Q&A)</option>
                                 </select>
                             </div>
@@ -109,6 +110,10 @@
                     keyLabel.innerText = "OpenAI API Key";
                     keyInput.placeholder = "sk-proj-...";
                     keyHelp.innerText = "Secret key from OpenAI Developer Platform.";
+                } else if (provider === 'groq') {
+                    keyLabel.innerText = "Groq API Key";
+                    keyInput.placeholder = "gsk_...";
+                    keyHelp.innerText = "API key obtained from Groq Console (console.groq.com).";
                 } else if (provider === 'ollama') {
                     keyLabel.innerText = "Ollama Endpoint URL";
                     keyInput.placeholder = "http://localhost:11434";

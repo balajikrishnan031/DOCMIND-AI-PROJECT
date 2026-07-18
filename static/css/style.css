@@ -12,28 +12,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --bg-dark: #07080c;
-    --bg-sidebar: #0d0f17;
-    --bg-panel: rgba(18, 22, 33, 0.7);
-    --bg-glass: rgba(255, 255, 255, 0.02);
-    --bg-glass-hover: rgba(255, 255, 255, 0.05);
+    --bg-dark: #05070a;
+    --bg-sidebar: rgba(10, 12, 18, 0.7);
+    --bg-panel: rgba(15, 20, 30, 0.6);
+    --bg-glass: rgba(255, 255, 255, 0.03);
+    --bg-glass-hover: rgba(255, 255, 255, 0.06);
     --border-glass: rgba(255, 255, 255, 0.08);
-    --border-glass-glow: rgba(99, 102, 241, 0.3);
+    --border-glass-glow: rgba(6, 182, 212, 0.3);
     --text-primary: #f3f4f6;
-    --text-secondary: #9ca3af;
-    --text-muted: #6b7280;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
     
-    --primary: #6366f1;
-    --primary-light: #818cf8;
-    --secondary: #06b6d4;
-    --accent: #a855f7;
+    --primary: #06b6d4;
+    --primary-light: #22d3ee;
+    --secondary: #3b82f6;
+    --accent: #8b5cf6;
     --success: #10b981;
     --danger: #ef4444;
     --warning: #f59e0b;
     
-    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
     --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-    --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
     
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -47,7 +47,8 @@
 }
 
 body {
-    background-color: var(--bg-dark);
+    background: radial-gradient(rgba(5, 7, 10, 0.6) 0%, rgba(5, 7, 10, 0.92) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
@@ -62,25 +63,26 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Glassmorphism Styles */
 .glass-panel {
-    background: var(--bg-glass);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border-glass);
+    background: rgba(10, 12, 18, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     transition: var(--transition);
 }
 
 .glass-panel:hover {
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(6, 182, 212, 0.2);
+    box-shadow: 0 8px 32px rgba(6, 182, 212, 0.05);
 }
 
 .glass-panel-glow {
-    background: rgba(99, 102, 241, 0.02);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(99, 102, 241, 0.15);
+    background: rgba(6, 182, 212, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(6, 182, 212, 0.2);
     border-radius: var(--radius-md);
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.05);
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.05);
 }
 
 /* Scrollbar styling */

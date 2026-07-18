@@ -15,6 +15,30 @@
         <div class="col-12">
             <!-- Drag and Drop Area -->
             <div class="glass-panel p-5 text-center" style="position: relative;">
+                
+                <!-- Target Metadata Fields -->
+                <div class="row mb-5 text-start g-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-secondary small font-weight-bold"><i class="fa-solid fa-graduation-cap text-cyan me-1"></i>Target Grade Level</label>
+                        <select id="targetGrade" class="form-select form-control-custom">
+                            <option value="Primary (1st-5th)">Primary (1st to 5th Standard)</option>
+                            <option value="Secondary (6th-10th)">Secondary (6th to 10th Standard)</option>
+                            <option value="Higher Secondary (11th-12th)">Higher Secondary (11th & 12th Standard)</option>
+                            <option value="College" selected>College & Higher Education</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-secondary small font-weight-bold"><i class="fa-solid fa-user-shield text-primary me-1"></i>Target Role Access</label>
+                        <select id="targetRole" class="form-select form-control-custom">
+                            <option value="Student" selected>Student</option>
+                            <option value="Staff">Staff / Teacher</option>
+                            <option value="Professor">Professor</option>
+                            <option value="HOD">HOD (Head of Dept.)</option>
+                            <option value="Dean">Dean / Admin</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div id="dropzone" class="dropzone-container">
                     <div class="dropzone-icon">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -148,6 +172,8 @@
 
             const formData = new FormData();
             formData.append('file', file);
+            formData.append('target_grade', document.getElementById('targetGrade').value);
+            formData.append('target_role', document.getElementById('targetRole').value);
 
             const xhr = new XMLHttpRequest();
             xhr.open('POST', '/api/upload', true);

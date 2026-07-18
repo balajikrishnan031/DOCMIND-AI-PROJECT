@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS documents (
     file_type TEXT NOT NULL,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status TEXT DEFAULT 'processing',
+    target_grade TEXT DEFAULT 'College',
+    target_role TEXT DEFAULT 'Student',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 

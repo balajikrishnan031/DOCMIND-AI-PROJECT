@@ -204,6 +204,34 @@ class AIEngine:
         return None
 
     @classmethod
+    def call_groq(cls, prompt, api_key):
+        """Sends a request to Groq API (llama-3.1-70b-versatile) for generative tasks."""
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}"
+        }
+        payload = {
+            "model": "llama-3.1-70b-versatile",
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.2
+        }
+        try:
+            res = requests.post(url, headers=headers, json=payload, timeout=25)
+            if res.status_code == 200:
+                data = res.json()
+                return data['choices'][0]['message']['content']
+            else:
+                payload["model"] = "llama-3.1-8b-instant"
+                res = requests.post(url, headers=headers, json=payload, timeout=25)
+                if res.status_code == 200:
+                    return res.json()['choices'][0]['message']['content']
+                print(f"Groq API returned error {res.status_code}: {res.text}")
+        except Exception as e:
+            print(f"Error calling Groq API: {e}")
+        return None
+
+    @classmethod
     def call_ollama(cls, prompt, endpoint):
         """Sends a request to a local Ollama instance (defaulting to llama3/mistral)."""
         url = f"{endpoint.rstrip('/')}/api/generate"
@@ -244,7 +272,7 @@ class AIEngine:
         summary_long = ""
         
         # If API key is present and enabled, run via API
-        if provider in ['gemini', 'openai', 'ollama'] and api_key:
+        if provider in ['gemini', 'openai', 'ollama', 'groq'] and api_key:
             prompt = (
                 "You are an AI document analysis assistant. Provide three distinct summaries "
                 "for the following document text. Respond ONLY in valid JSON format matching this schema: "
@@ -259,6 +287,8 @@ class AIEngine:
                 res_text = cls.call_openai(prompt, api_key)
             elif provider == 'ollama':
                 res_text = cls.call_ollama(prompt, api_key)
+            elif provider == 'groq':
+                res_text = cls.call_groq(prompt, api_key)
                 
             if res_text:
                 try:
@@ -279,7 +309,7 @@ class AIEngine:
 
         # 2. Keywords Extraction
         keywords = []
-        if provider in ['gemini', 'openai', 'ollama'] and api_key:
+        if provider in ['gemini', 'openai', 'ollama', 'groq'] and api_key:
             prompt = (
                 "Extract the top 8 most important keywords or key concepts from the following text. "
                 "Respond ONLY in valid JSON array format, where each item contains key 'keyword' and 'score' (relevance 0.0 to 1.0):\n"
@@ -293,6 +323,8 @@ class AIEngine:
                 res_text = cls.call_openai(prompt, api_key)
             elif provider == 'ollama':
                 res_text = cls.call_ollama(prompt, api_key)
+            elif provider == 'groq':
+                res_text = cls.call_groq(prompt, api_key)
                 
             if res_text:
                 try:
@@ -306,7 +338,7 @@ class AIEngine:
 
         # 3. Highlights (Definitions, Formulas, Questions)
         definitions, formulas, key_questions = [], [], []
-        if provider in ['gemini', 'openai', 'ollama'] and api_key:
+        if provider in ['gemini', 'openai', 'ollama', 'groq'] and api_key:
             prompt = (
                 "Analyze the following text and extract definitions, mathematical/chemical formulas, "
                 "and important questions with possible answers. Respond ONLY in valid JSON matching this schema:\n"
@@ -324,6 +356,8 @@ class AIEngine:
                 res_text = cls.call_openai(prompt, api_key)
             elif provider == 'ollama':
                 res_text = cls.call_ollama(prompt, api_key)
+            elif provider == 'groq':
+                res_text = cls.call_groq(prompt, api_key)
                 
             if res_text:
                 try:
@@ -383,7 +417,7 @@ class AIEngine:
         context_text = "\n\n".join(context_blocks)
         
         # 2. Generate Answer
-        if provider in ['gemini', 'openai', 'ollama'] and api_key:
+        if provider in ['gemini', 'openai', 'ollama', 'groq'] and api_key:
             prompt = (
                 "You are DocMind AI, a helpful document reading assistant. Answer the user's question "
                 "based ONLY on the extracted document context provided below. If the answer cannot be found "
@@ -401,6 +435,8 @@ class AIEngine:
                 res_text = cls.call_openai(prompt, api_key)
             elif provider == 'ollama':
                 res_text = cls.call_ollama(prompt, api_key)
+            elif provider == 'groq':
+                res_text = cls.call_groq(prompt, api_key)
                 
             if res_text:
                 return res_text.strip(), sources

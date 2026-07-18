@@ -584,12 +584,17 @@ def api_upload():
         file_size = os.path.getsize(file_path)
         file_type = filename.rsplit('.', 1)[1].lower()
         
+        target_grade = request.form.get('target_grade', 'College')
+        target_role = request.form.get('target_role', 'Student')
+        
         doc_id = Document.create(
             user_id=session['user_id'],
             filename=filename,
             file_path=file_path,
             file_size=file_size,
-            file_type=file_type
+            file_type=file_type,
+            target_grade=target_grade,
+            target_role=target_role
         )
         if doc_id:
             return jsonify({'doc_id': doc_id})
@@ -735,6 +740,23 @@ def api_chat():
     except Exception as e:
         print(f"Chat error: {e}")
         return jsonify({'error': str(e)}), 500
+
+# ----------------- Download Raw Study Material File -----------------
+
+@app.route('/document/download/<int:doc_id>')
+def download_document_file(doc_id):
+    user_id = session['user_id']
+    doc = Document.get_by_id(doc_id)
+    if not doc or doc['user_id'] != user_id:
+        flash("Document not found or unauthorized.", "danger")
+        return redirect(url_for('library_page'))
+        
+    try:
+        from flask import send_file
+        return send_file(doc['file_path'], as_attachment=True, download_name=doc['filename'])
+    except Exception as e:
+        flash(f"Error downloading file: {str(e)}", "danger")
+        return redirect(url_for('library_page'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

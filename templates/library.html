@@ -11,8 +11,23 @@
             <p class="text-secondary mb-0">Browse, search, and manage your uploaded files and study materials.</p>
         </div>
         <div class="col-md-6 text-md-end mt-3 mt-md-0">
-            <div class="d-inline-flex gap-2">
-                <input type="text" id="libSearch" class="form-control form-control-custom" style="width: 250px;" placeholder="Search files by name...">
+            <div class="d-inline-flex gap-2 flex-wrap justify-content-md-end">
+                <input type="text" id="libSearch" class="form-control form-control-custom" style="width: 200px;" placeholder="Search files...">
+                <select id="gradeFilter" class="form-select form-control-custom" style="width: 140px;" onchange="filterLibrary()">
+                    <option value="">All Grades</option>
+                    <option value="primary">Primary (1st-5th)</option>
+                    <option value="secondary">Secondary (6th-10th)</option>
+                    <option value="higher secondary">Higher Secondary</option>
+                    <option value="college">College</option>
+                </select>
+                <select id="roleFilter" class="form-select form-control-custom" style="width: 130px;" onchange="filterLibrary()">
+                    <option value="">All Roles</option>
+                    <option value="student">Student</option>
+                    <option value="staff">Staff/Teacher</option>
+                    <option value="professor">Professor</option>
+                    <option value="hod">HOD</option>
+                    <option value="dean">Dean</option>
+                </select>
                 <a href="{{ url_for('upload_page') }}" class="btn btn-primary-custom">
                     <i class="fa-solid fa-plus me-1"></i> Add New
                 </a>
@@ -38,7 +53,7 @@
                             </thead>
                             <tbody>
                                 {% for doc in documents %}
-                                    <tr class="document-row" data-name="{{ doc.filename | lower }}">
+                                    <tr class="document-row" data-name="{{ doc.filename | lower }}" data-grade="{{ doc.target_grade | lower }}" data-role="{{ doc.target_role | lower }}">
                                         <td>
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class="stat-icon {% if doc.file_type == 'pdf' %}icon-purple{% elif doc.file_type == 'docx' %}icon-blue{% else %}icon-cyan{% endif %}" style="width:40px; height:40px; font-size:1.1rem;">
@@ -46,7 +61,11 @@
                                                 </div>
                                                 <div>
                                                     <div class="text-white font-weight-semibold text-break">{{ doc.filename }}</div>
-                                                    <div class="text-secondary small">{{ (doc.file_size / 1024) | round(1) }} KB</div>
+                                                    <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
+                                                        <span class="text-secondary small">{{ (doc.file_size / 1024) | round(1) }} KB</span>
+                                                        <span class="badge bg-dark text-cyan" style="font-size: 10px; border: 1px solid rgba(6, 182, 212, 0.15);">{{ doc.target_grade }}</span>
+                                                        <span class="badge bg-dark text-primary" style="font-size: 10px; border: 1px solid rgba(59, 130, 246, 0.15);">{{ doc.target_role }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -72,6 +91,7 @@
                                                             <li><a class="dropdown-item" href="{{ url_for('summary_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-align-left me-2 text-secondary"></i>Summary</a></li>
                                                             <li><a class="dropdown-item" href="{{ url_for('keywords_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-tags me-2 text-secondary"></i>Keywords</a></li>
                                                             <li><a class="dropdown-item" href="{{ url_for('highlights_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-star me-2 text-secondary"></i>Highlights</a></li>
+                                                            <li><a class="dropdown-item" href="{{ url_for('download_document_file', doc_id=doc.id) }}"><i class="fa-solid fa-download me-2 text-secondary"></i>Download File</a></li>
                                                             <li><hr class="dropdown-divider"></li>
                                                             <li><a class="dropdown-item" href="{{ url_for('download_report', doc_id=doc.id) }}" target="_blank"><i class="fa-solid fa-file-export me-2 text-secondary"></i>Export Report</a></li>
                                                         </ul>
@@ -129,21 +149,34 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const searchInput = document.getElementById('libSearch');
+        const gradeSelect = document.getElementById('gradeFilter');
+        const roleSelect = document.getElementById('roleFilter');
         const rows = document.querySelectorAll('.document-row');
 
-        // Dynamic library search filtering
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase().strip();
-                rows.forEach(row => {
-                    const name = row.getAttribute('data-name');
-                    if (name.includes(query)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
+        window.filterLibrary = function() {
+            const query = searchInput.value.toLowerCase().trim();
+            const gradeVal = gradeSelect.value.toLowerCase();
+            const roleVal = roleSelect.value.toLowerCase();
+
+            rows.forEach(row => {
+                const name = row.getAttribute('data-name');
+                const grade = row.getAttribute('data-grade');
+                const role = row.getAttribute('data-role');
+
+                const matchesSearch = name.includes(query);
+                const matchesGrade = !gradeVal || grade.includes(gradeVal);
+                const matchesRole = !roleVal || role.includes(roleVal);
+
+                if (matchesSearch && matchesGrade && matchesRole) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
             });
+        };
+
+        if (searchInput) {
+            searchInput.addEventListener('input', filterLibrary);
         }
     });
 
