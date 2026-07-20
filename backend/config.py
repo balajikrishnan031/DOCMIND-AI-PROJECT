@@ -11,7 +11,7 @@ class Config:
         UPLOAD_FOLDER = '/tmp/uploads'
         HF_HOME = '/tmp/.cache'
     else:
-        DATABASE = os.path.join(BASE_DIR, 'database', 'database.db')
+        DATABASE = os.path.abspath(os.path.join(BASE_DIR, '..', 'database', 'database.db'))
         UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
         HF_HOME = os.path.join(BASE_DIR, '.cache')
         

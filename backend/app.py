@@ -11,7 +11,11 @@ from models.history import QAHistory
 from models.syllabus import Syllabus
 from models.study_tools import StudyTools
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder=os.path.abspath(os.path.join(Config.BASE_DIR, '..', 'frontend', 'templates')),
+    static_folder=os.path.abspath(os.path.join(Config.BASE_DIR, '..', 'frontend', 'static'))
+)
 app.config.from_object(Config)
 
 # Register Database hooks

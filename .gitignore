@@ -16,10 +16,13 @@ database/test_upgrade_database.db
 
 # User uploaded materials
 uploads/
+backend/uploads/
 temp_syllabus_*
 
 # Local environment
 venv/
 .venv/
+backend/venv/
+backend/.venv/
 env/
 .env

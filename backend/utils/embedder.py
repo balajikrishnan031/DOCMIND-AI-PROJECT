@@ -12,13 +12,17 @@ class Embedder:
         Otherwise falls back to Hugging Face Inference API.
         """
         if cls._model is None:
+            if os.environ.get("FORCE_HF_API") == "1":
+                print("FORCE_HF_API is set. Bypassing local model and using Hugging Face Inference API.")
+                cls._model = "api"
+                return cls._model
             try:
                 from sentence_transformers import SentenceTransformer
                 print("Loading local sentence-transformers model...")
                 cls._model = SentenceTransformer('all-MiniLM-L6-v2')
                 print("Sentence-transformers loaded locally.")
-            except ImportError:
-                print("sentence-transformers not installed. Will use Hugging Face Inference API.")
+            except Exception as e:
+                print(f"Local sentence-transformers load failed: {e}. Will use Hugging Face Inference API.")
                 cls._model = "api"
         return cls._model
 

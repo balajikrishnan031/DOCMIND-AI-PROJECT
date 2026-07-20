@@ -21,7 +21,7 @@ def close_db(e=None):
 
 def init_db():
     db = get_db()
-    schema_path = os.path.join(current_app.config['BASE_DIR'], 'database', 'schema.sql')
+    schema_path = os.path.abspath(os.path.join(current_app.config['BASE_DIR'], '..', 'database', 'schema.sql'))
     with open(schema_path, 'r', encoding='utf-8') as f:
         db.executescript(f.read())
     db.commit()
