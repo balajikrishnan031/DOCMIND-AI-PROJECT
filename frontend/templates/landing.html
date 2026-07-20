@@ -11,7 +11,7 @@
     <style>
         /* Standalone Extended Master Landing Page CSS */
         .landing-page-wrapper {
-            background: radial-gradient(rgba(3, 7, 18, 0.65) 0%, rgba(3, 7, 18, 0.95) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
+            background: radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.22) 0%, rgba(99, 102, 241, 0.18) 35%, rgba(3, 7, 18, 0.9) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
             color: #f8fafc;
@@ -21,13 +21,14 @@
 
         /* Top Announcement Header Bar */
         .announcement-bar {
-            background: linear-gradient(90deg, #0284c7 0%, #6366f1 50%, #d946ef 100%);
+            background: linear-gradient(90deg, #0284c7 0%, #6366f1 45%, #ec4899 100%);
             color: #ffffff;
             font-size: 0.85rem;
             font-weight: 600;
-            padding: 0.4rem 1rem;
+            padding: 0.45rem 1rem;
             text-align: center;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.04em;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         /* Glass Floating Navbar */
@@ -35,20 +36,21 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(10, 15, 30, 0.75);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+            background: rgba(10, 15, 30, 0.65);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             padding: 1.1rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
         }
 
         .brand-logo-extended {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.8rem;
-            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+            font-size: 3rem;
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
@@ -61,7 +63,7 @@
             font-size: 2.2rem;
             color: #38bdf8;
             -webkit-text-fill-color: initial;
-            filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
+            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.8));
         }
 
         .nav-links-menu {
@@ -74,7 +76,7 @@
         }
 
         .nav-links-menu a {
-            color: #cbd5e1;
+            color: #f1f5f9;
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
@@ -83,7 +85,7 @@
 
         .nav-links-menu a:hover {
             color: #38bdf8;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+            text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
         }
 
         /* Hero Container */
@@ -95,21 +97,21 @@
 
         .hero-title-main {
             font-family: 'Dancing Script', cursive !important;
-            font-size: 4.8rem !important;
+            font-size: 5rem !important;
             line-height: 1.1;
             margin-bottom: 1.8rem;
-            background: linear-gradient(135deg, #ffffff 20%, #38bdf8 70%, #a855f7 100%);
+            background: linear-gradient(135deg, #ffffff 10%, #38bdf8 60%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 5px 30px rgba(0, 0, 0, 0.9);
+            text-shadow: 0 5px 35px rgba(0, 0, 0, 0.9);
         }
 
         .hero-subtext {
             font-size: 1.25rem;
             line-height: 1.8;
-            color: #e2e8f0;
+            color: #f1f5f9;
             margin-bottom: 2.5rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
         }
 
         .hero-pill-badge {
@@ -117,16 +119,194 @@
             align-items: center;
             gap: 0.6rem;
             padding: 0.5rem 1.25rem;
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.35);
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.45);
             border-radius: 50px;
             color: #38bdf8;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 1.5rem;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Multi-Tone Glass Card Variants */
+        .glass-card-base {
+            border-radius: 20px;
+            padding: 2.25rem;
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 15px 45px rgba(0, 0, 0, 0.5);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Category 1: Cyan Glass */
+        .glass-cyan {
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+        }
+        .glass-cyan:hover {
+            border-color: #38bdf8;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 20px 50px rgba(56, 189, 248, 0.3);
+            transform: translateY(-8px);
+        }
+
+        /* Category 2: Purple Glass */
+        .glass-purple {
+            background: rgba(168, 85, 247, 0.12);
+            border: 1px solid rgba(192, 132, 252, 0.35);
+        }
+        .glass-purple:hover {
+            border-color: #c084fc;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 20px 50px rgba(192, 132, 252, 0.3);
+            transform: translateY(-8px);
+        }
+
+        /* Category 3: Amber Glass */
+        .glass-amber {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+        }
+        .glass-amber:hover {
+            border-color: #fbbf24;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 20px 50px rgba(251, 191, 36, 0.3);
+            transform: translateY(-8px);
+        }
+
+        /* Category 4: Emerald Glass */
+        .glass-emerald {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(52, 211, 153, 0.35);
+        }
+        .glass-emerald:hover {
+            border-color: #34d399;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 20px 50px rgba(52, 211, 153, 0.3);
+            transform: translateY(-8px);
+        }
+
+        /* Category 5: Rose Glass */
+        .glass-rose {
+            background: rgba(244, 63, 94, 0.12);
+            border: 1px solid rgba(251, 113, 133, 0.35);
+        }
+        .glass-rose:hover {
+            border-color: #fb7185;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 20px 50px rgba(251, 113, 133, 0.3);
+            transform: translateY(-8px);
+        }
+
+        /* Glowing Icon Containers */
+        .cat-icon-lg-glow {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .cat-icon-cyan {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.35), rgba(2, 132, 199, 0.35));
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+        }
+
+        .cat-icon-purple {
+            background: linear-gradient(135deg, rgba(192, 132, 252, 0.35), rgba(147, 51, 234, 0.35));
+            border: 1px solid #c084fc;
+            color: #c084fc;
+        }
+
+        .cat-icon-amber {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.35), rgba(217, 119, 6, 0.35));
+            border: 1px solid #fbbf24;
+            color: #fbbf24;
+        }
+
+        .cat-icon-emerald {
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.35), rgba(5, 150, 105, 0.35));
+            border: 1px solid #34d399;
+            color: #34d399;
+        }
+
+        .cat-icon-rose {
+            background: linear-gradient(135deg, rgba(251, 113, 133, 0.35), rgba(225, 29, 72, 0.35));
+            border: 1px solid #fb7185;
+            color: #fb7185;
+        }
+
+        /* Scope Badges */
+        .scope-tag-item {
+            padding: 0.55rem 1.1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #f1f5f9;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .scope-tag-item:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: #38bdf8;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Buttons with Vibrant Glows */
+        .btn-glow-cyan {
+            background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+            color: #ffffff !important;
+            padding: 0.9rem 2.2rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 6px 25px rgba(2, 132, 199, 0.5);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-glow-cyan:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(56, 189, 248, 0.7);
+        }
+
+        .btn-glow-purple {
+            background: linear-gradient(135deg, #7e22ce 0%, #c084fc 100%);
+            color: #ffffff !important;
+            padding: 0.9rem 2.2rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 6px 25px rgba(126, 34, 206, 0.5);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-glow-purple:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(192, 132, 252, 0.7);
         }
 
         /* Mockup Glass Preview Container */
@@ -478,12 +658,12 @@
             
             <!-- Category 1 -->
             <div class="col-lg-4 col-md-6 animate-fade-in-up">
-                <div class="category-card-master">
+                <div class="glass-card-base glass-cyan">
                     <div>
-                        <div class="cat-icon-lg">
+                        <div class="cat-icon-lg-glow cat-icon-cyan">
                             <i class="fa-solid fa-diagram-project"></i>
                         </div>
-                        <h3 class="text-white font-weight-bold mb-3">1. Semantic Syllabus & Chapter Mapping</h3>
+                        <h3 class="text-white font-weight-bold mb-3">1. Semantic Syllabus Mapping</h3>
                         <p class="text-secondary small leading-relaxed mb-4">
                             Upload multi-unit course syllabi (B.E. Sem 1-8, GATE, Group Exams). DocMind AI's regex parser extracts unit boundaries, topics, and uses cosine vector similarity to map every topic to exact textbook pages.
                         </p>
@@ -498,9 +678,9 @@
 
             <!-- Category 2 -->
             <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.1s;">
-                <div class="category-card-master">
+                <div class="glass-card-base glass-purple">
                     <div>
-                        <div class="cat-icon-lg">
+                        <div class="cat-icon-lg-glow cat-icon-purple">
                             <i class="fa-solid fa-clone"></i>
                         </div>
                         <h3 class="text-white font-weight-bold mb-3">2. 3D Active Recall Flashcards</h3>
@@ -509,38 +689,38 @@
                         </p>
                     </div>
                     <ul class="list-unstyled text-secondary small mb-0">
-                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>CSS 3D Perspective Flip Animations</li>
-                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Auto-Synthesized Term & Formula Decks</li>
-                        <li><i class="fa-solid fa-circle-check text-cyan me-2"></i>Custom Decks for Quick Pre-Exam Revisions</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-purple me-2"></i>CSS 3D Perspective Flip Animations</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-purple me-2"></i>Auto-Synthesized Term & Formula Decks</li>
+                        <li><i class="fa-solid fa-circle-check text-purple me-2"></i>Custom Decks for Quick Pre-Exam Revisions</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Category 3 -->
             <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.2s;">
-                <div class="category-card-master">
+                <div class="glass-card-base glass-amber">
                     <div>
-                        <div class="cat-icon-lg">
+                        <div class="cat-icon-lg-glow cat-icon-amber">
                             <i class="fa-solid fa-square-poll-vertical"></i>
                         </div>
-                        <h3 class="text-white font-weight-bold mb-3">3. Automated Practice Exams & Scoreboards</h3>
+                        <h3 class="text-white font-weight-bold mb-3">3. Automated Practice Exams</h3>
                         <p class="text-secondary small leading-relaxed mb-4">
                             Generate targeted multiple-choice question tests with detailed solution feedback. The system logs test scores and time metrics to track academic progress across exam attempts.
                         </p>
                     </div>
                     <ul class="list-unstyled text-secondary small mb-0">
-                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Dynamic MCQ Generation with Options</li>
-                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Real-time Answer Verification & Feedback</li>
-                        <li><i class="fa-solid fa-circle-check text-cyan me-2"></i>SQLite Scoreboard Attempt Logs</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i>Dynamic MCQ Generation with Options</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i>Real-time Answer Verification & Feedback</li>
+                        <li><i class="fa-solid fa-circle-check text-warning me-2"></i>SQLite Scoreboard Attempt Logs</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Category 4 -->
             <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.3s;">
-                <div class="category-card-master">
+                <div class="glass-card-base glass-emerald">
                     <div>
-                        <div class="cat-icon-lg">
+                        <div class="cat-icon-lg-glow cat-icon-emerald">
                             <i class="fa-solid fa-circle-nodes"></i>
                         </div>
                         <h3 class="text-white font-weight-bold mb-3">4. Visual Concept Mind Maps</h3>
@@ -549,21 +729,21 @@
                         </p>
                     </div>
                     <ul class="list-unstyled text-secondary small mb-0">
-                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Vis.js Dynamic Physics Node Rendering</li>
-                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Color-Coded Group Hierarchies</li>
-                        <li><i class="fa-solid fa-circle-check text-cyan me-2"></i>Zoom, Drag, & Node Inspection Controls</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>Vis.js Dynamic Physics Node Rendering</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>Color-Coded Group Hierarchies</li>
+                        <li><i class="fa-solid fa-circle-check text-success me-2"></i>Zoom, Drag, & Node Inspection Controls</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Category 5 -->
             <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.4s;">
-                <div class="category-card-master">
+                <div class="glass-card-base glass-rose">
                     <div>
-                        <div class="cat-icon-lg">
+                        <div class="cat-icon-lg-glow cat-icon-rose">
                             <i class="fa-solid fa-users-gear"></i>
                         </div>
-                        <h3 class="text-white font-weight-bold mb-3">5. Academic Grade & Role Knowledge Hub</h3>
+                        <h3 class="text-white font-weight-bold mb-3">5. Role & Grade Hub</h3>
                         <p class="text-secondary small leading-relaxed mb-4">
                             Filter materials and customize access criteria based on academic tier (Std 1-12, B.E. Sem 1-8, M.E., Competitive Exams) and target role (Student, Teacher, Professor, HOD, Dean).
                         </p>
