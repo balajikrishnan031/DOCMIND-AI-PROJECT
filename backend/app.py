@@ -1,6 +1,13 @@
 import os
+import sys
 import time
 import json
+
+# Ensure backend directory is in sys.path when running on Vercel serverless
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from werkzeug.utils import secure_filename
 from config import Config

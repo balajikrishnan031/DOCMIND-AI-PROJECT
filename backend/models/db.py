@@ -21,7 +21,21 @@ def close_db(e=None):
 
 def init_db():
     db = get_db()
-    schema_path = os.path.abspath(os.path.join(current_app.config['BASE_DIR'], '..', 'database', 'schema.sql'))
+    base_dir = current_app.config.get('BASE_DIR', os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    candidates = [
+        os.path.abspath(os.path.join(base_dir, '..', 'database', 'schema.sql')),
+        os.path.abspath(os.path.join(base_dir, 'database', 'schema.sql')),
+        '/var/task/database/schema.sql'
+    ]
+    schema_path = None
+    for cand in candidates:
+        if os.path.exists(cand):
+            schema_path = cand
+            break
+            
+    if not schema_path:
+        raise FileNotFoundError("Could not find schema.sql in any expected directory path.")
+        
     with open(schema_path, 'r', encoding='utf-8') as f:
         db.executescript(f.read())
     db.commit()

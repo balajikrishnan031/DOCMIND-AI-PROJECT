@@ -263,8 +263,12 @@ class AIEngine:
         Determines which processing pipeline to use (Local vs API) to extract
         summaries, keywords, and highlights, and persists them.
         """
+        from config import Config
         provider = settings.get('api_provider', 'local') if settings else 'local'
         api_key = settings.get('api_key', '') if settings else ''
+        if not api_key and getattr(Config, 'GROQ_API_KEY', None):
+            provider = 'groq'
+            api_key = Config.GROQ_API_KEY
         
         # 1. Summaries Generation
         summary_short = ""
@@ -392,8 +396,12 @@ class AIEngine:
         Embeds the question, retrieves relevant vector chunks, and generates
         a synthesis answer using Local fallback or external API integrations.
         """
+        from config import Config
         provider = settings.get('api_provider', 'local') if settings else 'local'
         api_key = settings.get('api_key', '') if settings else ''
+        if not api_key and getattr(Config, 'GROQ_API_KEY', None):
+            provider = 'groq'
+            api_key = Config.GROQ_API_KEY
         
         # 1. Embed query and search
         q_emb = Embedder.embed_text(question)
