@@ -708,3 +708,137 @@ h1.display-6, .cursive-h1 {
 .glass-panel:hover {
     transform: translateY(-4px);
 }
+
+/* Master Design System Extensions */
+.text-cyan {
+    color: #38bdf8 !important;
+}
+
+.text-purple {
+    color: #c084fc !important;
+}
+
+.border-cyan {
+    border-color: rgba(56, 189, 248, 0.4) !important;
+}
+
+.border-purple {
+    border-color: rgba(192, 132, 252, 0.4) !important;
+}
+
+/* Neon Pill Badges */
+.badge-neon-cyan {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-neon-purple {
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    color: #c084fc;
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-neon-green {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34d399;
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Custom Table Aesthetics */
+.table-custom-glass {
+    --bs-table-bg: transparent;
+    --bs-table-color: #f1f5f9;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.table-custom-glass th {
+    background: rgba(15, 23, 42, 0.6);
+    color: #94a3b8;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-custom-glass td {
+    padding: 1rem 1.25rem;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Custom Dropdown Overrides */
+.dropdown-menu-dark-custom {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+}
+
+.dropdown-menu-dark-custom .dropdown-item {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.25rem;
+    transition: var(--transition);
+}
+
+.dropdown-menu-dark-custom .dropdown-item:hover {
+    background: rgba(56, 189, 248, 0.15);
+    color: #ffffff;
+}
+
+/* Modal Glass Overrides */
+.modal-glass-content {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    color: #ffffff;
+}
+
+/* Form Controls Premium Styling */
+.form-control-custom {
+    background: rgba(15, 23, 42, 0.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    padding: 0.75rem 1.25rem !important;
+    transition: var(--transition);
+}
+
+.form-control-custom:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25) !important;
+}
+
+/* Micro-interaction Button Pulse */
+.btn-primary-custom {
+    background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
+    transition: var(--transition);
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.55);
+    color: #ffffff;
+}

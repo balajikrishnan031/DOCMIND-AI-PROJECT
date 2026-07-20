@@ -3,331 +3,915 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocMind AI - Intelligent Document Organizer</title>
-    <!-- Fonts & Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>DocMind AI - Intelligent Document Organizer & Educational Assistant</title>
+    <!-- FontAwesome 6 & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <style>
-        .landing-body {
-            background: radial-gradient(rgba(3, 7, 18, 0.6) 0%, rgba(3, 7, 18, 0.92) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
+        /* Standalone Extended Master Landing Page CSS */
+        .landing-page-wrapper {
+            background: radial-gradient(rgba(3, 7, 18, 0.65) 0%, rgba(3, 7, 18, 0.95) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
             color: #f8fafc;
-            display: flex;
-            flex-direction: column;
             font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
         }
 
-        .landing-navbar {
-            padding: 1.25rem 3rem;
+        /* Top Announcement Header Bar */
+        .announcement-bar {
+            background: linear-gradient(90deg, #0284c7 0%, #6366f1 50%, #d946ef 100%);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            text-align: center;
+            letter-spacing: 0.03em;
+        }
+
+        /* Glass Floating Navbar */
+        .landing-header-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 15, 30, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+            padding: 1.1rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(20px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
-        .brand-logo-full {
+        .brand-logo-extended {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.6rem;
-            background: linear-gradient(135deg, #ffffff 20%, #38bdf8 100%);
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.8rem;
         }
 
-        .brand-logo-full i {
-            font-size: 2rem;
+        .brand-logo-extended i {
+            font-size: 2.2rem;
             color: #38bdf8;
             -webkit-text-fill-color: initial;
-            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+            filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
         }
 
-        .landing-hero {
-            padding: 4rem 3rem;
+        .nav-links-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links-menu a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links-menu a:hover {
+            color: #38bdf8;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Hero Container */
+        .hero-section-full {
+            padding: 5rem 3rem 4rem 3rem;
             max-width: 1400px;
             margin: 0 auto;
-            width: 100%;
         }
 
-        .hero-title-cursive {
+        .hero-title-main {
             font-family: 'Dancing Script', cursive !important;
-            font-size: 4.2rem !important;
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
+            font-size: 4.8rem !important;
+            line-height: 1.1;
+            margin-bottom: 1.8rem;
+            background: linear-gradient(135deg, #ffffff 20%, #38bdf8 70%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 5px 30px rgba(0, 0, 0, 0.9);
         }
 
-        .glass-card-premium {
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 16px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            padding: 2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .hero-subtext {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
         }
 
-        .glass-card-premium:hover {
-            border-color: rgba(56, 189, 248, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 45px rgba(56, 189, 248, 0.2);
-        }
-
-        .category-badge-pill {
+        .hero-pill-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 1rem;
+            gap: 0.6rem;
+            padding: 0.5rem 1.25rem;
             background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            border: 1px solid rgba(56, 189, 248, 0.35);
             border-radius: 50px;
             color: #38bdf8;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+        }
+
+        /* Mockup Glass Preview Container */
+        .preview-mockup-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(30px);
+        }
+
+        .mockup-header-dots {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Metrics Bar */
+        .metrics-counter-bar {
+            background: rgba(15, 23, 42, 0.6);
+            border-y: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 3rem 0;
+            margin: 4rem 0;
+        }
+
+        .metric-item-box h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Section Layouts */
+        .section-padding {
+            padding: 5rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffffff;
             margin-bottom: 1rem;
         }
 
-        .categories-5-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+        .section-header-subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 750px;
+            margin-bottom: 3.5rem;
         }
 
-        .cat-icon-header {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+        /* 5 Core Categories Cards */
+        .category-card-master {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 20px;
+            padding: 2.25rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.35 cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .category-card-master:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(56, 189, 248, 0.2);
+        }
+
+        .cat-icon-lg {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.2));
+            border: 1px solid rgba(56, 189, 248, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #38bdf8;
-            margin-bottom: 1.25rem;
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            margin-bottom: 1.5rem;
         }
 
-        .role-pill-item {
-            padding: 0.35rem 0.85rem;
-            background: rgba(255, 255, 255, 0.06);
+        /* Scope Grid Pills */
+        .scope-tag-item {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #cbd5e1;
-        }
-
-        .landing-footer {
-            padding: 2rem 3rem;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(3, 7, 18, 0.8);
-            backdrop-filter: blur(10px);
+            border-radius: 30px;
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
         }
 
-        .btn-glow-primary {
+        .scope-tag-item:hover {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: #38bdf8;
+            color: #ffffff;
+        }
+
+        /* FAQ Accordion Styling */
+        .faq-accordion-item {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-accordion-header {
+            padding: 1.5rem 2rem;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-accordion-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: #38bdf8;
+        }
+
+        .faq-accordion-body {
+            padding: 0 2rem 1.5rem 2rem;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            color: #94a3b8;
+            display: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1.25rem;
+        }
+
+        .faq-accordion-item.active .faq-accordion-body {
+            display: block;
+        }
+
+        .faq-accordion-item.active .faq-icon {
+            transform: rotate(180deg);
+            color: #38bdf8;
+        }
+
+        /* Buttons */
+        .btn-glow-primary-lg {
             background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
             color: #ffffff !important;
-            padding: 0.85rem 2rem;
-            font-size: 1rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            border-radius: 12px;
+            border-radius: 14px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.4);
+            gap: 0.6rem;
+            box-shadow: 0 6px 25px rgba(2, 132, 199, 0.45);
             transition: all 0.3s ease;
         }
 
-        .btn-glow-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(2, 132, 199, 0.6);
+        .btn-glow-primary-lg:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(2, 132, 199, 0.65);
         }
 
-        .btn-glow-outline {
+        .btn-glow-outline-lg {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             color: #ffffff !important;
-            padding: 0.85rem 2rem;
-            font-size: 1rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            border-radius: 12px;
+            border-radius: 14px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             transition: all 0.3s ease;
         }
 
-        .btn-glow-outline:hover {
+        .btn-glow-outline-lg:hover {
             background: rgba(255, 255, 255, 0.12);
             border-color: #38bdf8;
         }
+
+        /* Footer */
+        .master-footer {
+            background: rgba(3, 7, 18, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4rem 3rem 2rem 3rem;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
     </style>
 </head>
-<body class="landing-body">
+<body class="landing-page-wrapper">
 
-    <!-- Top Navbar -->
-    <nav class="landing-navbar">
-        <a href="/" class="brand-logo-full">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <i class="fa-solid fa-sparkles me-2"></i> Powered by Groq Llama 3.1 70B & Vector RAG Embeddings — Built for Students, Professors, HODs & Deans
+    </div>
+
+    <!-- Floating Top Navigation -->
+    <header class="landing-header-nav">
+        <a href="/" class="brand-logo-extended">
             <i class="fa-solid fa-brain"></i>
             <span>DocMind AI</span>
         </a>
+
+        <ul class="nav-links-menu d-none d-lg-flex">
+            <li><a href="#core-modules">5 Modules</a></li>
+            <li><a href="#academic-scope">Academic Scope</a></li>
+            <li><a href="#user-personas">Roles & Personas</a></li>
+            <li><a href="#technical-architecture">Architecture</a></li>
+            <li><a href="#faq-section">FAQ</a></li>
+        </ul>
+
         <div class="d-flex gap-3">
-            <a href="/login" class="btn-glow-outline">
+            <a href="/login" class="btn-glow-outline-lg py-2 px-3 fs-6">
                 <i class="fa-solid fa-user-shield me-1"></i> Admin Portal
             </a>
-            <a href="/login" class="btn-glow-primary">
-                Enter Student Portal <i class="fa-solid fa-arrow-right-to-bracket ms-1"></i>
+            <a href="/login" class="btn-glow-primary-lg py-2 px-4 fs-6">
+                Student Portal <i class="fa-solid fa-arrow-right-to-bracket ms-1"></i>
             </a>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Content Area -->
-    <main class="landing-hero">
-        
-        <!-- Hero Section -->
-        <div class="row align-items-center mb-5 animate-fade-in-up">
-            <div class="col-lg-7">
-                <span class="category-badge-pill">
-                    <i class="fa-solid fa-bolt me-1"></i> AIML Intelligent Document Organizer
+    <!-- Main Hero Section -->
+    <main class="hero-section-full">
+        <div class="row align-items-center g-5">
+            
+            <div class="col-lg-7 animate-fade-in-up">
+                <span class="hero-pill-badge">
+                    <i class="fa-solid fa-brain-circuit"></i> AIML Intelligent Document Organizer
                 </span>
-                <h1 class="hero-title-cursive">Transform Study Materials Into Semantic Knowledge</h1>
-                <p class="lead text-light mb-4" style="font-size: 1.25rem; line-height: 1.7; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
-                    DocMind AI is an advanced Artificial Intelligence educational platform engineered for <strong>Students, Teachers, Professors, HODs, Deans, and Competitive Exam Aspirants</strong>. It automatically parses course syllabi, maps topics to exact textbook page numbers, generates 3D recall flashcards, auto-grades practice exams, and builds dynamic visual concept mind maps.
+                <h1 class="hero-title-main">Transform Complex Textbooks & Syllabi Into Interactive Knowledge</h1>
+                <p class="hero-subtext">
+                    DocMind AI is a comprehensive Artificial Intelligence educational tutor. Engineered specifically for <strong>Students, School Teachers, College Professors, HODs, Deans, and Competitive Exam Aspirants (GATE & Group Exams)</strong>, it automatically ingests multi-unit syllabi, maps chapter topics to exact textbook page numbers, flips 3D recall flashcards, auto-grades practice exams, and builds dynamic visual concept mind maps.
                 </p>
-                <div class="d-flex gap-3 flex-wrap mb-4">
-                    <a href="/login" class="btn-glow-primary">
-                        Get Started Free <i class="fa-solid fa-chevron-right ms-1"></i>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="/login" class="btn-glow-primary-lg">
+                        Launch Student Portal <i class="fa-solid fa-chevron-right ms-1"></i>
                     </a>
-                    <a href="#about-purpose" class="btn-glow-outline">
-                        Learn Purpose & Scope <i class="fa-solid fa-circle-info ms-1"></i>
+                    <a href="/login" class="btn-glow-outline-lg">
+                        Admin / Faculty Sign In <i class="fa-solid fa-user-gear ms-1"></i>
                     </a>
                 </div>
             </div>
-            
-            <div class="col-lg-5">
-                <div class="glass-card-premium border-glass-glow">
-                    <h4 class="text-white mb-3 font-weight-bold"><i class="fa-solid fa-graduation-cap text-cyan me-2"></i>Target Academic Scope</h4>
-                    <p class="text-secondary small mb-3">Tailored workspaces for all departments and education tiers:</p>
-                    <div class="d-flex flex-wrap gap-2 mb-4">
-                        <span class="role-pill-item"><i class="fa-solid fa-school text-warning me-1"></i> Std 1 - 12 School</span>
-                        <span class="role-pill-item"><i class="fa-solid fa-university text-info me-1"></i> B.E. (Sem 1 to 8)</span>
-                        <span class="role-pill-item"><i class="fa-solid fa-award text-success me-1"></i> M.E. / M.Tech</span>
-                        <span class="role-pill-item"><i class="fa-solid fa-laptop-code text-cyan me-1"></i> CSE & IT Dept</span>
-                        <span class="role-pill-item"><i class="fa-solid fa-microchip text-primary me-1"></i> ECE & EEE Dept</span>
-                        <span class="role-pill-item"><i class="fa-solid fa-gears text-danger me-1"></i> MECH & CIVIL</span>
-                        <span class="role-pill-item"><i class="fa-solid fa-book-open-reader text-warning me-1"></i> GATE Exam</span>
-                        <span class="role-pill-item"><i class="fa-solid fa-briefcase text-info me-1"></i> Group Exams</span>
+
+            <!-- Live Mockup Sandbox Preview -->
+            <div class="col-lg-5 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="preview-mockup-card border-glass-glow">
+                    <div class="mockup-header-dots">
+                        <div class="mockup-dot bg-danger"></div>
+                        <div class="mockup-dot bg-warning"></div>
+                        <div class="mockup-dot bg-success"></div>
+                        <span class="ms-auto text-secondary small font-monospace"><i class="fa-solid fa-circle-dot text-success me-1"></i> Live RAG Processing</span>
                     </div>
-                    <hr style="border-color: rgba(255,255,255,0.1);">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="text-secondary small">
-                            <i class="fa-solid fa-user-check text-success me-1"></i> User & Admin Portals Supported
+
+                    <div class="p-3 rounded-3 mb-3" style="background: rgba(3, 7, 18, 0.6); border: 1px solid rgba(56, 189, 248, 0.2);">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-cyan font-weight-semibold small"><i class="fa-solid fa-file-pdf me-1"></i> B.E_CSE_Operating_Systems_Syllabus.pdf</span>
+                            <span class="badge bg-success text-dark font-weight-bold">Sem 5 Mapped</span>
                         </div>
-                        <a href="/login" class="text-cyan text-decoration-none font-weight-semibold small">Sign In <i class="fa-solid fa-arrow-right"></i></a>
+                        <div class="text-white small mb-2 font-monospace">Unit I: OS Architecture & Process Scheduling</div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                            <div class="progress-bar bg-info w-100 progress-bar-striped progress-bar-animated"></div>
+                        </div>
+                    </div>
+
+                    <div class="p-3 rounded-3 mb-3" style="background: rgba(3, 7, 18, 0.6); border: 1px solid rgba(168, 85, 247, 0.2);">
+                        <div class="text-purple small font-weight-semibold mb-1"><i class="fa-solid fa-bolt me-1"></i> Groq Llama 3.1 70B Synthesis:</div>
+                        <div class="text-light small font-italic mb-2">"Operating Systems manage CPU scheduling via Round Robin & Priority Queue algorithms [Page 42, Textbook Vol 1]."</div>
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-dark border border-purple text-purple">3D Flashcard Ready</span>
+                            <span class="badge bg-dark border border-cyan text-cyan">Vis.js Mind Map Linked</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center text-secondary small pt-2">
+                        <span><i class="fa-solid fa-shield-check text-success me-1"></i> 100% Page Citation Precision</span>
+                        <a href="/login" class="text-cyan text-decoration-none">Try Sandbox <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Metrics Bar -->
+    <section class="metrics-counter-bar">
+        <div class="container-fluid px-5">
+            <div class="row text-center g-4">
+                <div class="col-md-3">
+                    <div class="metric-item-box">
+                        <h2>100%</h2>
+                        <div class="text-secondary font-weight-medium">Citation Precision (Page Exact)</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-item-box">
+                        <h2>Sem 1 - 8</h2>
+                        <div class="text-secondary font-weight-medium">Engineering Curriculum Supported</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-item-box">
+                        <h2>54+</h2>
+                        <div class="text-secondary font-weight-medium">Academic Departments</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-item-box">
+                        <h2>&lt; 10ms</h2>
+                        <div class="text-secondary font-weight-medium">Vector Similarity Index Latency</div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- 5 Core Categories Grid -->
-        <h2 class="text-white font-weight-bold mb-2 text-center text-md-start"><i class="fa-solid fa-layer-group text-cyan me-2"></i> 5 Core Intelligent Modules</h2>
-        <p class="text-secondary mb-4 text-center text-md-start">Explore how DocMind AI organizes complex educational materials into actionable learning assets:</p>
+    <!-- 5 Core Categories Section -->
+    <section id="core-modules" class="section-padding">
+        <div class="text-center text-md-start">
+            <span class="hero-pill-badge"><i class="fa-solid fa-layer-group me-1"></i> Core Functional Architecture</span>
+            <h2 class="section-header-title">5 Core Intelligent Educational Modules</h2>
+            <p class="section-header-subtitle">DocMind AI synthesizes raw textbooks and syllabi into 5 powerful, interconnected learning tools designed for instant comprehension:</p>
+        </div>
 
-        <div class="categories-5-grid animate-fade-in-up">
+        <div class="row g-4">
             
             <!-- Category 1 -->
-            <div class="glass-card-premium">
-                <div class="cat-icon-header">
-                    <i class="fa-solid fa-diagram-project"></i>
+            <div class="col-lg-4 col-md-6 animate-fade-in-up">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg">
+                            <i class="fa-solid fa-diagram-project"></i>
+                        </div>
+                        <h3 class="text-white font-weight-bold mb-3">1. Semantic Syllabus & Chapter Mapping</h3>
+                        <p class="text-secondary small leading-relaxed mb-4">
+                            Upload multi-unit course syllabi (B.E. Sem 1-8, GATE, Group Exams). DocMind AI's regex parser extracts unit boundaries, topics, and uses cosine vector similarity to map every topic to exact textbook pages.
+                        </p>
+                    </div>
+                    <ul class="list-unstyled text-secondary small mb-0">
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Unit I - V Regex Boundary Extractor</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Cosine Vector Similarity Page Resolver</li>
+                        <li><i class="fa-solid fa-circle-check text-cyan me-2"></i>Direct Page Jump Link Mappings</li>
+                    </ul>
                 </div>
-                <h4 class="text-white font-weight-semibold mb-2">1. Semantic Syllabus Mapping</h4>
-                <p class="text-secondary small mb-0">Upload unit-wise course syllabi (B.E. Sem 1-8, GATE, Group Exams). DocMind AI parses topics and semantically maps each chapter topic to exact textbook pages.</p>
             </div>
 
             <!-- Category 2 -->
-            <div class="glass-card-premium">
-                <div class="cat-icon-header">
-                    <i class="fa-solid fa-clone"></i>
+            <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg">
+                            <i class="fa-solid fa-clone"></i>
+                        </div>
+                        <h3 class="text-white font-weight-bold mb-3">2. 3D Active Recall Flashcards</h3>
+                        <p class="text-secondary small leading-relaxed mb-4">
+                            Boost memory retention with interactive 3D card-flipping decks. Automatically synthesizes crucial definitions, mathematical formulas, and key concepts into spaced-repetition study flashcards.
+                        </p>
+                    </div>
+                    <ul class="list-unstyled text-secondary small mb-0">
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>CSS 3D Perspective Flip Animations</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Auto-Synthesized Term & Formula Decks</li>
+                        <li><i class="fa-solid fa-circle-check text-cyan me-2"></i>Custom Decks for Quick Pre-Exam Revisions</li>
+                    </ul>
                 </div>
-                <h4 class="text-white font-weight-semibold mb-2">2. 3D Recall Flashcards</h4>
-                <p class="text-secondary small mb-0">Active recall study decks featuring 3D card flips. Automatically synthesizes key terms, formulas, and definitions from textbooks for instant revision.</p>
             </div>
 
             <!-- Category 3 -->
-            <div class="glass-card-premium">
-                <div class="cat-icon-header">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
+            <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg">
+                            <i class="fa-solid fa-square-poll-vertical"></i>
+                        </div>
+                        <h3 class="text-white font-weight-bold mb-3">3. Automated Practice Exams & Scoreboards</h3>
+                        <p class="text-secondary small leading-relaxed mb-4">
+                            Generate targeted multiple-choice question tests with detailed solution feedback. The system logs test scores and time metrics to track academic progress across exam attempts.
+                        </p>
+                    </div>
+                    <ul class="list-unstyled text-secondary small mb-0">
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Dynamic MCQ Generation with Options</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Real-time Answer Verification & Feedback</li>
+                        <li><i class="fa-solid fa-circle-check text-cyan me-2"></i>SQLite Scoreboard Attempt Logs</li>
+                    </ul>
                 </div>
-                <h4 class="text-white font-weight-semibold mb-2">3. Practice Exam Quizzes</h4>
-                <p class="text-secondary small mb-0">Generates targeted multiple-choice question tests with detailed solution feedback and automated scoreboards to log assessment metrics over time.</p>
             </div>
 
             <!-- Category 4 -->
-            <div class="glass-card-premium">
-                <div class="cat-icon-header">
-                    <i class="fa-solid fa-circle-nodes"></i>
+            <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                        </div>
+                        <h3 class="text-white font-weight-bold mb-3">4. Visual Concept Mind Maps</h3>
+                        <p class="text-secondary small leading-relaxed mb-4">
+                            Visualize conceptual linkages between definitions, equations, and key terms in interactive, zoomable Vis.js SVG node network graphics.
+                        </p>
+                    </div>
+                    <ul class="list-unstyled text-secondary small mb-0">
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Vis.js Dynamic Physics Node Rendering</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Color-Coded Group Hierarchies</li>
+                        <li><i class="fa-solid fa-circle-check text-cyan me-2"></i>Zoom, Drag, & Node Inspection Controls</li>
+                    </ul>
                 </div>
-                <h4 class="text-white font-weight-semibold mb-2">4. Concept Mind Maps</h4>
-                <p class="text-secondary small mb-0">Interactive Vis.js node network graphics mapping linkages between core definitions, formulas, and keywords in zoomable visual hierarchies.</p>
             </div>
 
             <!-- Category 5 -->
-            <div class="glass-card-premium">
-                <div class="cat-icon-header">
-                    <i class="fa-solid fa-users-gear"></i>
+            <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.4s;">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg">
+                            <i class="fa-solid fa-users-gear"></i>
+                        </div>
+                        <h3 class="text-white font-weight-bold mb-3">5. Academic Grade & Role Knowledge Hub</h3>
+                        <p class="text-secondary small leading-relaxed mb-4">
+                            Filter materials and customize access criteria based on academic tier (Std 1-12, B.E. Sem 1-8, M.E., Competitive Exams) and target role (Student, Teacher, Professor, HOD, Dean).
+                        </p>
+                    </div>
+                    <ul class="list-unstyled text-secondary small mb-0">
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Multi-Level Grade Level Metadata Filters</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Role-Based Document Repository Access</li>
+                        <li><i class="fa-solid fa-circle-check text-cyan me-2"></i>Direct Raw Material Download Routing</li>
+                    </ul>
                 </div>
-                <h4 class="text-white font-weight-semibold mb-2">5. Role & Grade Hub</h4>
-                <p class="text-secondary small mb-0">Tailor access criteria by role (Student, Teacher, Professor, HOD, Dean) and education grade level (Std 1-12, B.E., M.E., Competitive Exams).</p>
+            </div>
+
+            <!-- Summary Card -->
+            <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.5s;">
+                <div class="category-card-master" style="background: linear-gradient(135deg, rgba(2, 132, 199, 0.3), rgba(99, 102, 241, 0.3)); border-color: rgba(56, 189, 248, 0.4);">
+                    <div>
+                        <div class="cat-icon-lg" style="background: rgba(255,255,255,0.1); color: #fff;">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <h3 class="text-white font-weight-bold mb-3">Ready to Upgrade Your Study Workflow?</h3>
+                        <p class="text-light small leading-relaxed mb-4">
+                            Experience the power of Groq AI & RAG vector search on your course textbooks and syllabi today.
+                        </p>
+                    </div>
+                    <a href="/login" class="btn-glow-primary-lg w-100 justify-content-center">
+                        Access Portal Now <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
             </div>
 
         </div>
+    </section>
 
-        <!-- Detailed Purpose & Scope Section -->
-        <div id="about-purpose" class="mt-5 pt-4 animate-fade-in-up">
-            <div class="glass-card-premium p-4 p-md-5">
-                <div class="row align-items-center">
-                    <div class="col-lg-8">
-                        <h3 class="text-white font-weight-bold mb-3"><i class="fa-solid fa-bullseye text-cyan me-2"></i>Purpose & Educational Impact</h3>
-                        <p class="text-secondary lead mb-3">
-                            Educational textbooks and multi-unit course syllabi are often fragmented and overwhelming. DocMind AI resolves this challenge by acting as an artificial intelligence educational tutor powered by Groq Llama 3.1 70B & local vector embeddings.
-                        </p>
-                        <p class="text-secondary small mb-4">
-                            <strong>Why it was built:</strong> To streamline study workflows for B.E. / M.E. engineering students across 8 semesters, competitive exam candidates preparing for GATE and Group Exams, as well as faculty members (Professors, HODs, Deans) who need to evaluate curriculum alignment and generate automated assessment banks.
-                        </p>
+    <!-- Comprehensive Academic Scope Matrix Section -->
+    <section id="academic-scope" class="section-padding pt-0">
+        <div class="text-center text-md-start">
+            <span class="hero-pill-badge"><i class="fa-solid fa-graduation-cap me-1"></i> Universal Academic Scope</span>
+            <h2 class="section-header-title">Tailored for Every Education Level & Department</h2>
+            <p class="section-header-subtitle">DocMind AI supports students and faculty across school education, engineering semesters, postgraduate programs, and national competitive exams:</p>
+        </div>
+
+        <div class="preview-mockup-card p-4 p-md-5 mb-4 animate-fade-in-up">
+            <div class="row g-4">
+                
+                <div class="col-lg-4">
+                    <h4 class="text-white font-weight-bold mb-3"><i class="fa-solid fa-school text-warning me-2"></i>School Tier (Std 1 - 12)</h4>
+                    <p class="text-secondary small mb-3">Primary, Middle, High, and Higher Secondary curriculum support:</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="scope-tag-item"><i class="fa-solid fa-book-bookmark text-warning"></i> Primary (Std 1 - 5)</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-book-open text-warning"></i> Middle (Std 6 - 8)</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-microscope text-warning"></i> High School (Std 9 - 10)</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-flask text-warning"></i> Higher Secondary (Std 11 - 12)</span>
                     </div>
-                    <div class="col-lg-4 text-center">
-                        <a href="/login" class="btn-glow-primary w-100 justify-content-center py-3 fs-5">
-                            Join DocMind AI <i class="fa-solid fa-arrow-right ms-2"></i>
-                        </a>
+                </div>
+
+                <div class="col-lg-4">
+                    <h4 class="text-white font-weight-bold mb-3"><i class="fa-solid fa-university text-info me-2"></i>B.E. / B.Tech (Sem 1 - 8)</h4>
+                    <p class="text-secondary small mb-3">All engineering departments across 8 semester courses:</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="scope-tag-item"><i class="fa-solid fa-laptop-code text-cyan"></i> CSE & IT Dept</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-brain text-cyan"></i> AI & Data Science</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-microchip text-primary"></i> ECE & EEE Dept</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-gears text-danger"></i> Mechanical Engg</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-building text-success"></i> Civil Engineering</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <h4 class="text-white font-weight-bold mb-3"><i class="fa-solid fa-award text-success me-2"></i>Competitive & Postgrad</h4>
+                    <p class="text-secondary small mb-3">Advanced entrance and recruitment examination prep:</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="scope-tag-item"><i class="fa-solid fa-square-poll-vertical text-warning"></i> GATE Engineering</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-briefcase text-info"></i> TNPSC / Group Exams</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-landmark text-success"></i> UPSC & Civil Services</span>
+                        <span class="scope-tag-item"><i class="fa-solid fa-certificate text-purple"></i> M.E. / M.Tech Research</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- User Personas Section -->
+    <section id="user-personas" class="section-padding pt-0">
+        <div class="text-center text-md-start">
+            <span class="hero-pill-badge"><i class="fa-solid fa-id-card me-1"></i> Multi-Persona Support</span>
+            <h2 class="section-header-title">Engineered for Students, Educators, & Administrators</h2>
+            <p class="section-header-subtitle">DocMind AI offers specialized features tailored to each user role in the academic ecosystem:</p>
+        </div>
+
+        <div class="row g-4">
+            
+            <div class="col-lg-4 col-md-6 animate-fade-in-up">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg" style="color: #38bdf8;">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <h4 class="text-white font-weight-bold mb-2">🎓 Student / Candidate</h4>
+                        <p class="text-secondary small mb-3">Effortless study & revision:</p>
+                        <ul class="list-unstyled text-secondary small mb-0">
+                            <li class="mb-2">• Map syllabus topics to exact textbook pages.</li>
+                            <li class="mb-2">• Flip 3D flashcards for rapid active recall.</li>
+                            <li>• Take timed practice exams with instant scoring.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg" style="color: #a855f7;">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h4 class="text-white font-weight-bold mb-2">👩‍🏫 Teacher / Tutor</h4>
+                        <p class="text-secondary small mb-3">Lesson planning & question bank generation:</p>
+                        <ul class="list-unstyled text-secondary small mb-0">
+                            <li class="mb-2">• Extract key highlights & formulas instantly.</li>
+                            <li class="mb-2">• Auto-generate MCQ question banks for tests.</li>
+                            <li>• Share structured study summaries with classes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg" style="color: #f59e0b;">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <h4 class="text-white font-weight-bold mb-2">👨‍🏫 College Professor</h4>
+                        <p class="text-secondary small mb-3">Curriculum verification & research:</p>
+                        <ul class="list-unstyled text-secondary small mb-0">
+                            <li class="mb-2">• Audit syllabus unit coverage against reference books.</li>
+                            <li class="mb-2">• Query semantic vectors for research papers.</li>
+                            <li>• Export comprehensive PDF analytical reports.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg" style="color: #10b981;">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <h4 class="text-white font-weight-bold mb-2">🛡️ Head of Department (HOD)</h4>
+                        <p class="text-secondary small mb-3">Departmental oversight & course alignment:</p>
+                        <ul class="list-unstyled text-secondary small mb-0">
+                            <li class="mb-2">• Monitor departmental document repositories across Sem 1 to Sem 8.</li>
+                            <li class="mb-2">• Ensure unit compliance for NAAC / NBA accreditation audits.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 animate-fade-in-up" style="animation-delay: 0.4s;">
+                <div class="category-card-master">
+                    <div>
+                        <div class="cat-icon-lg" style="color: #ef4444;">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <h4 class="text-white font-weight-bold mb-2">🏛️ Dean / Academic Director</h4>
+                        <p class="text-secondary small mb-3">Institutional academic analytics & policy:</p>
+                        <ul class="list-unstyled text-secondary small mb-0">
+                            <li class="mb-2">• Oversee institution-wide document ingestion repositories.</li>
+                            <li class="mb-2">• Administer high-privilege faculty portal controls and metrics.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Technical Architecture Section -->
+    <section id="technical-architecture" class="section-padding pt-0">
+        <div class="text-center text-md-start">
+            <span class="hero-pill-badge"><i class="fa-solid fa-code-branch me-1"></i> Under the Hood</span>
+            <h2 class="section-header-title">5-Step AIML Pipeline Architecture</h2>
+            <p class="section-header-subtitle">How DocMind AI ingests, vectorizes, retrieves, and synthesizes educational documents:</p>
+        </div>
+
+        <div class="preview-mockup-card p-4 p-md-5 animate-fade-in-up">
+            <div class="row g-4 text-center text-md-start">
+                <div class="col-md">
+                    <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div class="text-cyan font-weight-bold fs-4 mb-2">01</div>
+                        <h5 class="text-white">Ingestion</h5>
+                        <p class="text-secondary small mb-0">pdfplumber & docx parsing into page-indexed text blocks.</p>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div class="text-cyan font-weight-bold fs-4 mb-2">02</div>
+                        <h5 class="text-white">Vectorization</h5>
+                        <p class="text-secondary small mb-0">Embedding via MiniLM-L6 into 384-dim dense vectors.</p>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div class="text-cyan font-weight-bold fs-4 mb-2">03</div>
+                        <h5 class="text-white">Indexing</h5>
+                        <p class="text-secondary small mb-0">Cosine similarity matching with SQLite vector store.</p>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div class="text-cyan font-weight-bold fs-4 mb-2">04</div>
+                        <h5 class="text-white">Synthesis</h5>
+                        <p class="text-secondary small mb-0">Groq Llama 3.1 70B generates answers & study assets.</p>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div class="text-cyan font-weight-bold fs-4 mb-2">05</div>
+                        <h5 class="text-white">Delivery</h5>
+                        <p class="text-secondary small mb-0">3D Flashcards, Mind Maps, & Quizzes served to UI.</p>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-    </main>
+    <!-- Interactive FAQ Section -->
+    <section id="faq-section" class="section-padding pt-0">
+        <div class="text-center text-md-start">
+            <span class="hero-pill-badge"><i class="fa-solid fa-circle-question me-1"></i> Clarifications</span>
+            <h2 class="section-header-title">Frequently Asked Questions</h2>
+            <p class="section-header-subtitle">Got questions about DocMind AI? Find detailed answers below:</p>
+        </div>
 
-    <!-- Public Footer -->
-    <footer class="landing-footer">
-        <p class="mb-0">© 2026 DocMind AI - Intelligent Document Organizer using Python with Artificial Intelligence & Machine Learning (AIML). All rights reserved.</p>
+        <div class="faq-accordion-list animate-fade-in-up">
+            
+            <div class="faq-accordion-item">
+                <div class="faq-accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                    <span><i class="fa-solid fa-shield-halved text-cyan me-2"></i> Will there be any copyright issues using DocMind AI?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-accordion-body">
+                    <strong>No.</strong> DocMind AI is a private personal educational study tool. It acts as an extractive indexing reader operating on your locally uploaded textbooks for personal study, research, and revision (Fair Use Educational exemption). It does not republish or redistribute copyrighted textbooks publicly.
+                </div>
+            </div>
+
+            <div class="faq-accordion-item">
+                <div class="faq-accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                    <span><i class="fa-solid fa-graduation-cap text-cyan me-2"></i> What academic levels and departments are supported?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-accordion-body">
+                    DocMind AI supports all educational levels: School Tier (Std 1-12), Engineering B.E. / B.Tech (Sem 1 to 8 across CSE, IT, AI&DS, ECE, EEE, MECH, CIVIL), M.E. / M.Tech postgraduation, and competitive examinations including GATE Engineering and Group Exams (TNPSC/UPSC/SSC).
+                </div>
+            </div>
+
+            <div class="faq-accordion-item">
+                <div class="faq-accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                    <span><i class="fa-solid fa-bolt text-cyan me-2"></i> How does the Groq AI Llama 3.1 70B integration work?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-accordion-body">
+                    DocMind AI integrates with Groq's high-speed inference engine (`llama-3.1-70b-versatile` with automatic `llama-3.1-8b-instant` fallback). Groq processes text chunks retrieved via RAG vector search in milliseconds to generate accurate, page-cited answers and study materials.
+                </div>
+            </div>
+
+            <div class="faq-accordion-item">
+                <div class="faq-accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                    <span><i class="fa-solid fa-database text-cyan me-2"></i> Does DocMind AI require a separate database server installation?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-accordion-body">
+                    <strong>No!</strong> DocMind AI uses SQLite (`database.db`), which is built directly into Python. When you run `python backend/app.py`, the system automatically creates and initializes the SQLite tables and schema automatically.
+                </div>
+            </div>
+
+            <div class="faq-accordion-item">
+                <div class="faq-accordion-header" onclick="this.parentElement.classList.toggle('active')">
+                    <span><i class="fa-solid fa-user-shield text-cyan me-2"></i> What is the difference between Student and Admin/Faculty Portals?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-accordion-body">
+                    The <strong>Student Portal</strong> focuses on learning tools: 3D flashcards, practice quizzes, mind maps, and Q&A chat. The <strong>Admin / Faculty Portal</strong> provides Professors, HODs, and Deans with higher-privilege controls for syllabus validation, departmental document repository management, and accreditation report generation.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Dual Portal CTA Section -->
+    <section class="section-padding pt-0">
+        <div class="preview-mockup-card p-5 text-center animate-fade-in-up" style="background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(99, 102, 241, 0.35)); border-color: rgba(56, 189, 248, 0.5);">
+            <span class="hero-pill-badge mb-3"><i class="fa-solid fa-rocket me-1"></i> Start Learning Smarter</span>
+            <h2 class="text-white font-weight-bold display-6 mb-3">Ready to Experience DocMind AI?</h2>
+            <p class="text-light lead max-w-700 mx-auto mb-4" style="max-width: 750px;">
+                Join thousands of students and faculty members utilizing AI-powered semantic syllabus mapping and active recall study tools today.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="/login" class="btn-glow-primary-lg">
+                    Enter Student Portal <i class="fa-solid fa-arrow-right-to-bracket ms-1"></i>
+                </a>
+                <a href="/login" class="btn-glow-outline-lg">
+                    <i class="fa-solid fa-user-shield me-1"></i> Access Admin Portal
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Master Footer -->
+    <footer class="master-footer">
+        <div class="container-fluid px-5">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-5">
+                    <a href="/" class="brand-logo-extended mb-3">
+                        <i class="fa-solid fa-brain"></i>
+                        <span>DocMind AI</span>
+                    </a>
+                    <p class="text-secondary small leading-relaxed" style="max-width: 450px;">
+                        DocMind AI: Intelligent document organizer using Python with Artificial Intelligence & Machine Learning (AIML). Empowering students and faculty across 8 semesters, school tiers, and national competitive exams.
+                    </p>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <h5 class="text-white font-weight-bold mb-3">Core Modules</h5>
+                    <ul class="list-unstyled text-secondary small">
+                        <li class="mb-2"><a href="#core-modules" class="text-decoration-none text-secondary">Semantic Syllabus Mapping</a></li>
+                        <li class="mb-2"><a href="#core-modules" class="text-decoration-none text-secondary">3D Recall Flashcards</a></li>
+                        <li class="mb-2"><a href="#core-modules" class="text-decoration-none text-secondary">Practice Exams & Scoreboards</a></li>
+                        <li class="mb-2"><a href="#core-modules" class="text-decoration-none text-secondary">Concept Mind Maps</a></li>
+                        <li><a href="#core-modules" class="text-decoration-none text-secondary">Role & Grade Hub</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <h5 class="text-white font-weight-bold mb-3">Portals & Access</h5>
+                    <ul class="list-unstyled text-secondary small">
+                        <li class="mb-2"><a href="/login" class="text-decoration-none text-secondary">Student & Aspirant Sign In</a></li>
+                        <li class="mb-2"><a href="/login" class="text-decoration-none text-secondary">Admin & Faculty Sign In</a></li>
+                        <li class="mb-2"><a href="#academic-scope" class="text-decoration-none text-secondary">B.E. CSE / IT / ECE / EEE / MECH / CIVIL</a></li>
+                        <li><a href="#academic-scope" class="text-decoration-none text-secondary">GATE & Group Exams Hub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.08);">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-secondary">
+                <p class="mb-0">© 2026 DocMind AI - Intelligent Document Organizer using Python with AIML. All rights reserved.</p>
+                <p class="mb-0 mt-2 mt-md-0">Built with Python, Flask, Groq Llama 3.1 70B, and SQLite.</p>
+            </div>
+        </div>
     </footer>
 
 </body>
