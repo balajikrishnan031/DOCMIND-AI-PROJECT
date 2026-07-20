@@ -400,7 +400,26 @@ class AIEngine:
         matches = VectorStore.similarity_search(user_id, q_emb, doc_id=doc_id, top_k=4)
         
         if not matches:
-            return "No relevant information found in the documents. Please verify that the documents are indexed.", []
+            if provider in ['gemini', 'openai', 'ollama', 'groq'] and api_key:
+                prompt = (
+                    "You are DocMind AI, an intelligent educational assistant supporting students, staff, professors, HODs, and deans "
+                    "across all academic levels (1st standard to college). Answer the following question thoroughly, accurately, "
+                    "and clearly for educational understanding:\n\n"
+                    f"Question:\n{question}\n\n"
+                    "Answer:"
+                )
+                res_text = None
+                if provider == 'gemini':
+                    res_text = cls.call_gemini(prompt, api_key)
+                elif provider == 'openai':
+                    res_text = cls.call_openai(prompt, api_key)
+                elif provider == 'ollama':
+                    res_text = cls.call_ollama(prompt, api_key)
+                elif provider == 'groq':
+                    res_text = cls.call_groq(prompt, api_key)
+                if res_text:
+                    return res_text.strip(), []
+            return "No relevant information found in your indexed documents. (Tip: You can configure an API key in Profile to ask general educational questions!).", []
             
         # Format context and citations
         context_blocks = []
