@@ -4,141 +4,181 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DocMind AI - Intelligent Document Organizer</title>
-    <!-- Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <style>
-        /* Standalone Landing Page Styling override to remove sidebar constraint */
         .landing-body {
-            background: radial-gradient(rgba(5, 7, 10, 0.7) 0%, rgba(5, 7, 10, 0.96) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
+            background: radial-gradient(rgba(3, 7, 18, 0.6) 0%, rgba(3, 7, 18, 0.92) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
+            color: #f8fafc;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            font-family: 'Outfit', sans-serif;
         }
 
         .landing-navbar {
-            padding: 1.5rem 3rem;
+            padding: 1.25rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .landing-navbar .brand-logo {
-            margin-bottom: 0;
+        .brand-logo-full {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #ffffff 20%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-logo-full i {
+            font-size: 2rem;
+            color: #38bdf8;
+            -webkit-text-fill-color: initial;
+            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
         }
 
         .landing-hero {
-            flex: 1;
-            display: flex;
-            align-items: center;
             padding: 4rem 3rem;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
-            width: 100%;
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
-            align-items: center;
+            width: 100%;
         }
 
-        .hero-text h1 {
+        .hero-title-cursive {
             font-family: 'Dancing Script', cursive !important;
-            font-size: 4rem !important;
-            line-height: 1.2;
+            font-size: 4.2rem !important;
+            line-height: 1.15;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 30%, var(--primary-light) 100%);
+            background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
         }
 
-        .hero-text p {
-            font-size: 1.15rem;
-            line-height: 1.6;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
+        .glass-card-premium {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .feature-badge {
+        .glass-card-premium:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(56, 189, 248, 0.2);
+        }
+
+        .category-badge-pill {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(6, 182, 212, 0.08);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 0.4rem 1rem;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             border-radius: 50px;
-            color: var(--primary-light);
+            color: #38bdf8;
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .feat-card {
-            padding: 1.5rem;
-            background: rgba(10, 12, 18, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: var(--radius-md);
-            backdrop-filter: blur(15px);
-            transition: var(--transition);
-        }
-
-        .feat-card:hover {
-            border-color: rgba(6, 182, 212, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .feat-card i {
-            font-size: 1.5rem;
-            color: var(--primary-light);
+            letter-spacing: 0.08em;
             margin-bottom: 1rem;
         }
 
-        .feat-card h5 {
-            color: #fff;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        .categories-5-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
         }
 
-        .feat-card p {
+        .cat-icon-header {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #38bdf8;
+            margin-bottom: 1.25rem;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .role-pill-item {
+            padding: 0.35rem 0.85rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0;
-            line-height: 1.5;
+            color: #cbd5e1;
         }
 
         .landing-footer {
             padding: 2rem 3rem;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.85rem;
-            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            color: #94a3b8;
         }
 
-        @media (max-width: 992px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-            .landing-navbar {
-                padding: 1.5rem;
-            }
-            .landing-hero {
-                padding: 2rem 1.5rem;
-            }
+        .btn-glow-primary {
+            background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
+            color: #ffffff !important;
+            padding: 0.85rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(2, 132, 199, 0.6);
+        }
+
+        .btn-glow-outline {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff !important;
+            padding: 0.85rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow-outline:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #38bdf8;
         }
     </style>
 </head>
@@ -146,62 +186,143 @@
 
     <!-- Top Navbar -->
     <nav class="landing-navbar">
-        <a href="/" class="brand-logo">
+        <a href="/" class="brand-logo-full">
             <i class="fa-solid fa-brain"></i>
             <span>DocMind AI</span>
         </a>
-        <div>
-            <a href="/login" class="btn btn-primary-custom">
-                Enter Portal <i class="fa-solid fa-arrow-right-to-bracket ms-2"></i>
+        <div class="d-flex gap-3">
+            <a href="/login" class="btn-glow-outline">
+                <i class="fa-solid fa-user-shield me-1"></i> Admin Portal
+            </a>
+            <a href="/login" class="btn-glow-primary">
+                Enter Student Portal <i class="fa-solid fa-arrow-right-to-bracket ms-1"></i>
             </a>
         </div>
     </nav>
 
     <!-- Main Content Area -->
     <main class="landing-hero">
-        <div class="hero-grid">
-            
-            <!-- Left Info column -->
-            <div class="hero-text animate-fade-in-up">
-                <span class="feature-badge">
-                    <i class="fa-solid fa-bolt"></i> Intelligent Document Organizer
+        
+        <!-- Hero Section -->
+        <div class="row align-items-center mb-5 animate-fade-in-up">
+            <div class="col-lg-7">
+                <span class="category-badge-pill">
+                    <i class="fa-solid fa-bolt me-1"></i> AIML Intelligent Document Organizer
                 </span>
-                <h1>Transform Study Materials Into Semantic Insights</h1>
-                <p>
-                    DocMind AI acts as an artificial intelligence educational tutor. Students, teachers, HODs, and deans can upload textbooks and syllabus lists to map chapters, flip active recall study cards, auto-grade quizzes, and explore interactive visual mind maps.
+                <h1 class="hero-title-cursive">Transform Study Materials Into Semantic Knowledge</h1>
+                <p class="lead text-light mb-4" style="font-size: 1.25rem; line-height: 1.7; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+                    DocMind AI is an advanced Artificial Intelligence educational platform engineered for <strong>Students, Teachers, Professors, HODs, Deans, and Competitive Exam Aspirants</strong>. It automatically parses course syllabi, maps topics to exact textbook page numbers, generates 3D recall flashcards, auto-grades practice exams, and builds dynamic visual concept mind maps.
                 </p>
-                <div class="d-flex gap-3 flex-wrap">
-                    <a href="/login" class="btn btn-primary-custom" style="padding: 0.9rem 2.2rem; font-size: 1.05rem;">
-                        Get Started <i class="fa-solid fa-chevron-right ms-2"></i>
+                <div class="d-flex gap-3 flex-wrap mb-4">
+                    <a href="/login" class="btn-glow-primary">
+                        Get Started Free <i class="fa-solid fa-chevron-right ms-1"></i>
+                    </a>
+                    <a href="#about-purpose" class="btn-glow-outline">
+                        Learn Purpose & Scope <i class="fa-solid fa-circle-info ms-1"></i>
                     </a>
                 </div>
             </div>
+            
+            <div class="col-lg-5">
+                <div class="glass-card-premium border-glass-glow">
+                    <h4 class="text-white mb-3 font-weight-bold"><i class="fa-solid fa-graduation-cap text-cyan me-2"></i>Target Academic Scope</h4>
+                    <p class="text-secondary small mb-3">Tailored workspaces for all departments and education tiers:</p>
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <span class="role-pill-item"><i class="fa-solid fa-school text-warning me-1"></i> Std 1 - 12 School</span>
+                        <span class="role-pill-item"><i class="fa-solid fa-university text-info me-1"></i> B.E. (Sem 1 to 8)</span>
+                        <span class="role-pill-item"><i class="fa-solid fa-award text-success me-1"></i> M.E. / M.Tech</span>
+                        <span class="role-pill-item"><i class="fa-solid fa-laptop-code text-cyan me-1"></i> CSE & IT Dept</span>
+                        <span class="role-pill-item"><i class="fa-solid fa-microchip text-primary me-1"></i> ECE & EEE Dept</span>
+                        <span class="role-pill-item"><i class="fa-solid fa-gears text-danger me-1"></i> MECH & CIVIL</span>
+                        <span class="role-pill-item"><i class="fa-solid fa-book-open-reader text-warning me-1"></i> GATE Exam</span>
+                        <span class="role-pill-item"><i class="fa-solid fa-briefcase text-info me-1"></i> Group Exams</span>
+                    </div>
+                    <hr style="border-color: rgba(255,255,255,0.1);">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-secondary small">
+                            <i class="fa-solid fa-user-check text-success me-1"></i> User & Admin Portals Supported
+                        </div>
+                        <a href="/login" class="text-cyan text-decoration-none font-weight-semibold small">Sign In <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <!-- Right Features Grid column -->
-            <div class="features-grid animate-fade-in-up" style="animation-delay: 0.2s;">
-                <div class="feat-card">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    <h5>Syllabus Mapping</h5>
-                    <p>Upload a course curriculum syllabus to scan and semantically map topics to textbooks and exact page numbers.</p>
+        <!-- 5 Core Categories Grid -->
+        <h2 class="text-white font-weight-bold mb-2 text-center text-md-start"><i class="fa-solid fa-layer-group text-cyan me-2"></i> 5 Core Intelligent Modules</h2>
+        <p class="text-secondary mb-4 text-center text-md-start">Explore how DocMind AI organizes complex educational materials into actionable learning assets:</p>
+
+        <div class="categories-5-grid animate-fade-in-up">
+            
+            <!-- Category 1 -->
+            <div class="glass-card-premium">
+                <div class="cat-icon-header">
+                    <i class="fa-solid fa-diagram-project"></i>
                 </div>
-                <div class="feat-card">
-                    <i class="fa-solid fa-address-card"></i>
-                    <h5>3D Recall Flashcards</h5>
-                    <p>Synthesize questions and definitions into elegant 3D flipping study decks to test memory retention.</p>
+                <h4 class="text-white font-weight-semibold mb-2">1. Semantic Syllabus Mapping</h4>
+                <p class="text-secondary small mb-0">Upload unit-wise course syllabi (B.E. Sem 1-8, GATE, Group Exams). DocMind AI parses topics and semantically maps each chapter topic to exact textbook pages.</p>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="glass-card-premium">
+                <div class="cat-icon-header">
+                    <i class="fa-solid fa-clone"></i>
                 </div>
-                <div class="feat-card">
-                    <i class="fa-solid fa-circle-question"></i>
-                    <h5>Practice Exams</h5>
-                    <p>Generate targeted mock quiz papers with automated scoring logs and grading metric boards.</p>
+                <h4 class="text-white font-weight-semibold mb-2">2. 3D Recall Flashcards</h4>
+                <p class="text-secondary small mb-0">Active recall study decks featuring 3D card flips. Automatically synthesizes key terms, formulas, and definitions from textbooks for instant revision.</p>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="glass-card-premium">
+                <div class="cat-icon-header">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
                 </div>
-                <div class="feat-card">
+                <h4 class="text-white font-weight-semibold mb-2">3. Practice Exam Quizzes</h4>
+                <p class="text-secondary small mb-0">Generates targeted multiple-choice question tests with detailed solution feedback and automated scoreboards to log assessment metrics over time.</p>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="glass-card-premium">
+                <div class="cat-icon-header">
                     <i class="fa-solid fa-circle-nodes"></i>
-                    <h5>Concept Mind Maps</h5>
-                    <p>Visualize linkages between core definitions and keywords in zoomable SVG graphic node hierarchies.</p>
                 </div>
+                <h4 class="text-white font-weight-semibold mb-2">4. Concept Mind Maps</h4>
+                <p class="text-secondary small mb-0">Interactive Vis.js node network graphics mapping linkages between core definitions, formulas, and keywords in zoomable visual hierarchies.</p>
+            </div>
+
+            <!-- Category 5 -->
+            <div class="glass-card-premium">
+                <div class="cat-icon-header">
+                    <i class="fa-solid fa-users-gear"></i>
+                </div>
+                <h4 class="text-white font-weight-semibold mb-2">5. Role & Grade Hub</h4>
+                <p class="text-secondary small mb-0">Tailor access criteria by role (Student, Teacher, Professor, HOD, Dean) and education grade level (Std 1-12, B.E., M.E., Competitive Exams).</p>
             </div>
 
         </div>
+
+        <!-- Detailed Purpose & Scope Section -->
+        <div id="about-purpose" class="mt-5 pt-4 animate-fade-in-up">
+            <div class="glass-card-premium p-4 p-md-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h3 class="text-white font-weight-bold mb-3"><i class="fa-solid fa-bullseye text-cyan me-2"></i>Purpose & Educational Impact</h3>
+                        <p class="text-secondary lead mb-3">
+                            Educational textbooks and multi-unit course syllabi are often fragmented and overwhelming. DocMind AI resolves this challenge by acting as an artificial intelligence educational tutor powered by Groq Llama 3.1 70B & local vector embeddings.
+                        </p>
+                        <p class="text-secondary small mb-4">
+                            <strong>Why it was built:</strong> To streamline study workflows for B.E. / M.E. engineering students across 8 semesters, competitive exam candidates preparing for GATE and Group Exams, as well as faculty members (Professors, HODs, Deans) who need to evaluate curriculum alignment and generate automated assessment banks.
+                        </p>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <a href="/login" class="btn-glow-primary w-100 justify-content-center py-3 fs-5">
+                            Join DocMind AI <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Public Footer -->
