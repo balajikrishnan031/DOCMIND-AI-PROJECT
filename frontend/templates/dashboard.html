@@ -1,190 +1,186 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard - DocMind AI{% endblock %}
+{% block title %}Dashboard — DocMind AI{% endblock %}
+{% block header_title %}Intellectual Dashboard{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
-    <!-- Header banner -->
-    <div class="row mb-5 align-items-center">
-        <div class="col-md-8">
-            <h1 class="display-5 text-white mb-2 font-weight-bold">Intellectual Knowledge Panel</h1>
-            <p class="text-secondary lead">Manage documents, query semantic vectors, and extract summaries with AI models.</p>
-        </div>
-        <div class="col-md-4 text-md-end">
-            <a href="{{ url_for('upload_page') }}" class="btn btn-primary-custom">
-                <i class="fa-solid fa-cloud-arrow-up me-2"></i>Upload Document
-            </a>
+<div class="container-fluid p-0">
+
+    <!-- Header Banner Card (Kinto Editorial Style) -->
+    <div class="p-4 rounded-4 mb-4" style="background: var(--kinto-card-sand); border: 1px solid var(--border-kinto-sand);">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <span class="badge bg-dark text-white rounded-pill px-3 py-1 font-monospace small mb-2">Platform Overview</span>
+                <h1 class="font-serif display-6 fw-bold text-dark mb-2">Intellectual Knowledge Panel</h1>
+                <p class="text-secondary lead mb-0" style="font-size: 1.05rem;">Manage documents, query semantic vectors, map multi-unit syllabi, and flip active recall study cards.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="{{ url_for('upload_page') }}" class="btn btn-dark rounded-pill px-4 py-2 fw-bold">
+                    <i class="fa-solid fa-cloud-arrow-up me-2"></i>Upload Document
+                </a>
+            </div>
         </div>
     </div>
 
-    <!-- Quick Stats row -->
+    <!-- Quick Metrics (Kinto Soft Linen Cards) -->
     <div class="row g-4 mb-4">
         <div class="col-md-4">
-            <div class="glass-panel stat-card">
+            <div class="p-4 bg-white rounded-4 border shadow-sm d-flex align-items-center justify-content-between">
                 <div>
-                    <h5 class="text-secondary small mb-1">Total Documents</h5>
-                    <h2 class="text-white mb-0 Outfit font-weight-bold">{{ total_docs }}</h2>
+                    <div class="text-secondary small fw-bold text-uppercase tracking-wide">Total Documents</div>
+                    <h2 class="font-serif display-6 fw-bold text-dark mb-0">{{ total_docs }}</h2>
                 </div>
-                <div class="stat-icon icon-purple">
+                <div class="rounded-3 p-3 bg-light text-dark fs-3">
                     <i class="fa-solid fa-file-pdf"></i>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
-            <div class="glass-panel stat-card">
+            <div class="p-4 bg-white rounded-4 border shadow-sm d-flex align-items-center justify-content-between">
                 <div>
-                    <h5 class="text-secondary small mb-1">AI Ready Files</h5>
-                    <h2 class="text-white mb-0 Outfit font-weight-bold">{{ processed_docs }}</h2>
+                    <div class="text-secondary small fw-bold text-uppercase tracking-wide">AI Vector Ready</div>
+                    <h2 class="font-serif display-6 fw-bold text-dark mb-0">{{ processed_docs }}</h2>
                 </div>
-                <div class="stat-icon icon-cyan">
+                <div class="rounded-3 p-3 bg-light text-info fs-3">
                     <i class="fa-solid fa-circle-check"></i>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
-            <div class="glass-panel stat-card">
+            <div class="p-4 bg-white rounded-4 border shadow-sm d-flex align-items-center justify-content-between">
                 <div>
-                    <h5 class="text-secondary small mb-1">Knowledge Queries</h5>
-                    <h2 class="text-white mb-0 Outfit font-weight-bold">{{ total_queries }}</h2>
+                    <div class="text-secondary small fw-bold text-uppercase tracking-wide">Knowledge Queries</div>
+                    <h2 class="font-serif display-6 fw-bold text-dark mb-0">{{ total_queries }}</h2>
                 </div>
-                <div class="stat-icon icon-blue">
+                <div class="rounded-3 p-3 bg-light text-purple fs-3">
                     <i class="fa-solid fa-circle-question"></i>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Academic Level & Role Workspace Navigator -->
-    <div class="glass-panel p-4 mb-5">
+    <!-- Academic Tier & Role Workspace Navigator -->
+    <div class="p-4 bg-white rounded-4 border shadow-sm mb-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="text-white mb-0 font-weight-semibold"><i class="fa-solid fa-layer-group text-cyan me-2"></i>Academic Tier & Role Navigator</h4>
-            <span class="badge bg-dark border border-cyan text-cyan px-3 py-2">Sem 1 - 8 & Exams Supported</span>
+            <h4 class="font-serif fw-bold text-dark mb-0"><i class="fa-solid fa-layer-group text-primary me-2"></i>Academic Tier & Role Navigator</h4>
+            <a href="/school-portal" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold">Open School Portal (Std 1-12)</a>
         </div>
-        <p class="text-secondary small mb-3">Filter materials and study tools by your target academic standard, department, or administrative role:</p>
-
+        <p class="text-secondary small mb-4">Select your academic grade level or professional role to filter course materials and access tailored AI tools:</p>
+        
         <div class="row g-3">
-            <div class="col-md-6">
-                <label class="text-secondary small d-block mb-2 font-weight-bold">Education Tier & Exam Categories:</label>
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="{{ url_for('library_page', grade='Primary (Std 1-5)') }}" class="btn btn-sm btn-outline-info text-decoration-none">Std 1 - 5 Primary</a>
-                    <a href="{{ url_for('library_page', grade='High School (Std 6-12)') }}" class="btn btn-sm btn-outline-info text-decoration-none">Std 6 - 12 School</a>
-                    <a href="{{ url_for('library_page', grade='B.E / B.Tech (Sem 1-8)') }}" class="btn btn-sm btn-outline-cyan text-decoration-none active">B.E. (Sem 1 - 8)</a>
-                    <a href="{{ url_for('library_page', grade='M.E / M.Tech') }}" class="btn btn-sm btn-outline-purple text-decoration-none">M.E. / M.Tech</a>
-                    <a href="{{ url_for('library_page', grade='GATE Exam') }}" class="btn btn-sm btn-outline-warning text-decoration-none">GATE Aspirants</a>
-                    <a href="{{ url_for('library_page', grade='Group Exams') }}" class="btn btn-sm btn-outline-success text-decoration-none">Group Exams (TNPSC/UPSC)</a>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded-3 border text-center">
+                    <i class="fa-solid fa-book-bookmark text-warning fs-3 mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">Std 1 to 5</h6>
+                    <span class="badge bg-warning bg-opacity-10 text-dark border border-warning rounded-pill">Primary School</span>
                 </div>
             </div>
-            <div class="col-md-6">
-                <label class="text-secondary small d-block mb-2 font-weight-bold">Target User Role Workspaces:</label>
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="{{ url_for('library_page', role='Student') }}" class="btn btn-sm btn-outline-light text-decoration-none"><i class="fa-solid fa-user-graduate me-1"></i> Student</a>
-                    <a href="{{ url_for('library_page', role='Teacher') }}" class="btn btn-sm btn-outline-light text-decoration-none"><i class="fa-solid fa-chalkboard-user me-1"></i> Teacher</a>
-                    <a href="{{ url_for('library_page', role='Professor') }}" class="btn btn-sm btn-outline-light text-decoration-none"><i class="fa-solid fa-graduation-cap me-1"></i> Professor</a>
-                    <a href="{{ url_for('library_page', role='HOD') }}" class="btn btn-sm btn-outline-light text-decoration-none"><i class="fa-solid fa-user-gear me-1"></i> HOD</a>
-                    <a href="{{ url_for('library_page', role='Dean') }}" class="btn btn-sm btn-outline-light text-decoration-none"><i class="fa-solid fa-user-shield me-1"></i> Dean</a>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded-3 border text-center">
+                    <i class="fa-solid fa-book-open text-warning fs-3 mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">Std 6 to 8</h6>
+                    <span class="badge bg-warning bg-opacity-10 text-dark border border-warning rounded-pill">Middle School</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded-3 border text-center">
+                    <i class="fa-solid fa-microscope text-warning fs-3 mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">Std 9 to 10</h6>
+                    <span class="badge bg-warning bg-opacity-10 text-dark border border-warning rounded-pill">High School</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded-3 border text-center">
+                    <i class="fa-solid fa-flask text-warning fs-3 mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">Std 11 to 12</h6>
+                    <span class="badge bg-warning bg-opacity-10 text-dark border border-warning rounded-pill">Higher Secondary</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded-3 border text-center">
+                    <i class="fa-solid fa-laptop-code text-info fs-3 mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">B.E. Sem 1 - 8</h6>
+                    <span class="badge bg-info bg-opacity-10 text-dark border border-info rounded-pill">College Undergrad</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded-3 border text-center">
+                    <i class="fa-solid fa-award text-success fs-3 mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">GATE & Group Exams</h6>
+                    <span class="badge bg-success bg-opacity-10 text-dark border border-success rounded-pill">Competitive Exam</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded-3 border text-center">
+                    <i class="fa-solid fa-chalkboard-user text-purple fs-3 mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">Professor & HOD</h6>
+                    <span class="badge bg-purple bg-opacity-10 text-dark border border-purple rounded-pill">Faculty Workspace</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded-3 border text-center">
+                    <i class="fa-solid fa-clipboard-check text-danger fs-3 mb-2"></i>
+                    <h6 class="fw-bold text-dark mb-1">NAAC / NBA Auditor</h6>
+                    <span class="badge bg-danger bg-opacity-10 text-dark border border-danger rounded-pill">Accreditation Audit</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row g-5">
-        <!-- Recent Documents Panel -->
-        <div class="col-lg-8">
-            <div class="glass-panel p-4 mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="text-white mb-0 font-weight-semibold">Recent Uploads</h4>
-                    <a href="{{ url_for('library_page') }}" class="text-secondary small text-decoration-none">
-                        View All Library <i class="fa-solid fa-arrow-right ms-1"></i>
-                    </a>
-                </div>
-                
-                {% if documents %}
-                    <div class="table-responsive">
-                        <table class="table table-custom align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Filename</th>
-                                    <th>Status</th>
-                                    <th>Uploaded</th>
-                                    <th class="text-end">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for doc in documents %}
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-3">
-                                                <i class="fa-solid {% if doc.file_type == 'pdf' %}fa-file-pdf text-danger{% else %}fa-file-word text-primary{% endif %} fs-4"></i>
-                                                <div>
-                                                    <div class="text-white font-weight-semibold">{{ doc.filename }}</div>
-                                                    <div class="text-secondary small">{{ (doc.file_size / 1024) | round(1) }} KB</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge-status {% if doc.status == 'completed' %}badge-completed{% elif doc.status == 'failed' %}badge-failed{% else %}badge-processing{% endif %}">
-                                                <i class="fa-solid {% if doc.status == 'completed' %}fa-circle-check{% elif doc.status == 'failed' %}fa-circle-xmark{% else %}fa-spinner fa-spin{% endif %} me-1"></i>
-                                                {{ doc.status | capitalize }}
-                                            </span>
-                                        </td>
-                                        <td class="text-secondary small">{{ doc.uploaded_at.split(' ')[0] }}</td>
-                                        <td class="text-end">
-                                            {% if doc.status == 'completed' %}
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary-custom btn-sm dropdown-toggle py-1" type="button" data-bs-toggle="dropdown">
-                                                        Explore
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-dark">
-                                                        <li><a class="dropdown-item" href="{{ url_for('chat_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-comments me-2 text-secondary"></i>Ask Q&A</a></li>
-                                                        <li><a class="dropdown-item" href="{{ url_for('summary_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-align-left me-2 text-secondary"></i>Summary</a></li>
-                                                        <li><a class="dropdown-item" href="{{ url_for('keywords_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-tags me-2 text-secondary"></i>Keywords</a></li>
-                                                        <li><a class="dropdown-item" href="{{ url_for('highlights_page') }}?doc_id={{ doc.id }}"><i class="fa-solid fa-star me-2 text-secondary"></i>Highlights</a></li>
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li><a class="dropdown-item" href="{{ url_for('download_report', doc_id=doc.id) }}" target="_blank"><i class="fa-solid fa-file-export me-2 text-secondary"></i>Export Report</a></li>
-                                                    </ul>
-                                                </div>
-                                            {% else %}
-                                                <button class="btn btn-secondary-custom btn-sm py-1" disabled>Indexing...</button>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                {% else %}
-                    <div class="text-center py-5 border-glass-glow rounded" style="border: 1px dashed rgba(255,255,255,0.05)">
-                        <i class="fa-solid fa-file-circle-plus display-6 text-muted mb-3"></i>
-                        <p class="text-secondary mb-0">No documents found. Start by uploading study materials.</p>
-                        <a href="{{ url_for('upload_page') }}" class="btn btn-primary-custom btn-sm mt-3">Upload Now</a>
-                    </div>
-                {% endif %}
-            </div>
+    <!-- Recent Document Library -->
+    <div class="p-4 bg-white rounded-4 border shadow-sm">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="font-serif fw-bold text-dark mb-0"><i class="fa-solid fa-folder-open text-primary me-2"></i>Recent Document Library</h4>
+            <a href="{{ url_for('library_page') }}" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold">View All Documents</a>
         </div>
 
-        <!-- Right Tag Cloud / Keywords Panel -->
-        <div class="col-lg-4">
-            <div class="glass-panel p-4 h-100">
-                <h4 class="text-white mb-4 font-weight-semibold">System-Wide Topics</h4>
-                <p class="text-secondary small mb-4">Extracted semantic keywords across all uploaded documents.</p>
-                
-                {% if top_keywords %}
-                    <div class="d-flex flex-wrap gap-2">
-                        {% for kw, count in top_keywords %}
-                            <a href="{{ url_for('keywords_page') }}" class="keyword-tag">
-                                {{ kw }}
-                                <span class="score">{{ count }}</span>
-                            </a>
+        {% if documents %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-uppercase small text-secondary">
+                        <tr>
+                            <th>Document Title</th>
+                            <th>Pages</th>
+                            <th>Status</th>
+                            <th>Uploaded</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doc in documents %}
+                        <tr>
+                            <td class="fw-bold text-dark">
+                                <i class="fa-solid fa-file-pdf text-danger me-2"></i>{{ doc.original_filename }}
+                            </td>
+                            <td>{{ doc.total_pages or 'N/A' }}</td>
+                            <td>
+                                {% if doc.status == 'processed' %}
+                                    <span class="badge bg-success">Ready (RAG Active)</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">Processing...</span>
+                                {% endif %}
+                            </td>
+                            <td class="small text-muted">{{ doc.created_at }}</td>
+                            <td>
+                                <a href="{{ url_for('chat_page') }}?doc_id={{ doc.doc_id }}" class="btn btn-sm btn-dark rounded-pill px-3 me-1">Ask Q&A</a>
+                                <a href="{{ url_for('flashcards_page') }}?doc_id={{ doc.doc_id }}" class="btn btn-sm btn-outline-dark rounded-pill px-3">Flashcards</a>
+                            </td>
+                        </tr>
                         {% endfor %}
-                    </div>
-                {% else %}
-                    <div class="text-center py-5">
-                        <i class="fa-solid fa-tags text-muted display-6 mb-3"></i>
-                        <p class="text-secondary small">No keywords indexed yet. Upload documents to construct your semantic network.</p>
-                    </div>
-                {% endif %}
+                    </tbody>
+                </table>
             </div>
-        </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fa-solid fa-cloud-arrow-up display-3 text-muted mb-3"></i>
+                <h5 class="fw-bold text-dark">No Documents Uploaded Yet</h5>
+                <p class="text-secondary small mb-3">Upload your textbook PDF to enable RAG Q&A, syllabus mapping, and 3D flashcards.</p>
+                <a href="{{ url_for('upload_page') }}" class="btn btn-dark rounded-pill px-4 py-2 fw-bold">Upload Your First PDF</a>
+            </div>
+        {% endif %}
     </div>
+
 </div>
 {% endblock %}

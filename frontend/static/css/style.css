@@ -9,28 +9,39 @@
      --glow-glow: 0 0 20px rgba(99, 102, 241, 0.15)
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap');
 
 :root {
-    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --bg-dark: #05070a;
-    --bg-sidebar: rgba(10, 12, 18, 0.7);
-    --bg-panel: rgba(15, 20, 30, 0.6);
-    --bg-glass: rgba(255, 255, 255, 0.03);
-    --bg-glass-hover: rgba(255, 255, 255, 0.06);
-    --border-glass: rgba(255, 255, 255, 0.08);
-    --border-glass-glow: rgba(6, 182, 212, 0.3);
-    --text-primary: #f3f4f6;
-    --text-secondary: #cbd5e1;
-    --text-muted: #64748b;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --bg-kinto-sand: #f7f4ee;
+    --bg-kinto-card: #eae4d8;
+    --bg-kinto-white: #ffffff;
+    --border-kinto-sand: #e2dacd;
+    --text-kinto-dark: #1c1917;
+    --text-kinto-sub: #57534e;
+    --btn-kinto-dark: #18181b;
+
+    /* Legacy Dark Mode Fallbacks */
+    --bg-dark: #f7f4ee;
+    --bg-sidebar: #eae4d8;
+    --bg-panel: #ffffff;
+    --bg-glass: #ffffff;
+    --bg-glass-hover: #f7f4ee;
+    --border-glass: #e2dacd;
+    --border-glass-glow: #0284c7;
+    --text-primary: #1c1917;
+    --text-secondary: #57534e;
+    --text-muted: #78716c;
     
-    --primary: #06b6d4;
-    --primary-light: #22d3ee;
-    --secondary: #3b82f6;
-    --accent: #8b5cf6;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
+    --primary: #0284c7;
+    --primary-light: #38bdf8;
+    --secondary: #6366f1;
+    --accent: #a855f7;
+    --success: #15803d;
+    --danger: #b91c1c;
+    --warning: #b45309;
+}
     
     --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
     --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);

@@ -1,28 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}School Education Portal (Std 1 - 12) - DocMind AI{% endblock %}
+{% block title %}School Education Portal (Std 1 - 12) — DocMind AI{% endblock %}
+{% block header_title %}School Portal (Std 1 to 12){% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
-    <!-- Header banner -->
-    <div class="row mb-4 align-items-center">
-        <div class="col-md-8">
-            <h1 class="display-6 text-white mb-2 font-weight-bold cursive-h1">School Education Portal (Std 1 to 12)</h1>
-            <p class="text-secondary lead">Instant AI Step-by-Step Problem Solver, Homework Tutor & Practice Quizzes.</p>
-        </div>
-        <div class="col-md-4 text-md-end">
-            <span class="badge bg-dark border border-warning text-warning p-2 px-3 fs-6">
-                <i class="fa-solid fa-graduation-cap me-1"></i> Std 1 - 12 All Subjects
-            </span>
+<div class="container-fluid p-0">
+
+    <!-- Header Banner Card (Kinto Editorial Style) -->
+    <div class="p-4 rounded-4 mb-4" style="background: var(--kinto-card-sand); border: 1px solid var(--border-kinto-sand);">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <span class="badge bg-warning bg-opacity-20 text-dark border border-warning rounded-pill px-3 py-1 font-monospace small mb-2 fw-bold">Std 1 to 12 Curriculum Engine</span>
+                <h1 class="font-serif display-6 fw-bold text-dark mb-2">School Education Portal</h1>
+                <p class="text-secondary lead mb-0" style="font-size: 1.05rem;">Instant AI Step-by-Step Problem Solver, Homework Tutor & Grade-Tailored Quizzes.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <span class="badge bg-dark text-white p-2 px-3 fs-6 rounded-pill fw-bold">
+                    <i class="fa-solid fa-graduation-cap me-1 text-warning"></i> Std 1 - 12 All Subjects
+                </span>
+            </div>
         </div>
     </div>
 
     <!-- Grade Standard Selector Bar -->
-    <div class="glass-panel p-4 mb-5">
-        <label class="text-secondary small d-block mb-3 font-weight-bold"><i class="fa-solid fa-layer-group text-cyan me-2"></i>Select Target Standard / Class (Std 1 to 12):</label>
+    <div class="p-4 bg-white rounded-4 border shadow-sm mb-4">
+        <label class="text-secondary small d-block mb-3 fw-bold"><i class="fa-solid fa-layer-group text-primary me-2"></i>Select Target Standard / Class (Std 1 to 12):</label>
         <div class="d-flex flex-wrap gap-2">
             {% for g in range(1, 13) %}
-            <a href="{{ url_for('school_portal_page', grade=g) }}" class="btn btn-sm {% if selected_grade == g %}btn-glow-cyan active{% else %}btn-outline-info{% endif %} px-3 py-2">
+            <a href="{{ url_for('school_portal_page', grade=g) }}" class="btn btn-sm {% if selected_grade == g %}btn-dark{% else %}btn-outline-dark{% endif %} rounded-pill px-3 py-2 fw-bold">
                 Std {{ g }} {% if g <= 5 %}(Primary){% elif g <= 8 %}(Middle){% elif g <= 10 %}(High){% else %}(Higher Sec){% endif %}
             </a>
             {% endfor %}
@@ -30,24 +35,24 @@
     </div>
 
     <!-- AI Step-by-Step Question & Homework Solver Box -->
-    <div class="glass-panel p-4 p-md-5 mb-5 border-glass-glow">
-        <h4 class="text-white font-weight-bold mb-3"><i class="fa-solid fa-wand-magic-sparkles text-cyan me-2"></i>AI Step-by-Step Problem & Homework Solver (Std {{ selected_grade }})</h4>
+    <div class="p-4 p-md-5 bg-white rounded-4 border shadow-sm mb-4">
+        <h4 class="font-serif fw-bold text-dark mb-2"><i class="fa-solid fa-wand-magic-sparkles text-warning me-2"></i>AI Step-by-Step Problem Solver (Std {{ selected_grade }})</h4>
         <p class="text-secondary small mb-4">Type any question, math equation, physics problem, or science concept for Std {{ selected_grade }} to get easy step-by-step solutions:</p>
 
         <form action="{{ url_for('school_portal_page', grade=selected_grade) }}" method="POST" class="mb-4">
             <div class="row g-3 align-items-center">
                 <div class="col-md-3">
-                    <select name="subject" class="form-select form-control-custom text-white" style="background: rgba(15,23,42,0.8);">
+                    <select name="subject" class="form-select form-control-kinto">
                         {% for subj in subjects %}
                         <option value="{{ subj.subject }}">{{ subj.subject }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-7">
-                    <input type="text" name="question_text" class="form-control form-control-custom" placeholder="e.g., Explain Newton's Second Law with formula F=ma or Solve 3x + 5 = 20..." required>
+                    <input type="text" name="question_text" class="form-control form-control-kinto" placeholder="e.g., Explain Newton's Second Law with formula F=ma or Solve 3x + 5 = 20..." required>
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-glow-cyan w-100 py-2">
+                    <button type="submit" class="btn btn-dark w-100 py-2 rounded-3 fw-bold">
                         Solve Step-by-Step <i class="fa-solid fa-bolt ms-1"></i>
                     </button>
                 </div>
@@ -56,67 +61,51 @@
 
         <!-- Solution Display Card if Solved -->
         {% if solution %}
-        <div class="p-4 rounded-3 border-glass-glow" style="background: rgba(3, 7, 18, 0.85); border-color: rgba(56, 189, 248, 0.4);">
+        <div class="p-4 rounded-3 bg-light border">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="text-cyan font-weight-bold mb-0"><i class="fa-solid fa-circle-check text-success me-2"></i>Step-by-Step Solution Breakdown</h5>
-                <span class="badge bg-dark border border-cyan text-cyan px-3 py-1">Std {{ solution.grade_std }} | {{ solution.subject }}</span>
+                <span class="badge bg-success text-white font-monospace">Step-by-Step Solution Ready</span>
+                <span class="text-muted small">Grade: Std {{ solution.grade }} | Subject: {{ solution.subject }}</span>
             </div>
 
-            <div class="p-3 rounded-3 mb-3" style="background: rgba(255,255,255,0.03);">
-                <div class="text-warning small font-weight-bold mb-1"><i class="fa-solid fa-lightbulb me-1"></i> Simplified Conceptual Overview:</div>
-                <p class="text-white mb-0 leading-relaxed">{{ solution.simple_explanation }}</p>
-            </div>
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-circle-question text-info me-2"></i>{{ solution.question }}</h5>
 
-            <div class="p-3 rounded-3 mb-3" style="background: rgba(255,255,255,0.03);">
-                <div class="text-purple small font-weight-bold mb-2"><i class="fa-solid fa-list-check me-1"></i> Step-by-Step Derivation & Steps:</div>
-                <ul class="list-unstyled text-light mb-0">
-                    {% for step in solution.step_by_step_solution %}
-                    <li class="mb-2"><i class="fa-solid fa-chevron-right text-cyan me-2"></i>{{ step }}</li>
+            <div class="p-3 bg-white rounded border mb-3">
+                <div class="fw-bold text-dark small mb-2"><i class="fa-solid fa-list-check text-primary me-2"></i>Structured Steps:</div>
+                <ol class="mb-0 ps-3 text-secondary">
+                    {% for step in solution.steps %}
+                    <li class="mb-2">{{ step }}</li>
                     {% endfor %}
-                </ul>
+                </ol>
             </div>
 
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <div class="p-3 rounded-3 bg-dark border border-warning">
-                        <div class="text-warning small font-weight-bold mb-1"><i class="fa-solid fa-key me-1"></i> Key Formula / Rule:</div>
-                        <div class="text-white small font-monospace">{{ solution.key_formula_or_concept }}</div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="p-3 rounded-3 bg-dark border border-success">
-                        <div class="text-success small font-weight-bold mb-1"><i class="fa-solid fa-brain me-1"></i> Memory Trick & Tip:</div>
-                        <div class="text-white small font-monospace">{{ solution.memory_trick_or_tip }}</div>
-                    </div>
-                </div>
+            <div class="p-3 bg-dark text-white rounded border">
+                <div class="fw-bold text-warning small mb-1"><i class="fa-solid fa-star me-2"></i>Final Answer & Summary:</div>
+                <p class="mb-0 text-white font-weight-bold">{{ solution.final_answer }}</p>
             </div>
         </div>
         {% endif %}
     </div>
 
-    <!-- Subjects Grid for Selected Grade -->
-    <h4 class="text-white font-weight-bold mb-4"><i class="fa-solid fa-book text-warning me-2"></i>Std {{ selected_grade }} Core Subject Curricula & Topics</h4>
-    <div class="row g-4 mb-5">
-        {% for subj in subjects %}
-        <div class="col-lg-3 col-md-6">
-            <div class="glass-card-base glass-cyan h-100">
-                <div>
-                    <div class="cat-icon-lg-glow cat-icon-cyan">
-                        <i class="fa-solid {{ subj.icon }}"></i>
+    <!-- Available Subjects & Topics Grid -->
+    <div class="p-4 bg-white rounded-4 border shadow-sm">
+        <h4 class="font-serif fw-bold text-dark mb-3"><i class="fa-solid fa-books text-primary me-2"></i>Std {{ selected_grade }} Subject Curriculums</h4>
+        <div class="row g-4">
+            {% for subj in subjects %}
+            <div class="col-md-6">
+                <div class="p-3 bg-light rounded-3 border">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="fw-bold text-dark mb-0"><i class="fa-solid fa-book text-warning me-2"></i>{{ subj.subject }}</h6>
+                        <span class="badge bg-secondary text-white">{{ subj.topics|length }} Units</span>
                     </div>
-                    <h4 class="text-white font-weight-bold mb-3">{{ subj.subject }}</h4>
-                    <ul class="list-unstyled text-secondary small mb-0">
-                        {% for t in subj.topics %}
-                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>{{ t }}</li>
+                    <ul class="list-unstyled mb-0 text-secondary small ps-2">
+                        {% for topic in subj.topics %}
+                        <li class="mb-1">• {{ topic }}</li>
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="pt-3">
-                    <a href="{{ url_for('quiz_page') }}" class="btn btn-sm btn-outline-cyan w-100">Take Subject Test</a>
-                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 
 </div>
