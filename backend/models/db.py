@@ -4,6 +4,18 @@ from flask import g, current_app
 
 def get_db():
     if 'db' not in g:
+        turso_url = os.environ.get('TURSO_DATABASE_URL')
+        turso_token = os.environ.get('TURSO_AUTH_TOKEN')
+        
+        if turso_url and turso_token:
+            try:
+                import libsql_experimental as libsql
+                g.db = libsql.connect(turso_url, auth_token=turso_token)
+                g.db.row_factory = sqlite3.Row
+                return g.db
+            except Exception as e:
+                print(f"Turso Cloud DB Connection Notice: {e}, falling back to local SQLite.")
+
         db_path = current_app.config['DATABASE']
         # Ensure database directory exists
         os.makedirs(os.path.dirname(db_path), exist_ok=True)

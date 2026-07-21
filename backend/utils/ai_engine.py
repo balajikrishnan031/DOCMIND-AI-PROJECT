@@ -232,6 +232,36 @@ class AIEngine:
         return None
 
     @classmethod
+    def call_groq_json(cls, system_prompt, user_prompt, api_key):
+        """Sends a request to Groq API with JSON Mode forced output (response_format={'type': 'json_object'})."""
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}"
+        }
+        payload = {
+            "model": "llama-3.1-70b-versatile",
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            "response_format": {"type": "json_object"},
+            "temperature": 0.3
+        }
+        try:
+            res = requests.post(url, headers=headers, json=payload, timeout=25)
+            if res.status_code == 200:
+                return res.json()['choices'][0]['message']['content']
+            else:
+                payload["model"] = "llama-3.1-8b-instant"
+                res = requests.post(url, headers=headers, json=payload, timeout=25)
+                if res.status_code == 200:
+                    return res.json()['choices'][0]['message']['content']
+        except Exception as e:
+            print(f"Error calling Groq JSON API: {e}")
+        return None
+
+    @classmethod
     def call_ollama(cls, prompt, endpoint):
         """Sends a request to a local Ollama instance (defaulting to llama3/mistral)."""
         url = f"{endpoint.rstrip('/')}/api/generate"
