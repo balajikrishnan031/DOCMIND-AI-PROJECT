@@ -6,29 +6,17 @@
     <title>DocMind AI - Intelligent Document Organizer & Educational Assistant</title>
     <!-- FontAwesome 6 & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <style>
-        /* High-Contrast Decent Box-Formatted Landing Page CSS */
+        /* Master Extended White Glassmorphism Design System */
         .landing-page-wrapper {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.6) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.55) 100%), url('/static/assets/bg.jpg') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
             color: #0f172a;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             overflow-x: hidden;
-        }
-
-        /* Top Announcement Header Bar */
-        .announcement-bar {
-            background: linear-gradient(90deg, #0284c7 0%, #4338ca 50%, #be185d 100%);
-            color: #ffffff;
-            font-size: 0.88rem;
-            font-weight: 700;
-            padding: 0.5rem 1rem;
-            text-align: center;
-            letter-spacing: 0.03em;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         /* Glass Floating Navbar - High Contrast Solid Dark */
@@ -36,31 +24,69 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: #0f172a;
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(20px);
             border-bottom: 2px solid rgba(56, 189, 248, 0.3);
-            padding: 1rem 3rem;
+            padding: 0.9rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
         }
 
+        /* Brand Logo with Tagline */
         .brand-logo-extended {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #ffffff !important;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            letter-spacing: -0.02em;
+            gap: 0.85rem;
         }
 
-        .brand-logo-extended i {
-            font-size: 2rem;
+        .logo-icon-badge {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, #0284c7 0%, #4338ca 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo-extended:hover .logo-icon-badge {
+            transform: scale(1.08) rotate(5deg);
+        }
+
+        .logo-icon-badge i {
+            font-size: 1.6rem;
+            color: #ffffff;
+        }
+
+        .logo-brand-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .logo-subtagline {
+            font-size: 0.72rem;
+            font-weight: 700;
             color: #38bdf8;
-            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8));
+            letter-spacing: 0.02em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .badge-ai-accent {
+            background: linear-gradient(135deg, #38bdf8 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
         }
 
         .nav-links-menu {
@@ -75,8 +101,8 @@
         .nav-links-menu a {
             color: #f8fafc;
             text-decoration: none;
-            font-size: 0.98rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             transition: all 0.25s ease;
         }
 
@@ -85,28 +111,49 @@
             text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
         }
 
-        /* Hero Container & Solid Box Wrapper */
+        /* Cursive Accent Typography */
+        .cursive-accent {
+            font-family: 'Dancing Script', cursive !important;
+            font-size: 1.85rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        /* Hero Container & White Glass Box */
         .hero-section-full {
-            padding: 4rem 2rem 3rem 2rem;
-            max-width: 1350px;
+            padding: 3.5rem 2rem 3rem 2rem;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .hero-card-box {
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 24px;
-            padding: 3.5rem 3rem;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(20px);
-            color: #0f172a;
+        /* White Glassmorphism Card Utility */
+        .glass-box-white {
+            background: rgba(255, 255, 255, 0.93) !important;
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.8) !important;
+            border-radius: 24px !important;
+            padding: 2.75rem !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22) !important;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #0f172a !important;
+        }
+
+        .glass-box-white:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3) !important;
+            border-color: #38bdf8 !important;
         }
 
         .hero-pill-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
-            padding: 0.5rem 1.25rem;
+            padding: 0.55rem 1.35rem;
             background: #e0f2fe;
             border: 1px solid #7dd3fc;
             border-radius: 50px;
@@ -115,63 +162,42 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .hero-title-main {
-            font-family: 'Outfit', sans-serif !important;
-            font-size: 3.2rem !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 3.1rem !important;
             font-weight: 900 !important;
-            line-height: 1.2;
+            line-height: 1.25;
             color: #0f172a !important;
             margin-bottom: 1.5rem;
             letter-spacing: -0.03em;
         }
 
         .hero-subtext {
-            font-size: 1.15rem;
+            font-size: 1.12rem;
             line-height: 1.8;
             color: #334155;
             margin-bottom: 2.25rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        /* Clean Decent Box Format Cards */
-        .box-card-white {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 2.25rem;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            color: #0f172a;
-        }
-
-        .box-card-white:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-            border-color: #38bdf8;
-        }
-
-        /* Category Color Accents for Boxes */
-        .box-accent-cyan { border-top: 6px solid #0284c7; }
-        .box-accent-purple { border-top: 6px solid #7e22ce; }
-        .box-accent-amber { border-top: 6px solid #d97706; }
-        .box-accent-emerald { border-top: 6px solid #059669; }
-        .box-accent-rose { border-top: 6px solid #e11d48; }
+        /* Color Accent Box Tops */
+        .box-accent-cyan { border-top: 6px solid #0284c7 !important; }
+        .box-accent-purple { border-top: 6px solid #7e22ce !important; }
+        .box-accent-amber { border-top: 6px solid #d97706 !important; }
+        .box-accent-emerald { border-top: 6px solid #059669 !important; }
+        .box-accent-rose { border-top: 6px solid #e11d48 !important; }
 
         .cat-icon-box {
-            width: 58px;
-            height: 58px;
-            border-radius: 16px;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.75rem;
+            font-size: 1.85rem;
             margin-bottom: 1.5rem;
         }
 
@@ -181,19 +207,19 @@
         .icon-box-emerald { background: #d1fae5; color: #059669; border: 1px solid #6ee7b7; }
         .icon-box-rose { background: #ffe4e6; color: #e11d48; border: 1px solid #fecdd3; }
 
-        /* Typography Controls inside Boxes */
+        /* Typography Controls inside White Glass Boxes */
         .box-card-title {
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 800;
             color: #0f172a;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.9rem;
         }
 
         .box-card-text {
             font-size: 0.98rem;
-            line-height: 1.65;
+            line-height: 1.7;
             color: #334155;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .box-feature-list {
@@ -201,25 +227,19 @@
             padding: 0;
             margin: 0;
             color: #1e293b;
-            font-size: 0.92rem;
-            font-weight: 600;
+            font-size: 0.94rem;
+            font-weight: 700;
         }
 
         .box-feature-list li {
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
         }
 
         /* Metrics Counter Box */
         .metrics-counter-bar {
-            background: #ffffff;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
-            padding: 2.5rem 2rem;
             margin: 3.5rem 0;
-            color: #0f172a;
         }
 
         .metric-item-box h2 {
@@ -235,9 +255,9 @@
             font-size: 0.95rem;
         }
 
-        /* Scope Pills in Light Box */
+        /* Scope Tags */
         .scope-tag-pill {
-            padding: 0.55rem 1.1rem;
+            padding: 0.6rem 1.2rem;
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
             border-radius: 30px;
@@ -256,11 +276,11 @@
             border-color: #0284c7;
         }
 
-        /* Solid High Contrast Buttons */
+        /* High Contrast Action Buttons */
         .btn-solid-primary {
             background: #0284c7;
             color: #ffffff !important;
-            padding: 0.9rem 2.2rem;
+            padding: 0.95rem 2.25rem;
             font-size: 1.05rem;
             font-weight: 800;
             border-radius: 14px;
@@ -282,7 +302,7 @@
         .btn-solid-dark {
             background: #0f172a;
             color: #ffffff !important;
-            padding: 0.9rem 2.2rem;
+            padding: 0.95rem 2.25rem;
             font-size: 1.05rem;
             font-weight: 800;
             border-radius: 14px;
@@ -299,18 +319,36 @@
             transform: translateY(-2px);
         }
 
-        /* FAQ Accordion High Contrast Box */
+        /* Section Title Boxes */
+        .section-header-title-dark {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .section-header-sub-dark {
+            font-size: 1.1rem;
+            color: #f1f5f9;
+            max-width: 850px;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* FAQ Box Item */
         .faq-box-item {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.95);
             border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            margin-bottom: 1rem;
+            border-radius: 16px;
+            margin-bottom: 1.25rem;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         }
 
         .faq-box-header {
-            padding: 1.25rem 1.75rem;
+            padding: 1.35rem 1.85rem;
             font-size: 1.1rem;
             font-weight: 800;
             color: #0f172a;
@@ -318,7 +356,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #ffffff;
         }
 
         .faq-box-header:hover {
@@ -327,14 +364,14 @@
         }
 
         .faq-box-body {
-            padding: 1.25rem 1.75rem;
+            padding: 1.35rem 1.85rem;
             font-size: 0.98rem;
-            line-height: 1.7;
+            line-height: 1.75;
             color: #334155;
             display: none;
             border-top: 1px solid #e2e8f0;
             background: #f8fafc;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .faq-box-item.active .faq-box-body {
@@ -346,49 +383,33 @@
             color: #0284c7;
         }
 
-        /* Section Title Boxes */
-        .section-header-title-dark {
-            font-size: 2.4rem;
-            font-weight: 900;
-            color: #ffffff;
-            margin-bottom: 0.75rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-        }
-
-        .section-header-sub-dark {
-            font-size: 1.1rem;
-            color: #f1f5f9;
-            max-width: 800px;
-            margin-bottom: 3rem;
-            font-weight: 600;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-        }
-
-        /* Master Footer */
-        .master-footer-dark {
-            background: #0f172a;
-            border-top: 2px solid rgba(56, 189, 248, 0.3);
-            padding: 4rem 3rem 2rem 3rem;
-            font-size: 0.92rem;
+        /* Master Footer in Structured White Glass Box */
+        .master-footer-glass {
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(25px);
+            border-top: 3px solid #0284c7;
+            padding: 4.5rem 3rem 2.5rem 3rem;
+            font-size: 0.95rem;
             color: #94a3b8;
+            margin-top: 4rem;
         }
     </style>
 </head>
 <body class="landing-page-wrapper">
 
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        <i class="fa-solid fa-sparkles me-2"></i> Powered by Groq Llama 3.1 70B & Vector RAG Embeddings — Built for Students, Professors, HODs & Deans
-    </div>
-
     <!-- Solid Dark Navigation Bar -->
     <header class="landing-header-nav">
         <a href="/" class="brand-logo-extended">
-            <i class="fa-solid fa-brain"></i>
-            <span>DocMind AI</span>
+            <div class="logo-icon-badge">
+                <i class="fa-solid fa-atom"></i>
+            </div>
+            <div>
+                <span class="logo-brand-text">DocMind <span class="badge-ai-accent">AI</span></span>
+                <span class="logo-subtagline">Intelligent Document Organizer & Educational Assistant</span>
+            </div>
         </a>
 
-        <ul class="nav-links-menu d-none d-lg-flex">
+        <ul class="nav-links-menu d-none d-xl-flex">
             <li><a href="#core-modules">5 Modules</a></li>
             <li><a href="#academic-scope">Academic Scope</a></li>
             <li><a href="#user-personas">Roles & Personas</a></li>
@@ -398,7 +419,7 @@
 
         <div class="d-flex gap-3">
             <a href="/login" class="btn-solid-dark py-2 px-3 fs-6">
-                <i class="fa-solid fa-user-shield me-1"></i> Admin Portal
+                <i class="fa-solid fa-user-shield me-1"></i> Faculty Portal
             </a>
             <a href="/login" class="btn-solid-primary py-2 px-4 fs-6">
                 Student Portal <i class="fa-solid fa-arrow-right-to-bracket ms-1"></i>
@@ -406,16 +427,19 @@
         </div>
     </header>
 
-    <!-- Main Hero Box Section -->
+    <!-- Hero Section in White Glassmorphism Box -->
     <main class="hero-section-full">
-        <div class="hero-card-box">
+        <div class="glass-box-white">
             <div class="row align-items-center g-5">
                 
                 <div class="col-lg-7">
                     <span class="hero-pill-badge">
-                        <i class="fa-solid fa-brain-circuit me-1"></i> AIML Intelligent Document Organizer
+                        <i class="fa-solid fa-brain-circuit me-1"></i> AIML Intelligent Platform
                     </span>
-                    <h1 class="hero-title-main">Transform Complex Textbooks & Syllabi Into Interactive Knowledge</h1>
+                    <h1 class="hero-title-main">
+                        Transform Complex Textbooks & Syllabi Into Interactive Knowledge
+                        <span class="cursive-accent">Ecosystem</span>
+                    </h1>
                     <p class="hero-subtext">
                         DocMind AI is a comprehensive Artificial Intelligence educational tutor. Engineered specifically for <strong>Students, School Teachers (Std 1-12), College Professors, HODs, Deans, and Competitive Exam Aspirants (GATE & Group Exams)</strong>, it automatically ingests multi-unit syllabi, maps chapter topics to exact textbook page numbers, flips 3D recall flashcards, auto-grades practice exams, and builds dynamic visual concept mind maps.
                     </p>
@@ -429,26 +453,26 @@
                     </div>
                 </div>
 
-                <!-- Live Mockup Sandbox Preview Box -->
+                <!-- Clean Sandbox Preview Box on Right -->
                 <div class="col-lg-5">
-                    <div class="p-4 rounded-4 shadow-lg" style="background: #0f172a; border: 2px solid #38bdf8; color: #ffffff;">
+                    <div class="p-4 rounded-4 shadow-lg" style="background: rgba(15, 23, 42, 0.95); border: 2px solid #38bdf8; color: #ffffff;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="badge bg-info text-dark font-weight-bold px-3 py-1"><i class="fa-solid fa-circle-dot me-1"></i> Live RAG Processing</span>
-                            <span class="text-cyan small font-monospace">Llama 3.1 70B</span>
+                            <span class="badge bg-info text-dark font-weight-bold px-3 py-2"><i class="fa-solid fa-circle-dot me-1"></i> Live RAG Ingestion</span>
+                            <span class="text-cyan small font-monospace">Groq Llama 3.1 70B</span>
                         </div>
 
-                        <div class="p-3 rounded-3 mb-3" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15);">
+                        <div class="p-3 rounded-3 mb-3" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2);">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-cyan font-weight-bold small"><i class="fa-solid fa-file-pdf me-1"></i> B.E_CSE_Operating_Systems.pdf</span>
                                 <span class="badge bg-success text-dark font-weight-bold">Sem 5 Mapped</span>
                             </div>
                             <div class="text-white small mb-2 font-monospace">Unit I: OS Architecture & CPU Scheduling</div>
-                            <div class="progress" style="height: 8px; background: rgba(255,255,255,0.15);">
+                            <div class="progress" style="height: 8px; background: rgba(255,255,255,0.2);">
                                 <div class="progress-bar bg-info w-100 progress-bar-striped progress-bar-animated"></div>
                             </div>
                         </div>
 
-                        <div class="p-3 rounded-3 mb-3" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(192, 132, 252, 0.3);">
+                        <div class="p-3 rounded-3 mb-3" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(192, 132, 252, 0.3);">
                             <div class="text-warning small font-weight-bold mb-1"><i class="fa-solid fa-bolt me-1"></i> Page-Cited Synthesis:</div>
                             <div class="text-light small font-italic mb-2">"Operating Systems manage CPU scheduling via Round Robin & Priority Queue algorithms [Page 42, Textbook Vol 1]."</div>
                             <div class="d-flex gap-2 flex-wrap">
@@ -467,8 +491,8 @@
             </div>
         </div>
 
-        <!-- High-Contrast Metrics Box -->
-        <div class="metrics-counter-bar">
+        <!-- Metrics Box in White Glass -->
+        <div class="glass-box-white metrics-counter-bar">
             <div class="row text-center g-4">
                 <div class="col-md-3">
                     <div class="metric-item-box">
@@ -498,19 +522,22 @@
         </div>
     </main>
 
-    <!-- 5 Core Categories Section in High-Contrast White Boxes -->
+    <!-- 5 Core Categories Section in Separate White Glass Boxes -->
     <section id="core-modules" class="container-fluid px-4 px-md-5 mb-5">
-        <div class="text-center text-md-start">
+        <div class="text-center text-md-start mb-4">
             <span class="hero-pill-badge mb-2"><i class="fa-solid fa-layer-group me-1"></i> Core Architecture</span>
-            <h2 class="section-header-title-dark">5 Core Intelligent Educational Modules</h2>
-            <p class="section-header-sub-dark">DocMind AI synthesizes raw textbooks and syllabi into 5 powerful, interconnected learning tools designed for instant comprehension:</p>
+            <h2 class="section-header-title-dark">
+                5 Core Intelligent Educational Modules
+                <span class="cursive-accent">Structured Learning</span>
+            </h2>
+            <p class="section-header-sub-dark">DocMind AI synthesizes raw textbooks and syllabi into 5 powerful, interconnected learning tools placed in dedicated white glass containers:</p>
         </div>
 
         <div class="row g-4">
             
             <!-- Category 1 -->
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white box-accent-cyan">
+                <div class="glass-box-white box-accent-cyan h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="cat-icon-box icon-box-cyan">
                             <i class="fa-solid fa-diagram-project"></i>
@@ -530,7 +557,7 @@
 
             <!-- Category 2 -->
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white box-accent-purple">
+                <div class="glass-box-white box-accent-purple h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="cat-icon-box icon-box-purple">
                             <i class="fa-solid fa-clone"></i>
@@ -550,7 +577,7 @@
 
             <!-- Category 3 -->
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white box-accent-amber">
+                <div class="glass-box-white box-accent-amber h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="cat-icon-box icon-box-amber">
                             <i class="fa-solid fa-square-poll-vertical"></i>
@@ -570,7 +597,7 @@
 
             <!-- Category 4 -->
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white box-accent-emerald">
+                <div class="glass-box-white box-accent-emerald h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="cat-icon-box icon-box-emerald">
                             <i class="fa-solid fa-circle-nodes"></i>
@@ -590,7 +617,7 @@
 
             <!-- Category 5 -->
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white box-accent-rose">
+                <div class="glass-box-white box-accent-rose h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="cat-icon-box icon-box-rose">
                             <i class="fa-solid fa-users-gear"></i>
@@ -608,9 +635,9 @@
                 </div>
             </div>
 
-            <!-- Action Summary Box -->
+            <!-- Category Action Summary Box -->
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white" style="background: #0f172a; color: #ffffff; border: 2px solid #38bdf8;">
+                <div class="glass-box-white h-100 d-flex flex-column justify-content-between" style="background: #0f172a !important; color: #ffffff !important; border: 2px solid #38bdf8 !important;">
                     <div>
                         <div class="cat-icon-box" style="background: #0284c7; color: #ffffff;">
                             <i class="fa-solid fa-rocket"></i>
@@ -629,15 +656,18 @@
         </div>
     </section>
 
-    <!-- Comprehensive Academic Scope Section in Solid Light Box -->
+    <!-- Comprehensive Academic Scope Section in White Glass Container -->
     <section id="academic-scope" class="container-fluid px-4 px-md-5 mb-5">
-        <div class="text-center text-md-start">
-            <span class="hero-pill-badge mb-2"><i class="fa-solid fa-graduation-cap me-1"></i> Universal Academic Scope</span>
-            <h2 class="section-header-title-dark">Tailored for Every Education Level & Department</h2>
+        <div class="text-center text-md-start mb-4">
+            <span class="hero-pill-badge mb-2"><i class="fa-solid fa-graduation-cap me-1"></i> Universal Scope</span>
+            <h2 class="section-header-title-dark">
+                Tailored for Every Education Level & Department
+                <span class="cursive-accent">Academic Spectrum</span>
+            </h2>
             <p class="section-header-sub-dark">DocMind AI supports students and faculty across school education, engineering semesters, postgraduate programs, and national competitive exams:</p>
         </div>
 
-        <div class="box-card-white p-4 p-md-5">
+        <div class="glass-box-white p-4 p-md-5">
             <div class="row g-4">
                 
                 <div class="col-lg-4">
@@ -678,143 +708,139 @@
         </div>
     </section>
 
-    <!-- User Personas Grid -->
+    <!-- User Personas Grid in Separate White Glass Cards -->
     <section id="user-personas" class="container-fluid px-4 px-md-5 mb-5">
-        <div class="text-center text-md-start">
-            <span class="hero-pill-badge mb-2"><i class="fa-solid fa-id-card me-1"></i> Multi-Persona Support</span>
-            <h2 class="section-header-title-dark">Engineered for Students, Educators, & Administrators</h2>
+        <div class="text-center text-md-start mb-4">
+            <span class="hero-pill-badge mb-2"><i class="fa-solid fa-id-card me-1"></i> Personas</span>
+            <h2 class="section-header-title-dark">
+                Engineered for Students, Tutors, & Administrators
+                <span class="cursive-accent">Multi-Persona Ecosystem</span>
+            </h2>
             <p class="section-header-sub-dark">DocMind AI offers specialized features tailored to each user role in the academic ecosystem:</p>
         </div>
 
         <div class="row g-4">
             
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white box-accent-cyan">
-                    <div>
-                        <div class="cat-icon-box icon-box-cyan">
-                            <i class="fa-solid fa-user-graduate"></i>
-                        </div>
-                        <h4 class="box-card-title">🎓 Student / Candidate</h4>
-                        <p class="box-card-text mb-3">Effortless study & revision:</p>
-                        <ul class="box-feature-list">
-                            <li class="mb-2">• Map syllabus topics to exact textbook pages.</li>
-                            <li class="mb-2">• Flip 3D flashcards for rapid active recall.</li>
-                            <li>• Take timed practice exams with instant scoring.</li>
-                        </ul>
+                <div class="glass-box-white box-accent-cyan h-100">
+                    <div class="cat-icon-box icon-box-cyan">
+                        <i class="fa-solid fa-user-graduate"></i>
                     </div>
+                    <h4 class="box-card-title">🎓 Student / Candidate</h4>
+                    <p class="box-card-text mb-3">Effortless study & revision:</p>
+                    <ul class="box-feature-list">
+                        <li class="mb-2">• Map syllabus topics to exact textbook pages.</li>
+                        <li class="mb-2">• Flip 3D flashcards for rapid active recall.</li>
+                        <li>• Take timed practice exams with instant scoring.</li>
+                    </ul>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white box-accent-purple">
-                    <div>
-                        <div class="cat-icon-box icon-box-purple">
-                            <i class="fa-solid fa-chalkboard-user"></i>
-                        </div>
-                        <h4 class="box-card-title">👩‍🏫 Teacher / Tutor</h4>
-                        <p class="box-card-text mb-3">Lesson planning & question banks:</p>
-                        <ul class="box-feature-list">
-                            <li class="mb-2">• Extract key highlights & formulas instantly.</li>
-                            <li class="mb-2">• Auto-generate MCQ question banks for tests.</li>
-                            <li>• Share structured study summaries with classes.</li>
-                        </ul>
+                <div class="glass-box-white box-accent-purple h-100">
+                    <div class="cat-icon-box icon-box-purple">
+                        <i class="fa-solid fa-chalkboard-user"></i>
                     </div>
+                    <h4 class="box-card-title">👩‍🏫 Teacher / Tutor</h4>
+                    <p class="box-card-text mb-3">Lesson planning & question banks:</p>
+                    <ul class="box-feature-list">
+                        <li class="mb-2">• Extract key highlights & formulas instantly.</li>
+                        <li class="mb-2">• Auto-generate MCQ question banks for tests.</li>
+                        <li>• Share structured study summaries with classes.</li>
+                    </ul>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6">
-                <div class="box-card-white box-accent-amber">
-                    <div>
-                        <div class="cat-icon-box icon-box-amber">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                        </div>
-                        <h4 class="box-card-title">👨‍🏫 College Professor</h4>
-                        <p class="box-card-text mb-3">Curriculum verification & research:</p>
-                        <ul class="box-feature-list">
-                            <li class="mb-2">• Audit syllabus unit coverage against reference books.</li>
-                            <li class="mb-2">• Query semantic vectors for research papers.</li>
-                            <li>• Export comprehensive PDF analytical reports.</li>
-                        </ul>
+                <div class="glass-box-white box-accent-amber h-100">
+                    <div class="cat-icon-box icon-box-amber">
+                        <i class="fa-solid fa-graduation-cap"></i>
                     </div>
+                    <h4 class="box-card-title">👨‍🏫 College Professor</h4>
+                    <p class="box-card-text mb-3">Curriculum verification & research:</p>
+                    <ul class="box-feature-list">
+                        <li class="mb-2">• Audit syllabus unit coverage against reference books.</li>
+                        <li class="mb-2">• Query semantic vectors for research papers.</li>
+                        <li>• Export comprehensive PDF analytical reports.</li>
+                    </ul>
                 </div>
             </div>
 
             <div class="col-lg-6 col-md-6">
-                <div class="box-card-white box-accent-emerald">
-                    <div>
-                        <div class="cat-icon-box icon-box-emerald">
-                            <i class="fa-solid fa-user-gear"></i>
-                        </div>
-                        <h4 class="box-card-title">🛡️ Head of Department (HOD)</h4>
-                        <p class="box-card-text mb-3">Departmental oversight & course alignment:</p>
-                        <ul class="box-feature-list">
-                            <li class="mb-2">• Monitor departmental document repositories across Sem 1 to Sem 8.</li>
-                            <li>• Ensure unit compliance for NAAC / NBA accreditation audits.</li>
-                        </ul>
+                <div class="glass-box-white box-accent-emerald h-100">
+                    <div class="cat-icon-box icon-box-emerald">
+                        <i class="fa-solid fa-user-gear"></i>
                     </div>
+                    <h4 class="box-card-title">🛡️ Head of Department (HOD)</h4>
+                    <p class="box-card-text mb-3">Departmental oversight & course alignment:</p>
+                    <ul class="box-feature-list">
+                        <li class="mb-2">• Monitor departmental document repositories across Sem 1 to Sem 8.</li>
+                        <li>• Ensure unit compliance for NAAC / NBA accreditation audits.</li>
+                    </ul>
                 </div>
             </div>
 
             <div class="col-lg-6 col-md-12">
-                <div class="box-card-white box-accent-rose">
-                    <div>
-                        <div class="cat-icon-box icon-box-rose">
-                            <i class="fa-solid fa-user-shield"></i>
-                        </div>
-                        <h4 class="box-card-title">🏛️ Dean / Academic Director</h4>
-                        <p class="box-card-text mb-3">Institutional academic analytics & policy:</p>
-                        <ul class="box-feature-list">
-                            <li class="mb-2">• Oversee institution-wide document ingestion repositories.</li>
-                            <li>• Administer high-privilege faculty portal controls and metrics.</li>
-                        </ul>
+                <div class="glass-box-white box-accent-rose h-100">
+                    <div class="cat-icon-box icon-box-rose">
+                        <i class="fa-solid fa-user-shield"></i>
                     </div>
+                    <h4 class="box-card-title">🏛️ Dean / Academic Director</h4>
+                    <p class="box-card-text mb-3">Institutional academic analytics & policy:</p>
+                    <ul class="box-feature-list">
+                        <li class="mb-2">• Oversee institution-wide document ingestion repositories.</li>
+                        <li>• Administer high-privilege faculty portal controls and metrics.</li>
+                    </ul>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- Technical Architecture Section -->
+    <!-- Technical Architecture Section in White Glass Box -->
     <section id="technical-architecture" class="container-fluid px-4 px-md-5 mb-5">
-        <div class="text-center text-md-start">
-            <span class="hero-pill-badge mb-2"><i class="fa-solid fa-code-branch me-1"></i> Under the Hood</span>
-            <h2 class="section-header-title-dark">5-Step AIML Pipeline Architecture</h2>
+        <div class="text-center text-md-start mb-4">
+            <span class="hero-pill-badge mb-2"><i class="fa-solid fa-code-branch me-1"></i> Architecture</span>
+            <h2 class="section-header-title-dark">
+                5-Step AIML Pipeline Architecture
+                <span class="cursive-accent">Deep Technical RAG</span>
+            </h2>
             <p class="section-header-sub-dark">How DocMind AI ingests, vectorizes, retrieves, and synthesizes educational documents:</p>
         </div>
 
-        <div class="box-card-white p-4 p-md-5">
+        <div class="glass-box-white p-4 p-md-5">
             <div class="row g-4 text-center text-md-start">
                 <div class="col-md">
-                    <div class="p-3 rounded-3" style="background: #f8fafc; border: 1px solid #cbd5e1;">
-                        <div class="text-primary font-weight-bold fs-4 mb-2">01</div>
+                    <div class="p-3 rounded-4" style="background: #f8fafc; border: 1px solid #cbd5e1;">
+                        <div class="text-primary font-weight-bold fs-3 mb-2">01</div>
                         <h5 class="box-card-title fs-5 mb-1">Ingestion</h5>
                         <p class="box-card-text small mb-0">pdfplumber & docx parsing into page-indexed text blocks.</p>
                     </div>
                 </div>
                 <div class="col-md">
-                    <div class="p-3 rounded-3" style="background: #f8fafc; border: 1px solid #cbd5e1;">
-                        <div class="text-primary font-weight-bold fs-4 mb-2">02</div>
+                    <div class="p-3 rounded-4" style="background: #f8fafc; border: 1px solid #cbd5e1;">
+                        <div class="text-primary font-weight-bold fs-3 mb-2">02</div>
                         <h5 class="box-card-title fs-5 mb-1">Vectorization</h5>
                         <p class="box-card-text small mb-0">Embedding via MiniLM-L6 into 384-dim dense vectors.</p>
                     </div>
                 </div>
                 <div class="col-md">
-                    <div class="p-3 rounded-3" style="background: #f8fafc; border: 1px solid #cbd5e1;">
-                        <div class="text-primary font-weight-bold fs-4 mb-2">03</div>
+                    <div class="p-3 rounded-4" style="background: #f8fafc; border: 1px solid #cbd5e1;">
+                        <div class="text-primary font-weight-bold fs-3 mb-2">03</div>
                         <h5 class="box-card-title fs-5 mb-1">Indexing</h5>
                         <p class="box-card-text small mb-0">Cosine similarity matching with SQLite / Turso vector store.</p>
                     </div>
                 </div>
                 <div class="col-md">
-                    <div class="p-3 rounded-3" style="background: #f8fafc; border: 1px solid #cbd5e1;">
-                        <div class="text-primary font-weight-bold fs-4 mb-2">04</div>
+                    <div class="p-3 rounded-4" style="background: #f8fafc; border: 1px solid #cbd5e1;">
+                        <div class="text-primary font-weight-bold fs-3 mb-2">04</div>
                         <h5 class="box-card-title fs-5 mb-1">Synthesis</h5>
                         <p class="box-card-text small mb-0">Groq Llama 3.1 70B generates answers & study assets.</p>
                     </div>
                 </div>
                 <div class="col-md">
-                    <div class="p-3 rounded-3" style="background: #f8fafc; border: 1px solid #cbd5e1;">
-                        <div class="text-primary font-weight-bold fs-4 mb-2">05</div>
+                    <div class="p-3 rounded-4" style="background: #f8fafc; border: 1px solid #cbd5e1;">
+                        <div class="text-primary font-weight-bold fs-3 mb-2">05</div>
                         <h5 class="box-card-title fs-5 mb-1">Delivery</h5>
                         <p class="box-card-text small mb-0">3D Flashcards, Mind Maps, & Quizzes served to UI.</p>
                     </div>
@@ -825,7 +851,7 @@
 
     <!-- FAQ Accordion Section -->
     <section id="faq-section" class="container-fluid px-4 px-md-5 mb-5">
-        <div class="text-center text-md-start">
+        <div class="text-center text-md-start mb-4">
             <span class="hero-pill-badge mb-2"><i class="fa-solid fa-circle-question me-1"></i> Clarifications</span>
             <h2 class="section-header-title-dark">Frequently Asked Questions</h2>
             <p class="section-header-sub-dark">Got questions about DocMind AI? Find detailed answers below:</p>
@@ -876,22 +902,29 @@
         </div>
     </section>
 
-    <!-- Master Footer -->
-    <footer class="master-footer-dark">
+    <!-- Master Footer in Structured White Glass Box -->
+    <footer class="master-footer-glass">
         <div class="container-fluid px-4 px-md-5">
-            <div class="row g-4 mb-4">
+            <div class="row g-5 mb-4">
+                
                 <div class="col-lg-5">
                     <a href="/" class="brand-logo-extended mb-3">
-                        <i class="fa-solid fa-brain"></i>
-                        <span>DocMind AI</span>
+                        <div class="logo-icon-badge">
+                            <i class="fa-solid fa-atom"></i>
+                        </div>
+                        <div>
+                            <span class="logo-brand-text">DocMind <span class="badge-ai-accent">AI</span></span>
+                            <span class="logo-subtagline">Intelligent Document Organizer & Educational Assistant</span>
+                        </div>
                     </a>
-                    <p class="text-secondary small leading-relaxed" style="max-width: 450px;">
-                        DocMind AI: Intelligent document organizer using Python with Artificial Intelligence & Machine Learning (AIML). Empowering students and faculty across Std 1-12, 8 engineering semesters, and national competitive exams.
+                    <p class="text-secondary small leading-relaxed mt-3" style="max-width: 460px;">
+                        DocMind AI is an advanced AI educational assistant built with Python & Machine Learning (AIML). Empowering students, teachers, professors, HODs, and deans across Std 1-12, 8 engineering semesters, and competitive exams.
                     </p>
                 </div>
+
                 <div class="col-lg-3 col-6">
-                    <h5 class="text-white font-weight-bold mb-3">Core Modules</h5>
-                    <ul class="list-unstyled text-secondary small">
+                    <h5 class="text-white font-weight-bold mb-3">Core Educational Modules</h5>
+                    <ul class="list-unstyled text-secondary small leading-relaxed">
                         <li class="mb-2"><a href="#core-modules" class="text-decoration-none text-secondary">Semantic Syllabus Mapping</a></li>
                         <li class="mb-2"><a href="#core-modules" class="text-decoration-none text-secondary">3D Recall Flashcards</a></li>
                         <li class="mb-2"><a href="#core-modules" class="text-decoration-none text-secondary">Practice Exams & Scoreboards</a></li>
@@ -899,19 +932,21 @@
                         <li><a href="#core-modules" class="text-decoration-none text-secondary">Role & Grade Hub</a></li>
                     </ul>
                 </div>
+
                 <div class="col-lg-4 col-6">
-                    <h5 class="text-white font-weight-bold mb-3">Portals & Access</h5>
-                    <ul class="list-unstyled text-secondary small">
+                    <h5 class="text-white font-weight-bold mb-3">Portals & Educational Tiers</h5>
+                    <ul class="list-unstyled text-secondary small leading-relaxed">
                         <li class="mb-2"><a href="/school-portal" class="text-decoration-none text-secondary">School Education Portal (Std 1-12)</a></li>
                         <li class="mb-2"><a href="/login" class="text-decoration-none text-secondary">Student & Aspirant Sign In</a></li>
                         <li class="mb-2"><a href="/login" class="text-decoration-none text-secondary">Admin & Faculty Sign In</a></li>
                         <li><a href="#academic-scope" class="text-decoration-none text-secondary">GATE & Group Exams Hub</a></li>
                     </ul>
                 </div>
+
             </div>
             <hr style="border-color: rgba(255,255,255,0.15);">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-secondary">
-                <p class="mb-0">© 2026 DocMind AI - Intelligent Document Organizer using Python with AIML. All rights reserved.</p>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-secondary pt-2">
+                <p class="mb-0">© 2026 DocMind AI - Intelligent Document Organizer & Educational Assistant. All rights reserved.</p>
                 <p class="mb-0 mt-2 mt-md-0">Built with Python, Flask, Groq Llama 3.1 70B, and SQLite / Turso.</p>
             </div>
         </div>
