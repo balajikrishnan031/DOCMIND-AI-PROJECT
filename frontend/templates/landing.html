@@ -4,25 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DocMind AI — Intelligent Document Organizer & Educational Assistant</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome 6 & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <style>
-        /* DocMind AI Kinto Template Design System */
+        /* Premium DocMind AI Kinto Design System & Elevated Box Effects */
         :root {
-            --kinto-bg-sand: #f7f4ee;
-            --kinto-card-sand: #eae4d8;
+            --kinto-bg-sand: #f8f6f0;
+            --kinto-card-sand: #ebd6d1;
             --kinto-card-white: #ffffff;
-            --kinto-text-dark: #1c1917;
-            --kinto-text-sub: #57534e;
-            --kinto-border-sand: #e2dacd;
-            --kinto-btn-dark: #18181b;
-            --kinto-accent-cyan: #0284c7;
+            --kinto-text-dark: #111827;
+            --kinto-text-sub: #4b5563;
+            --kinto-border-sand: #e5dfd5;
+            --kinto-btn-dark: #0f172a;
+            --kinto-cyan: #0284c7;
         }
 
         body.kinto-template-page {
-            background-color: var(--kinto-bg-sand);
+            background-color: #f4f0e6;
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--kinto-text-dark);
             margin: 0;
@@ -30,14 +32,15 @@
             min-height: 100vh;
         }
 
-        /* Master Kinto Container Canvas */
+        /* Master Canvas Container Frame */
         .kinto-canvas-container {
-            max-width: 1320px;
+            max-width: 1340px;
             margin: 0 auto;
-            background: #f7f4ee;
-            border-radius: 32px;
+            background: #f8f6f0;
+            border-radius: 36px;
             overflow: hidden;
-            position: relative;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.12);
+            border: 1px solid #e2dacd;
         }
 
         /* Floating Top Nav Pill Header */
@@ -47,43 +50,71 @@
             z-index: 1000;
             display: flex;
             justify-content: center;
-            margin-bottom: 3.5rem;
-            padding: 0 1rem;
+            margin-bottom: 4rem;
+            padding: 0 1.5rem;
         }
 
         .kinto-floating-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid var(--kinto-border-sand);
-            border-radius: 50px;
-            padding: 0.55rem 1.75rem;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border: 1px solid rgba(226, 218, 205, 0.9);
+            border-radius: 60px;
+            padding: 0.65rem 2rem;
             display: flex;
             align-items: center;
-            gap: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1100px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
         }
 
-        .kinto-brand-pill {
+        /* Premium Brand Logo */
+        .kinto-brand-logo-badge {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.85rem;
             text-decoration: none;
-            color: var(--kinto-text-dark);
-            font-weight: 800;
-            font-size: 1.2rem;
-            font-family: 'Playfair Display', serif;
         }
 
-        .kinto-brand-pill i {
+        .logo-icon-gradient {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #0284c7 0%, #6366f1 50%, #a855f7 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
             font-size: 1.25rem;
-            color: var(--kinto-text-dark);
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .kinto-brand-logo-badge:hover .logo-icon-gradient {
+            transform: rotate(10deg) scale(1.05);
+        }
+
+        .logo-text-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.1;
+        }
+
+        .logo-text-tagline {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #0284c7;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         .kinto-nav-links-pill {
             display: flex;
             align-items: center;
-            gap: 1.75rem;
+            gap: 2rem;
             list-style: none;
             margin: 0;
             padding: 0;
@@ -91,14 +122,14 @@
 
         .kinto-nav-links-pill a {
             text-decoration: none;
-            color: var(--kinto-text-sub);
-            font-size: 0.92rem;
-            font-weight: 600;
+            color: #475569;
+            font-size: 0.95rem;
+            font-weight: 700;
             transition: color 0.2s ease;
         }
 
         .kinto-nav-links-pill a:hover {
-            color: var(--kinto-text-dark);
+            color: #0284c7;
         }
 
         .kinto-nav-actions {
@@ -108,52 +139,57 @@
         }
 
         .btn-kinto-signin {
-            color: var(--kinto-text-dark);
+            color: #0f172a;
             text-decoration: none;
             font-weight: 700;
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             padding: 0.4rem 0.8rem;
         }
 
         .btn-kinto-pill-dark {
-            background: var(--kinto-btn-dark);
+            background: #0f172a;
             color: #ffffff !important;
-            padding: 0.6rem 1.35rem;
+            padding: 0.7rem 1.6rem;
             border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
+            font-weight: 800;
+            font-size: 0.92rem;
             text-decoration: none;
-            transition: all 0.2s ease;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+            transition: all 0.25s ease;
         }
 
         .btn-kinto-pill-dark:hover {
-            background: #27272a;
-            transform: translateY(-1px);
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.35);
         }
 
-        /* Hero Section (Editorial Serif Style) */
+        /* Hero Section */
         .kinto-hero-section {
-            padding: 1rem 3rem 4rem 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 1rem 4rem 5rem 4rem;
         }
 
         .kinto-badge-sub {
+            background: #ffffff;
+            border: 1px solid #e2dacd;
+            color: #0284c7;
             font-size: 0.82rem;
             font-weight: 800;
-            color: #78716c;
-            letter-spacing: 0.08em;
+            padding: 0.45rem 1.1rem;
+            border-radius: 30px;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            display: block;
+            margin-bottom: 1.75rem;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
         .kinto-hero-title {
             font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 700;
+            font-size: 4.4rem;
+            font-weight: 800;
             line-height: 1.12;
-            color: var(--kinto-text-dark);
+            color: #0f172a;
             margin-bottom: 1.75rem;
             letter-spacing: -0.02em;
         }
@@ -161,110 +197,173 @@
         .kinto-hero-subtext {
             font-size: 1.2rem;
             line-height: 1.8;
-            color: var(--kinto-text-sub);
+            color: #475569;
             margin-bottom: 2.5rem;
-            max-width: 680px;
             font-weight: 500;
         }
 
         .kinto-btn-group {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 4rem;
+            gap: 1.25rem;
         }
 
         .btn-kinto-hero-dark {
-            background: var(--kinto-btn-dark);
+            background: #0f172a;
             color: #ffffff !important;
-            padding: 0.9rem 2.2rem;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
+            padding: 1rem 2.4rem;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            font-weight: 800;
             text-decoration: none;
-            transition: all 0.2s ease;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+            transition: all 0.25s ease;
         }
 
         .btn-kinto-hero-dark:hover {
-            background: #27272a;
-            transform: translateY(-2px);
+            background: #1e293b;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.35);
         }
 
         .btn-kinto-hero-light {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid var(--kinto-border-sand);
-            color: var(--kinto-text-dark) !important;
-            padding: 0.9rem 2.2rem;
-            border-radius: 12px;
-            font-size: 1rem;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #0f172a !important;
+            padding: 1rem 2.4rem;
+            border-radius: 14px;
+            font-size: 1.05rem;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s ease;
         }
 
         .btn-kinto-hero-light:hover {
-            background: #ffffff;
-            border-color: #d6d0c4;
+            background: #f8fafc;
+            border-color: #94a3b8;
+            transform: translateY(-2px);
         }
 
-        /* Metrics Counter Card */
-        .kinto-metrics-card {
-            background: var(--kinto-card-sand);
-            border: 1px solid var(--kinto-border-sand);
+        /* Hero Right Preview Card Box Effect */
+        .hero-preview-card-box {
+            background: #ffffff;
+            border: 1px solid #e2dacd;
             border-radius: 28px;
+            padding: 2.25rem;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.09);
+            transition: all 0.3s ease;
+        }
+
+        .hero-preview-card-box:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.14);
+        }
+
+        .preview-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid #f1f5f9;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-groq-live {
+            background: rgba(2, 132, 199, 0.12);
+            color: #0284c7;
+            border: 1px solid rgba(2, 132, 199, 0.3);
+            border-radius: 30px;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-doc-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .preview-citation-box {
+            background: #0f172a;
+            color: #ffffff;
+            border-radius: 16px;
+            padding: 1.35rem;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
+        }
+
+        /* Elevated Metrics Counter Box */
+        .kinto-metrics-card {
+            background: #eae4d8;
+            border: 1px solid #dcd3c4;
+            border-radius: 32px;
             padding: 3.5rem 3rem;
-            margin-bottom: 5rem;
+            margin-top: 4rem;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.03);
         }
 
         .metrics-grid-4 {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            text-align: center;
+            gap: 1.75rem;
         }
 
         .metric-card-inner {
-            background: rgba(255, 255, 255, 0.65);
-            border: 1px solid var(--kinto-border-sand);
-            border-radius: 20px;
-            padding: 2.25rem 1.5rem;
+            background: #ffffff;
+            border: 1px solid #e2dacd;
+            border-radius: 24px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card-inner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+            border-color: #0284c7;
         }
 
         .metric-num-editorial {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--kinto-text-dark);
-            margin-bottom: 0.35rem;
+            font-size: 3.6rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
             line-height: 1;
         }
 
         .metric-desc-sub {
-            font-size: 0.92rem;
-            color: var(--kinto-text-sub);
-            font-weight: 600;
+            font-size: 0.95rem;
+            color: #475569;
+            font-weight: 700;
         }
 
-        /* 5 Core Modules Section */
+        /* 5 Core Intelligent Modules (Elevated White Cards) */
         .kinto-section-wrapper {
-            margin-bottom: 5rem;
-            padding: 0 1rem;
+            padding: 5rem 4rem;
         }
 
         .kinto-section-title-editorial {
             font-family: 'Playfair Display', serif;
-            font-size: 3.2rem;
-            font-weight: 700;
-            color: var(--kinto-text-dark);
-            margin-bottom: 0.85rem;
+            font-size: 3.4rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1rem;
         }
 
         .kinto-section-subtext {
-            font-size: 1.12rem;
+            font-size: 1.15rem;
             line-height: 1.7;
-            color: var(--kinto-text-sub);
+            color: #475569;
             margin-bottom: 3.5rem;
-            max-width: 650px;
+            max-width: 680px;
         }
 
         .kinto-modules-list-grid {
@@ -275,26 +374,26 @@
 
         .kinto-module-box-white {
             background: #ffffff;
-            border: 1px solid var(--kinto-border-sand);
-            border-radius: 24px;
-            padding: 2.5rem;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e2dacd;
+            border-radius: 28px;
+            padding: 2.75rem;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.3s ease;
+            transition: all 0.35s ease;
         }
 
         .kinto-module-box-white:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
-            border-color: #a8a29e;
+            transform: translateY(-7px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+            border-color: #0284c7;
         }
 
         .module-num-pill {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 800;
-            color: #78716c;
+            color: #0284c7;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 1.25rem;
@@ -303,50 +402,50 @@
 
         .module-title-editorial {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--kinto-text-dark);
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #0f172a;
             margin-bottom: 1rem;
         }
 
         .module-text-sub {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--kinto-text-sub);
+            font-size: 1.02rem;
+            line-height: 1.75;
+            color: #475569;
             margin-bottom: 2rem;
         }
 
         .module-tag-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
         .tag-chip-sand {
-            background: var(--kinto-bg-sand);
-            border: 1px solid var(--kinto-border-sand);
-            color: var(--kinto-text-dark);
-            font-size: 0.82rem;
+            background: #f8f6f0;
+            border: 1px solid #e2dacd;
+            color: #0f172a;
+            font-size: 0.84rem;
             font-weight: 700;
-            padding: 0.35rem 0.85rem;
+            padding: 0.4rem 0.95rem;
             border-radius: 30px;
         }
 
         /* Feature Split Showcase Card */
         .kinto-feature-split-card {
-            background: var(--kinto-card-sand);
-            border: 1px solid var(--kinto-border-sand);
-            border-radius: 28px;
-            padding: 3.5rem 3rem;
+            background: #eae4d8;
+            border: 1px solid #dcd3c4;
+            border-radius: 32px;
+            padding: 4rem 3.5rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3.5rem;
+            gap: 4rem;
             align-items: center;
-            margin-bottom: 5rem;
+            margin: 0 4rem 5rem 4rem;
         }
 
         .split-list-item {
-            margin-bottom: 2rem;
+            margin-bottom: 2.25rem;
         }
 
         .split-list-item:last-child {
@@ -355,110 +454,106 @@
 
         .split-item-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--kinto-text-dark);
-            margin-bottom: 0.5rem;
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.6rem;
         }
 
         .split-item-desc {
-            font-size: 0.98rem;
-            line-height: 1.7;
-            color: var(--kinto-text-sub);
+            font-size: 1.02rem;
+            line-height: 1.75;
+            color: #475569;
         }
 
-        /* Academic Tiers Container */
+        /* Universal Academic Tiers Box */
         .kinto-academic-tiers-box {
             background: #ffffff;
-            border: 1px solid var(--kinto-border-sand);
-            border-radius: 24px;
-            padding: 3rem;
-            margin-bottom: 5rem;
+            border: 1px solid #e2dacd;
+            border-radius: 32px;
+            padding: 3.5rem;
+            margin: 0 4rem 5rem 4rem;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
         }
 
         .tiers-pill-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.85rem;
-            margin-top: 1.5rem;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
         .tier-chip-item {
-            background: var(--kinto-bg-sand);
-            border: 1px solid var(--kinto-border-sand);
-            color: var(--kinto-text-dark);
-            padding: 0.65rem 1.25rem;
+            background: #f8f6f0;
+            border: 1px solid #e2dacd;
+            color: #0f172a;
+            padding: 0.75rem 1.4rem;
             border-radius: 50px;
-            font-size: 0.92rem;
-            font-weight: 700;
+            font-size: 0.95rem;
+            font-weight: 800;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.75rem;
             transition: all 0.25s ease;
         }
 
         .tier-chip-item:hover {
-            background: var(--kinto-btn-dark);
+            background: #0f172a;
             color: #ffffff;
-            border-color: var(--kinto-btn-dark);
+            border-color: #0f172a;
+            transform: translateY(-2px);
         }
 
         /* FAQ Accordion List */
         .kinto-faq-split-grid {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
-            gap: 4rem;
-            margin-bottom: 6rem;
-            padding: 0 1rem;
+            gap: 4.5rem;
+            margin: 0 4rem 6rem 4rem;
         }
 
         .faq-left-info h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.2rem;
-            font-weight: 700;
-            color: var(--kinto-text-dark);
-            margin-bottom: 1rem;
+            font-size: 3.4rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1.25rem;
             line-height: 1.15;
         }
 
         .faq-left-info p {
-            font-size: 1.05rem;
-            color: var(--kinto-text-sub);
-            line-height: 1.7;
-        }
-
-        .faq-accordion-kinto {
-            display: flex;
-            flex-direction: column;
+            font-size: 1.1rem;
+            color: #475569;
+            line-height: 1.8;
         }
 
         .faq-kinto-item {
-            border-bottom: 1px solid var(--kinto-border-sand);
-            padding: 1.5rem 0;
+            border-bottom: 1px solid #e2dacd;
+            padding: 1.75rem 0;
         }
 
         .faq-kinto-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-weight: 700;
-            font-size: 1.12rem;
-            color: var(--kinto-text-dark);
+            font-weight: 800;
+            font-size: 1.18rem;
+            color: #0f172a;
             cursor: pointer;
         }
 
         .faq-kinto-header span.faq-num {
             font-family: 'IBM Plex Mono', monospace;
-            color: #a8a29e;
-            font-size: 0.88rem;
-            margin-right: 1rem;
+            color: #0284c7;
+            font-size: 0.92rem;
+            margin-right: 1.25rem;
         }
 
         .faq-kinto-body {
-            font-size: 0.98rem;
-            line-height: 1.75;
-            color: var(--kinto-text-sub);
-            margin-top: 1rem;
+            font-size: 1.02rem;
+            line-height: 1.8;
+            color: #475569;
+            margin-top: 1.25rem;
             display: none;
         }
 
@@ -472,43 +567,43 @@
 
         /* Footer */
         .kinto-master-footer-dark {
-            background: #18181b;
+            background: #0f172a;
             color: #ffffff;
             padding: 5rem 4rem 3rem 4rem;
-            border-radius: 32px 32px 0 0;
+            border-radius: 36px 36px 0 0;
         }
 
         .footer-grid-5 {
             display: grid;
-            grid-template-columns: 2fr repeat(4, 1fr);
+            grid-template-columns: 2.2fr repeat(4, 1fr);
             gap: 3.5rem;
             margin-bottom: 4rem;
         }
 
         .footer-brand-editorial {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 800;
             color: #ffffff;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.85rem;
         }
 
         .footer-desc-text {
-            color: #a1a1aa;
-            font-size: 0.94rem;
-            line-height: 1.7;
+            color: #94a3b8;
+            font-size: 0.96rem;
+            line-height: 1.75;
             max-width: 380px;
         }
 
         .footer-col-title {
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: #ffffff;
-            margin-bottom: 1.25rem;
-            letter-spacing: 0.05em;
+            margin-bottom: 1.35rem;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
         }
 
@@ -519,47 +614,53 @@
         }
 
         .footer-nav-list li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.85rem;
         }
 
         .footer-nav-list a {
-            color: #a1a1aa;
+            color: #94a3b8;
             text-decoration: none;
-            font-size: 0.92rem;
-            font-weight: 500;
+            font-size: 0.94rem;
+            font-weight: 600;
             transition: color 0.2s ease;
         }
 
         .footer-nav-list a:hover {
-            color: #ffffff;
+            color: #38bdf8;
         }
 
         .footer-bottom-flex {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: 2rem;
-            border-top: 1px solid #27272a;
-            color: #71717a;
-            font-size: 0.88rem;
+            padding-top: 2.25rem;
+            border-top: 1px solid #1e293b;
+            color: #64748b;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body class="kinto-template-page">
 
-    <!-- Master Container Canvas -->
+    <!-- Master Container Canvas Frame -->
     <div class="kinto-canvas-container">
 
         <!-- Floating Top Nav Pill Header -->
         <div class="kinto-floating-nav-wrapper">
             <nav class="kinto-floating-nav">
-                <a href="/" class="kinto-brand-pill">
-                    <i class="fa-solid fa-brain"></i>
-                    <span>DocMind AI</span>
+                <!-- Premium Brand Logo -->
+                <a href="/" class="kinto-brand-logo-badge">
+                    <div class="logo-icon-gradient">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text-title">DocMind AI</div>
+                        <div class="logo-text-tagline">Intelligent Document Platform</div>
+                    </div>
                 </a>
 
                 <ul class="kinto-nav-links-pill d-none d-md-flex">
-                    <li><a href="#about">About Platform</a></li>
+                    <li><a href="#about">About</a></li>
                     <li><a href="#modules">5 Modules</a></li>
                     <li><a href="#academic-tiers">Academic Tiers</a></li>
                     <li><a href="#faq">FAQ</a></li>
@@ -575,13 +676,13 @@
         <!-- Hero Section -->
         <main class="kinto-hero-section" id="about">
             <div class="row align-items-center g-5">
-                <div class="col-lg-7">
+                <div class="col-lg-6">
                     <span class="kinto-badge-sub">Intelligent Document Organizer & Educational Assistant</span>
                     <h1 class="kinto-hero-title">
                         Making Academic Intelligence Accessible.
                     </h1>
                     <p class="kinto-hero-subtext">
-                        DocMind AI is an AI-powered educational platform built for students, school teachers, college professors, and competitive exam aspirants. Upload course textbooks to map multi-unit syllabi, generate 3D flashcards, and solve step-by-step homework problems.
+                        DocMind AI is an AI-powered educational tutor built for students, school teachers, college professors, and competitive exam aspirants. Upload course textbooks to map multi-unit syllabi, generate 3D flashcards, and solve step-by-step homework problems.
                     </p>
                     <div class="kinto-btn-group">
                         <a href="/login" class="btn-kinto-hero-dark">Explore Student Portal</a>
@@ -590,25 +691,39 @@
                 </div>
 
                 <!-- Right Side Hero Preview Showcase Card -->
-                <div class="col-lg-5">
-                    <div class="p-4 rounded-4 shadow-sm" style="background: var(--kinto-card-sand); border: 1px solid var(--kinto-border-sand);">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="badge bg-dark text-white font-weight-bold px-3 py-2">Groq Llama 3.1 70B</span>
-                            <span class="text-muted small font-monospace">RAG Engine</span>
+                <div class="col-lg-6">
+                    <div class="hero-preview-card-box">
+                        <div class="preview-header-bar">
+                            <span class="badge-groq-live">
+                                <i class="fa-solid fa-bolt text-warning"></i> Groq Llama 3.1 70B Active
+                            </span>
+                            <span class="text-muted small font-monospace fw-bold">&lt; 10ms Latency</span>
                         </div>
-                        <div class="p-3 bg-white rounded-3 mb-3 border">
-                            <div class="fw-bold text-dark small mb-1"><i class="fa-solid fa-file-pdf text-danger me-1"></i> B.E_CSE_Operating_Systems.pdf</div>
-                            <div class="text-muted small">Unit I: OS Architecture & CPU Scheduling</div>
+
+                        <div class="preview-doc-card">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <i class="fa-solid fa-file-pdf text-danger fs-4"></i>
+                                <div>
+                                    <div class="fw-bold text-dark small">B.E_CSE_Operating_Systems.pdf</div>
+                                    <div class="text-muted style-small" style="font-size: 0.78rem;">Unit I: OS Architecture & CPU Scheduling</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="p-3 bg-white rounded-3 border">
-                            <div class="fw-bold text-dark small mb-1"><i class="fa-solid fa-quote-left me-1"></i> Page-Exact Citation:</div>
-                            <div class="text-secondary small fst-italic">"CPU Scheduling handles process execution order via Round Robin [Page 42, Textbook]."</div>
+
+                        <div class="preview-citation-box">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="badge bg-primary text-white font-monospace">Page-Exact Citation</span>
+                                <span class="text-info small font-monospace">100% Vector Match</span>
+                            </div>
+                            <p class="mb-0 small leading-relaxed fst-italic">
+                                "CPU Scheduling handles process execution order via Round Robin algorithms [Page 42, Textbook]."
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Metrics Counter Soft Linen Card -->
+            <!-- Elevated Metrics Counter Card -->
             <div class="kinto-metrics-card">
                 <div class="metrics-grid-4">
                     <div class="metric-card-inner">
@@ -659,13 +774,13 @@
                         <p class="module-text-sub">Boost memory retention with interactive 3D card-flipping decks. Automatically synthesizes crucial definitions and formulas into spaced-repetition study cards.</p>
                     </div>
                     <div class="module-tag-group">
-                        <span class="tag-chip-sand">3D CSS Flip Perspective</span>
+                        <span class="tag-chip-sand">3D CSS Perspective Flip</span>
                         <span class="tag-chip-sand">Spaced Repetition</span>
                     </div>
                 </div>
 
                 <!-- Module 3 -->
-                <div class="module-box-white kinto-module-box-white">
+                <div class="kinto-module-box-white">
                     <div>
                         <span class="module-num-pill">Module 03</span>
                         <h3 class="module-title-editorial">3. Automated Practice Exams</h3>
@@ -719,7 +834,7 @@
         <!-- Feature Split Showcase Card -->
         <div class="kinto-feature-split-card" id="principles">
             <div>
-                <img src="/static/assets/bg.jpg" class="img-fluid rounded-4 shadow-sm" style="max-height: 380px; object-fit: cover; width: 100%;" alt="DocMind AI Showcase">
+                <img src="/static/assets/bg.jpg" class="img-fluid rounded-4 shadow-sm" style="max-height: 380px; object-fit: cover; width: 100%; border: 1px solid #e2dacd;" alt="DocMind AI Showcase">
             </div>
 
             <div>
@@ -744,7 +859,7 @@
 
         <!-- Academic Tiers Supported Box -->
         <section class="kinto-academic-tiers-box" id="academic-tiers">
-            <h3 class="kinto-section-title-editorial" style="font-size: 2.4rem;">Universal Academic Tiers Supported</h3>
+            <h3 class="kinto-section-title-editorial" style="font-size: 2.6rem;">Universal Academic Tiers Supported</h3>
             <p class="kinto-section-subtext mb-3">DocMind AI supports students and faculty across all educational grade tiers and engineering departments:</p>
 
             <div class="tiers-pill-list">
@@ -819,7 +934,7 @@
             <div class="footer-grid-5">
                 <div>
                     <div class="footer-brand-editorial">
-                        <i class="fa-solid fa-brain text-cyan"></i>
+                        <i class="fa-solid fa-brain text-info"></i>
                         <span>DocMind AI</span>
                     </div>
                     <div class="text-warning small fw-bold mb-2 font-monospace">Intelligent Document Organizer & Educational Assistant</div>
