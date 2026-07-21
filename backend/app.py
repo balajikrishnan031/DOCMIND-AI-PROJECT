@@ -792,5 +792,29 @@ def study_planner_page():
         return redirect(url_for('login'))
     return render_template('study_planner.html')
 
+# ----------------- School Education Portal (Std 1 - 12) Routes -----------------
+
+@app.route('/school-portal', methods=['GET', 'POST'])
+def school_portal_page():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+        
+    grade = request.args.get('grade', default=10, type=int)
+    grade = max(1, min(12, grade))
+    
+    from utils.school_curriculum import SchoolCurriculumRegistry
+    from utils.school_solver import SchoolSolverEngine
+    
+    subjects = SchoolCurriculumRegistry.get_subjects_for_grade(grade)
+    solution = None
+    
+    if request.method == 'POST':
+        subj_name = request.form.get('subject', 'Science')
+        q_text = request.form.get('question_text', '').strip()
+        if q_text:
+            solution = SchoolSolverEngine.solve_school_question(grade, subj_name, q_text)
+            
+    return render_template('school_portal.html', selected_grade=grade, subjects=subjects, solution=solution)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

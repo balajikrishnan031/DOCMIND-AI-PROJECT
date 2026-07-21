@@ -79,6 +79,10 @@
                     <i class="fa-solid fa-calendar-days text-warning"></i>
                     <span>Study Planner</span>
                 </a>
+                <a href="{{ url_for('school_portal_page') }}" class="nav-link-custom {% if active_page == 'school_portal' %}active{% endif %}">
+                    <i class="fa-solid fa-school text-info"></i>
+                    <span>School Portal (Std 1-12)</span>
+                </a>
                 <a href="{{ url_for('profile_page') }}" class="nav-link-custom {% if active_page == 'profile' %}active{% endif %}">
                     <i class="fa-solid fa-user-gear"></i>
                     <span>Profile & Settings</span>

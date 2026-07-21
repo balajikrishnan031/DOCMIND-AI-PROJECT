@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}School Education Portal (Std 1 - 12) - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header banner -->
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-6 text-white mb-2 font-weight-bold cursive-h1">School Education Portal (Std 1 to 12)</h1>
+            <p class="text-secondary lead">Instant AI Step-by-Step Problem Solver, Homework Tutor & Practice Quizzes.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <span class="badge bg-dark border border-warning text-warning p-2 px-3 fs-6">
+                <i class="fa-solid fa-graduation-cap me-1"></i> Std 1 - 12 All Subjects
+            </span>
+        </div>
+    </div>
+
+    <!-- Grade Standard Selector Bar -->
+    <div class="glass-panel p-4 mb-5">
+        <label class="text-secondary small d-block mb-3 font-weight-bold"><i class="fa-solid fa-layer-group text-cyan me-2"></i>Select Target Standard / Class (Std 1 to 12):</label>
+        <div class="d-flex flex-wrap gap-2">
+            {% for g in range(1, 13) %}
+            <a href="{{ url_for('school_portal_page', grade=g) }}" class="btn btn-sm {% if selected_grade == g %}btn-glow-cyan active{% else %}btn-outline-info{% endif %} px-3 py-2">
+                Std {{ g }} {% if g <= 5 %}(Primary){% elif g <= 8 %}(Middle){% elif g <= 10 %}(High){% else %}(Higher Sec){% endif %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- AI Step-by-Step Question & Homework Solver Box -->
+    <div class="glass-panel p-4 p-md-5 mb-5 border-glass-glow">
+        <h4 class="text-white font-weight-bold mb-3"><i class="fa-solid fa-wand-magic-sparkles text-cyan me-2"></i>AI Step-by-Step Problem & Homework Solver (Std {{ selected_grade }})</h4>
+        <p class="text-secondary small mb-4">Type any question, math equation, physics problem, or science concept for Std {{ selected_grade }} to get easy step-by-step solutions:</p>
+
+        <form action="{{ url_for('school_portal_page', grade=selected_grade) }}" method="POST" class="mb-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-3">
+                    <select name="subject" class="form-select form-control-custom text-white" style="background: rgba(15,23,42,0.8);">
+                        {% for subj in subjects %}
+                        <option value="{{ subj.subject }}">{{ subj.subject }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" name="question_text" class="form-control form-control-custom" placeholder="e.g., Explain Newton's Second Law with formula F=ma or Solve 3x + 5 = 20..." required>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-glow-cyan w-100 py-2">
+                        Solve Step-by-Step <i class="fa-solid fa-bolt ms-1"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Solution Display Card if Solved -->
+        {% if solution %}
+        <div class="p-4 rounded-3 border-glass-glow" style="background: rgba(3, 7, 18, 0.85); border-color: rgba(56, 189, 248, 0.4);">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-cyan font-weight-bold mb-0"><i class="fa-solid fa-circle-check text-success me-2"></i>Step-by-Step Solution Breakdown</h5>
+                <span class="badge bg-dark border border-cyan text-cyan px-3 py-1">Std {{ solution.grade_std }} | {{ solution.subject }}</span>
+            </div>
+
+            <div class="p-3 rounded-3 mb-3" style="background: rgba(255,255,255,0.03);">
+                <div class="text-warning small font-weight-bold mb-1"><i class="fa-solid fa-lightbulb me-1"></i> Simplified Conceptual Overview:</div>
+                <p class="text-white mb-0 leading-relaxed">{{ solution.simple_explanation }}</p>
+            </div>
+
+            <div class="p-3 rounded-3 mb-3" style="background: rgba(255,255,255,0.03);">
+                <div class="text-purple small font-weight-bold mb-2"><i class="fa-solid fa-list-check me-1"></i> Step-by-Step Derivation & Steps:</div>
+                <ul class="list-unstyled text-light mb-0">
+                    {% for step in solution.step_by_step_solution %}
+                    <li class="mb-2"><i class="fa-solid fa-chevron-right text-cyan me-2"></i>{{ step }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="p-3 rounded-3 bg-dark border border-warning">
+                        <div class="text-warning small font-weight-bold mb-1"><i class="fa-solid fa-key me-1"></i> Key Formula / Rule:</div>
+                        <div class="text-white small font-monospace">{{ solution.key_formula_or_concept }}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 rounded-3 bg-dark border border-success">
+                        <div class="text-success small font-weight-bold mb-1"><i class="fa-solid fa-brain me-1"></i> Memory Trick & Tip:</div>
+                        <div class="text-white small font-monospace">{{ solution.memory_trick_or_tip }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Subjects Grid for Selected Grade -->
+    <h4 class="text-white font-weight-bold mb-4"><i class="fa-solid fa-book text-warning me-2"></i>Std {{ selected_grade }} Core Subject Curricula & Topics</h4>
+    <div class="row g-4 mb-5">
+        {% for subj in subjects %}
+        <div class="col-lg-3 col-md-6">
+            <div class="glass-card-base glass-cyan h-100">
+                <div>
+                    <div class="cat-icon-lg-glow cat-icon-cyan">
+                        <i class="fa-solid {{ subj.icon }}"></i>
+                    </div>
+                    <h4 class="text-white font-weight-bold mb-3">{{ subj.subject }}</h4>
+                    <ul class="list-unstyled text-secondary small mb-0">
+                        {% for t in subj.topics %}
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-cyan me-2"></i>{{ t }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="pt-3">
+                    <a href="{{ url_for('quiz_page') }}" class="btn btn-sm btn-outline-cyan w-100">Take Subject Test</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
