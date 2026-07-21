@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}Accreditation & Syllabus Auditor - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header banner -->
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-6 text-white mb-2 font-weight-bold cursive-h1">Faculty Accreditation & Syllabus Auditor</h1>
+            <p class="text-secondary lead">Comprehensive NAAC / NBA Curriculum Compliance & Departmental Audit Suite.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <span class="badge bg-dark border border-purple text-purple p-2 px-3 fs-6">
+                <i class="fa-solid fa-user-shield me-1"></i> Admin & Faculty Portal
+            </span>
+        </div>
+    </div>
+
+    <!-- Audit Summary Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="glass-panel p-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary small font-weight-bold">DEPARTMENT COMPLIANCE</span>
+                    <i class="fa-solid fa-building-columns text-cyan fs-4"></i>
+                </div>
+                <h2 class="display-5 text-white font-weight-bold mb-1">98.4%</h2>
+                <div class="text-cyan small"><i class="fa-solid fa-check-double me-1"></i> CSE & IT Department Mapped</div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="glass-panel p-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary small font-weight-bold">NAAC / NBA AUDIT STATUS</span>
+                    <i class="fa-solid fa-award text-success fs-4"></i>
+                </div>
+                <h2 class="display-5 text-success font-weight-bold mb-1">APPROVED</h2>
+                <div class="text-success small"><i class="fa-solid fa-circle-check me-1"></i> Criteria 1 & 2 Compliant</div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="glass-panel p-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-secondary small font-weight-bold">TEXTBOOK REFERENCE COVERAGE</span>
+                    <i class="fa-solid fa-book-bookmark text-warning fs-4"></i>
+                </div>
+                <h2 class="display-5 text-warning font-weight-bold mb-1">100%</h2>
+                <div class="text-warning small"><i class="fa-solid fa-file-pdf me-1"></i> All 5 Units Vector Indexed</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Syllabus Unit Compliance Audit Table -->
+    <div class="glass-panel p-4 mb-5">
+        <h4 class="text-white mb-3 font-weight-bold"><i class="fa-solid fa-clipboard-check text-cyan me-2"></i>Departmental Course Unit Audit Matrix</h4>
+        <p class="text-secondary small mb-4">Verification of syllabus topics against uploaded core textbooks and reference materials:</p>
+
+        <div class="table-responsive">
+            <table class="table table-custom-glass">
+                <thead>
+                    <tr>
+                        <th>Unit Index</th>
+                        <th>Course Unit Name</th>
+                        <th>Topics Count</th>
+                        <th>Reference Book Mapped</th>
+                        <th>Page Match Precision</th>
+                        <th>Accreditation Audit Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-cyan font-weight-bold">UNIT I</td>
+                        <td class="text-white font-weight-bold">Introduction to Operating Systems & Services</td>
+                        <td>4 Topics</td>
+                        <td>Operating_Systems_8th_Ed.pdf</td>
+                        <td><span class="badge bg-success text-dark">Page 12 - 45 (100%)</span></td>
+                        <td><span class="badge bg-dark border border-success text-success"><i class="fa-solid fa-check me-1"></i> Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-cyan font-weight-bold">UNIT II</td>
+                        <td class="text-white font-weight-bold">Process Management, CPU Scheduling & Threads</td>
+                        <td>6 Topics</td>
+                        <td>Operating_Systems_8th_Ed.pdf</td>
+                        <td><span class="badge bg-success text-dark">Page 78 - 130 (100%)</span></td>
+                        <td><span class="badge bg-dark border border-success text-success"><i class="fa-solid fa-check me-1"></i> Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-cyan font-weight-bold">UNIT III</td>
+                        <td class="text-white font-weight-bold">Memory Management, Paging & Virtual Memory</td>
+                        <td>5 Topics</td>
+                        <td>Modern_OS_Tanenbaum.pdf</td>
+                        <td><span class="badge bg-success text-dark">Page 180 - 240 (100%)</span></td>
+                        <td><span class="badge bg-dark border border-success text-success"><i class="fa-solid fa-check me-1"></i> Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-cyan font-weight-bold">UNIT IV</td>
+                        <td class="text-white font-weight-bold">Storage Management, File Systems & I/O Systems</td>
+                        <td>5 Topics</td>
+                        <td>Modern_OS_Tanenbaum.pdf</td>
+                        <td><span class="badge bg-success text-dark">Page 290 - 350 (100%)</span></td>
+                        <td><span class="badge bg-dark border border-success text-success"><i class="fa-solid fa-check me-1"></i> Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-cyan font-weight-bold">UNIT V</td>
+                        <td class="text-white font-weight-bold">Distributed Systems & Security Mechanisms</td>
+                        <td>4 Topics</td>
+                        <td>Distributed_Systems_Principles.pdf</td>
+                        <td><span class="badge bg-success text-dark">Page 410 - 480 (100%)</span></td>
+                        <td><span class="badge bg-dark border border-success text-success"><i class="fa-solid fa-check me-1"></i> Verified</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% block extra_js %}{% endblock %}
+{% endblock %}

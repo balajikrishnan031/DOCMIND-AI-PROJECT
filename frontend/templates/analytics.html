@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Academic Analytics - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header banner -->
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-6 text-white mb-2 font-weight-bold cursive-h1">Cognitive Academic Analytics</h1>
+            <p class="text-secondary lead">Ebbinghaus Memory Retention Decay, Bloom's Taxonomy, and Exam Readiness Insights.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <span class="badge bg-dark border border-cyan text-cyan p-2 px-3 fs-6">
+                <i class="fa-solid fa-brain me-1"></i> AI Predictive Engine
+            </span>
+        </div>
+    </div>
+
+    <!-- Top Stats Row -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="glass-panel p-4 h-100">
+                <div class="text-secondary small font-weight-bold mb-1">EXAM READINESS SCORE</div>
+                <h2 class="display-5 text-cyan font-weight-bold mb-0">88.5%</h2>
+                <div class="text-success small mt-2"><i class="fa-solid fa-circle-check me-1"></i> High Preparedness Status</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-panel p-4 h-100">
+                <div class="text-secondary small font-weight-bold mb-1">EBBINGHAUS RETENTION</div>
+                <h2 class="display-5 text-purple font-weight-bold mb-0">92.4%</h2>
+                <div class="text-purple small mt-2"><i class="fa-solid fa-clock-rotate-left me-1"></i> Spaced Recall Active</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-panel p-4 h-100">
+                <div class="text-secondary small font-weight-bold mb-1">SYLLABUS UNITS COVERED</div>
+                <h2 class="display-5 text-warning font-weight-bold mb-0">5 / 5</h2>
+                <div class="text-warning small mt-2"><i class="fa-solid fa-layer-group me-1"></i> 100% Units Mapped</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-panel p-4 h-100">
+                <div class="text-secondary small font-weight-bold mb-1">QUIZ ACCURACY RATE</div>
+                <h2 class="display-5 text-success font-weight-bold mb-0">95.0%</h2>
+                <div class="text-success small mt-2"><i class="fa-solid fa-award me-1"></i> Top 5% Benchmark</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Graphs & Tables -->
+    <div class="row g-4 mb-5">
+        
+        <!-- Ebbinghaus Memory Decay Card -->
+        <div class="col-lg-7">
+            <div class="glass-panel p-4 h-100">
+                <h4 class="text-white mb-3 font-weight-bold"><i class="fa-solid fa-chart-line text-cyan me-2"></i>Ebbinghaus Retention Decay Curve</h4>
+                <p class="text-secondary small mb-4">Predicted memory retention decline over days without spaced active recall revisions:</p>
+
+                <div class="p-4 rounded-3 text-center mb-4" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.2);">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-light font-weight-bold">Day 1 (Immediate Review):</span>
+                        <span class="badge bg-success text-dark font-weight-bold px-3">100% Retention</span>
+                    </div>
+                    <div class="progress mb-3" style="height: 10px; background: rgba(255,255,255,0.1);">
+                        <div class="progress-bar bg-success w-100"></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-light font-weight-bold">Day 3 (First Flashcard Review):</span>
+                        <span class="badge bg-cyan text-dark font-weight-bold px-3">85% Retention</span>
+                    </div>
+                    <div class="progress mb-3" style="height: 10px; background: rgba(255,255,255,0.1);">
+                        <div class="progress-bar bg-info" style="width: 85%;"></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-light font-weight-bold">Day 7 (Spaced Practice Exam):</span>
+                        <span class="badge bg-warning text-dark font-weight-bold px-3">72% Retention</span>
+                    </div>
+                    <div class="progress mb-3" style="height: 10px; background: rgba(255,255,255,0.1);">
+                        <div class="progress-bar bg-warning" style="width: 72%;"></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-light font-weight-bold">Day 14 (Pre-Exam Revision):</span>
+                        <span class="badge bg-purple text-dark font-weight-bold px-3">60% Retention</span>
+                    </div>
+                    <div class="progress" style="height: 10px; background: rgba(255,255,255,0.1);">
+                        <div class="progress-bar bg-purple" style="width: 60%;"></div>
+                    </div>
+                </div>
+
+                <div class="alert alert-dark border-cyan text-light small mb-0">
+                    <i class="fa-solid fa-lightbulb text-warning me-2"></i> <strong>AI Recommendation:</strong> Schedule your next 3D Flashcard revision deck in <strong>2 days</strong> to lock concepts into long-term memory.
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloom's Taxonomy Cognitive Classification -->
+        <div class="col-lg-5">
+            <div class="glass-panel p-4 h-100">
+                <h4 class="text-white mb-3 font-weight-bold"><i class="fa-solid fa-cubes-stacked text-purple me-2"></i>Bloom's Taxonomy Spectrum</h4>
+                <p class="text-secondary small mb-4">Cognitive complexity breakdown of your studied textbook chapters:</p>
+
+                <ul class="list-group list-group-flush bg-transparent">
+                    <li class="list-group-item bg-transparent text-white border-glass d-flex justify-content-between align-items-center">
+                        <span>Level 6: Create & Synthesize</span>
+                        <span class="badge bg-purple px-3">Advanced (15%)</span>
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-glass d-flex justify-content-between align-items-center">
+                        <span>Level 5: Evaluate & Critique</span>
+                        <span class="badge bg-purple px-3">High (20%)</span>
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-glass d-flex justify-content-between align-items-center">
+                        <span>Level 4: Analyze & Differentiate</span>
+                        <span class="badge bg-cyan text-dark px-3">High (25%)</span>
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-glass d-flex justify-content-between align-items-center">
+                        <span>Level 3: Apply & Calculate</span>
+                        <span class="badge bg-info text-dark px-3">Core (25%)</span>
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-glass d-flex justify-content-between align-items-center">
+                        <span>Level 2: Understand & Explain</span>
+                        <span class="badge bg-success text-dark px-3">Fundamental (10%)</span>
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-glass d-flex justify-content-between align-items-center">
+                        <span>Level 1: Remember & Recall</span>
+                        <span class="badge bg-secondary px-3">Base (5%)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Topic Weakness Index Matrix -->
+    <div class="glass-panel p-4 mb-5">
+        <h4 class="text-white mb-3 font-weight-bold"><i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>Topic Weakness Index & Targeted Remediation</h4>
+        <p class="text-secondary small mb-4">AI-identified areas requiring additional revision before university & competitive exams:</p>
+
+        <div class="table-responsive">
+            <table class="table table-custom-glass">
+                <thead>
+                    <tr>
+                        <th>Topic Name</th>
+                        <th>Target Grade / Unit</th>
+                        <th>Attempts</th>
+                        <th>Accuracy</th>
+                        <th>Weakness Index</th>
+                        <th>Remediation Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-white font-weight-bold">CPU Preemptive Scheduling & Priority Queues</td>
+                        <td><span class="badge bg-dark border border-cyan text-cyan">B.E. Sem 5 (Unit II)</span></td>
+                        <td>8</td>
+                        <td><span class="text-warning">75.0%</span></td>
+                        <td><span class="badge bg-warning text-dark font-weight-bold">25.0% (Medium)</span></td>
+                        <td><a href="{{ url_for('flashcards_page') }}" class="btn btn-sm btn-outline-cyan">Revise Flashcards</a></td>
+                    </tr>
+                    <tr>
+                        <td class="text-white font-weight-bold">Page Replacement Algorithms (LRU / FIFO)</td>
+                        <td><span class="badge bg-dark border border-cyan text-cyan">B.E. Sem 5 (Unit III)</span></td>
+                        <td>12</td>
+                        <td><span class="text-success">91.6%</span></td>
+                        <td><span class="badge bg-success text-dark font-weight-bold">8.4% (Low)</span></td>
+                        <td><a href="{{ url_for('quiz_page') }}" class="btn btn-sm btn-outline-success">Take Quick Test</a></td>
+                    </tr>
+                    <tr>
+                        <td class="text-white font-weight-bold">Paging & Virtual Memory Allocation</td>
+                        <td><span class="badge bg-dark border border-purple text-purple">GATE Aspirant</span></td>
+                        <td>5</td>
+                        <td><span class="text-danger">60.0%</span></td>
+                        <td><span class="badge bg-danger text-white font-weight-bold">40.0% (High)</span></td>
+                        <td><a href="{{ url_for('chat_page') }}" class="btn btn-sm btn-primary-custom">Ask AI Tutor</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

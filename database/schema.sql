@@ -121,3 +121,58 @@ CREATE TABLE IF NOT EXISTS quiz_attempts (
     FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE
 );
 
+-- Enterprise Analytics Logs
+CREATE TABLE IF NOT EXISTS analytics_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    ebbinghaus_score REAL DEFAULT 85.0,
+    readiness_score REAL DEFAULT 75.0,
+    study_hours_logged REAL DEFAULT 0.0,
+    last_revised_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Accreditation Compliance Audits
+CREATE TABLE IF NOT EXISTS accreditation_audits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    department TEXT NOT NULL,
+    academic_year TEXT NOT NULL,
+    semester TEXT NOT NULL,
+    syllabus_compliance_pct REAL DEFAULT 100.0,
+    naac_status TEXT DEFAULT 'APPROVED',
+    audited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Study Planner Calendar Events
+CREATE TABLE IF NOT EXISTS study_planner_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    scheduled_date DATE NOT NULL,
+    status TEXT DEFAULT 'pending',
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Interactive Mind Maps
+CREATE TABLE IF NOT EXISTS mind_maps (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    document_id INTEGER UNIQUE NOT NULL,
+    nodes_json TEXT NOT NULL,
+    edges_json TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE
+);
+
+-- User Document Bookmarks
+CREATE TABLE IF NOT EXISTS user_bookmarks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    document_id INTEGER NOT NULL,
+    page_number INTEGER NOT NULL,
+    note TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE
+);
+

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Study Planner - DocMind AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header banner -->
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-6 text-white mb-2 font-weight-bold cursive-h1">AI Exam Study Planner & Schedule</h1>
+            <p class="text-secondary lead">Automated Spaced Repetition Timetable Generator & Exam Countdown.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#modalAddTask">
+                <i class="fa-solid fa-plus me-2"></i>Add Revision Task
+            </button>
+        </div>
+    </div>
+
+    <!-- Countdown Header Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="glass-panel p-4 text-center">
+                <div class="text-secondary small font-weight-bold mb-1">TARGET EXAM COUNTDOWN</div>
+                <h2 class="display-4 text-cyan font-weight-bold mb-0">12 Days</h2>
+                <div class="text-light small mt-2">B.E. Semester 5 Examination</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-panel p-4 text-center">
+                <div class="text-secondary small font-weight-bold mb-1">PLANNED REVISION SESSIONS</div>
+                <h2 class="display-4 text-purple font-weight-bold mb-0">18 Sessions</h2>
+                <div class="text-purple small mt-2">Spaced Across 3 Weeks</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-panel p-4 text-center">
+                <div class="text-secondary small font-weight-bold mb-1">COMPLETED TASKS</div>
+                <h2 class="display-4 text-success font-weight-bold mb-0">14 / 18</h2>
+                <div class="text-success small mt-2">77% Study Schedule Completed</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timetable List -->
+    <div class="glass-panel p-4 mb-5">
+        <h4 class="text-white mb-3 font-weight-bold"><i class="fa-solid fa-calendar-check text-cyan me-2"></i>Weekly Spaced Repetition Schedule</h4>
+
+        <div class="list-group list-group-flush bg-transparent">
+            
+            <div class="list-group-item bg-transparent text-white border-glass p-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="badge bg-success text-dark me-2">Completed</span>
+                    <strong class="text-cyan">Operating Systems - Unit I & II Flashcards Review</strong>
+                    <div class="text-secondary small mt-1"><i class="fa-solid fa-clock me-1"></i> Today, 09:00 AM - 10:30 AM</div>
+                </div>
+                <span class="badge bg-dark border border-cyan text-cyan">90 Mins</span>
+            </div>
+
+            <div class="list-group-item bg-transparent text-white border-glass p-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="badge bg-cyan text-dark me-2">In Progress</span>
+                    <strong class="text-white">CPU Scheduling MCQ Practice Quiz</strong>
+                    <div class="text-secondary small mt-1"><i class="fa-solid fa-clock me-1"></i> Today, 02:00 PM - 03:00 PM</div>
+                </div>
+                <span class="badge bg-dark border border-cyan text-cyan">60 Mins</span>
+            </div>
+
+            <div class="list-group-item bg-transparent text-white border-glass p-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="badge bg-warning text-dark me-2">Scheduled</span>
+                    <strong class="text-white">Virtual Memory Paging Vis.js Mind Map Synthesis</strong>
+                    <div class="text-secondary small mt-1"><i class="fa-solid fa-clock me-1"></i> Tomorrow, 10:00 AM - 11:30 AM</div>
+                </div>
+                <span class="badge bg-dark border border-purple text-purple">90 Mins</span>
+            </div>
+
+            <div class="list-group-item bg-transparent text-white border-glass p-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="badge bg-secondary me-2">Upcoming</span>
+                    <strong class="text-white">GATE Engineering Sample Question Paper Test</strong>
+                    <div class="text-secondary small mt-1"><i class="fa-solid fa-clock me-1"></i> Friday, 04:00 PM - 06:00 PM</div>
+                </div>
+                <span class="badge bg-dark border border-warning text-warning">120 Mins</span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Add Task -->
+<div class="modal fade" id="modalAddTask" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-glass-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-white font-weight-bold"><i class="fa-solid fa-plus text-cyan me-2"></i>Add Revision Event</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label text-secondary small">Task Title</label>
+                    <input type="text" class="form-control form-control-custom" placeholder="e.g. Unit III Memory Management Quiz">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-secondary small">Subject / Course</label>
+                    <input type="text" class="form-control form-control-custom" placeholder="Operating Systems">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-secondary small">Scheduled Date</label>
+                    <input type="date" class="form-control form-control-custom">
+                </div>
+                <button type="button" class="btn btn-primary-custom w-100 py-2" data-bs-dismiss="modal">Save Schedule Event</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

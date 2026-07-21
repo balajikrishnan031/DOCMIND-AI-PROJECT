@@ -772,5 +772,25 @@ def download_document_file(doc_id):
         flash(f"Error downloading file: {str(e)}", "danger")
         return redirect(url_for('library_page'))
 
+# ----------------- Enterprise Analytics & Auditor Routes -----------------
+
+@app.route('/analytics')
+def analytics_page():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('analytics.html')
+
+@app.route('/syllabus-auditor')
+def syllabus_auditor_page():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('syllabus_auditor.html')
+
+@app.route('/study-planner')
+def study_planner_page():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('study_planner.html')
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

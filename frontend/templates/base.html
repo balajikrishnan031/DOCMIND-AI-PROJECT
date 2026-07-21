@@ -67,6 +67,18 @@
                     <i class="fa-solid fa-circle-nodes"></i>
                     <span>Visual Mind Map</span>
                 </a>
+                <a href="{{ url_for('analytics_page') }}" class="nav-link-custom {% if active_page == 'analytics' %}active{% endif %}">
+                    <i class="fa-solid fa-chart-line text-cyan"></i>
+                    <span>Academic Analytics</span>
+                </a>
+                <a href="{{ url_for('syllabus_auditor_page') }}" class="nav-link-custom {% if active_page == 'syllabus_auditor' %}active{% endif %}">
+                    <i class="fa-solid fa-clipboard-check text-purple"></i>
+                    <span>Accreditation Auditor</span>
+                </a>
+                <a href="{{ url_for('study_planner_page') }}" class="nav-link-custom {% if active_page == 'study_planner' %}active{% endif %}">
+                    <i class="fa-solid fa-calendar-days text-warning"></i>
+                    <span>Study Planner</span>
+                </a>
                 <a href="{{ url_for('profile_page') }}" class="nav-link-custom {% if active_page == 'profile' %}active{% endif %}">
                     <i class="fa-solid fa-user-gear"></i>
                     <span>Profile & Settings</span>
