@@ -102,3 +102,38 @@ class StudyTools:
                 (user_id,)
             ).fetchall()
         return [dict(r) for r in rows]
+
+class StudyToolManager:
+    """
+    Phase 3 Spec: Database State Manager for AI generated flashcards & MCQs.
+    """
+    def save_flashcards(self, document_id: str, flashcards: list):
+        """Persists generated flashcard JSON into the database."""
+        db = get_db()
+        cursor = db.cursor()
+        for card in flashcards:
+            cursor.execute(
+                "INSERT INTO flashcards (document_id, front, back) VALUES (?, ?, ?)",
+                (str(document_id), card.get("front", ""), card.get("back", ""))
+            )
+        db.commit()
+
+    def save_mcqs(self, document_id: str, mcqs: list):
+        """Persists generated MCQ JSON and stringifies the options array."""
+        db = get_db()
+        cursor = db.cursor()
+        for mcq in mcqs:
+            options_json = json.dumps(mcq.get("options", []))
+            cursor.execute(
+                "INSERT INTO mcqs (document_id, question, correct_answer, options_json, explanation, blooms_level) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    str(document_id),
+                    mcq.get("question", ""),
+                    mcq.get("correct_answer", mcq.get("options", [""])[0]),
+                    options_json,
+                    mcq.get("explanation", ""),
+                    mcq.get("blooms_level", "Remembering")
+                )
+            )
+        db.commit()

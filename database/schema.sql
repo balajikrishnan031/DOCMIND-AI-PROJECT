@@ -121,6 +121,26 @@ CREATE TABLE IF NOT EXISTS quiz_attempts (
     FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE
 );
 
+-- Phase 3 Spec: 3D Flashcard Storage
+CREATE TABLE IF NOT EXISTS flashcards (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    document_id TEXT NOT NULL,
+    front TEXT NOT NULL,
+    back TEXT NOT NULL,
+    retention_score INTEGER DEFAULT 1
+);
+
+-- Phase 3 Spec: MCQ & Bloom's Taxonomy Storage
+CREATE TABLE IF NOT EXISTS mcqs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    document_id TEXT NOT NULL,
+    question TEXT NOT NULL,
+    correct_answer TEXT NOT NULL,
+    options_json TEXT NOT NULL,
+    explanation TEXT NOT NULL,
+    blooms_level TEXT NOT NULL
+);
+
 -- Enterprise Analytics Logs
 CREATE TABLE IF NOT EXISTS analytics_logs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
