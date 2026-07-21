@@ -40,6 +40,12 @@ def init_db():
         db.executescript(f.read())
     db.commit()
 
+    try:
+        from utils.sample_dataset_loader import SampleDatasetLoader
+        SampleDatasetLoader.seed_academic_database(db)
+    except Exception as e:
+        print(f"Sample dataset loader notice: {e}")
+
 def init_app(app):
     app.teardown_appcontext(close_db)
     # Automatically initialize db if it doesn't exist
