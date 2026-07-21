@@ -3,678 +3,751 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocMind AI — Making Academic Intelligence Accessible</title>
+    <title>DocMind AI — Kinto App Shell & Academic Platform</title>
     <!-- FontAwesome 6 & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <style>
-        /* 21st.dev Folio & Vertex Modern Minimalist Template CSS */
+        /* Kinto Shadcn UI Template App Shell Layout */
         :root {
-            --bg-page: #09090b;
-            --bg-card: #ffffff;
-            --text-main: #09090b;
-            --text-sub: #71717a;
-            --border-color: #e4e4e7;
-            --accent-black: #18181b;
+            --kinto-sidebar-width: 270px;
+            --kinto-bg-dark: #09090b;
+            --kinto-sidebar-bg: #0c0d12;
+            --kinto-border: #27272a;
+            --kinto-border-light: #e4e4e7;
+            --kinto-card-bg: #ffffff;
+            --kinto-text-dark: #09090b;
+            --kinto-text-muted: #71717a;
+            --kinto-cyan: #0284c7;
         }
 
-        body.template-landing {
-            background-color: var(--bg-page);
+        body.kinto-template-body {
+            background-color: #09090b;
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: var(--text-main);
             margin: 0;
-            padding: 2rem 1rem;
+            padding: 0;
+            color: #f8fafc;
+            display: flex;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Master Container Card (21st.dev Outer Frame) */
-        .template-frame-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border-radius: 28px;
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
-            border: 1px solid #27272a;
+        /* Fixed Left Sidebar Layout (Kinto Style) */
+        .kinto-sidebar {
+            width: var(--kinto-sidebar-width);
+            background: var(--kinto-sidebar-bg);
+            border-right: 1px solid var(--kinto-border);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem 1.25rem;
+            z-index: 100;
         }
 
-        /* Top Minimalist Header Bar */
-        .vertex-header {
+        .kinto-brand-box {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1.5rem 3rem;
-            background: #ffffff;
-            border-bottom: 1px solid #f4f4f5;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--kinto-border);
+            margin-bottom: 1.25rem;
         }
 
-        .vertex-brand {
+        .kinto-brand-logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             text-decoration: none;
-            color: var(--text-main);
+            color: #ffffff;
             font-weight: 800;
-            font-size: 1.4rem;
+            font-size: 1.25rem;
         }
 
-        .vertex-brand-icon {
-            width: 32px;
-            height: 32px;
+        .kinto-logo-icon {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
-            color: var(--text-main);
+            color: #ffffff;
+            font-size: 1.15rem;
+            box-shadow: 0 0 15px rgba(2, 132, 199, 0.5);
         }
 
-        .vertex-nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2.25rem;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .vertex-nav-links a {
-            text-decoration: none;
-            color: var(--text-sub);
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .vertex-nav-links a:hover {
-            color: var(--text-main);
-        }
-
-        .vertex-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-vertex-login {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 0.5rem 1rem;
-        }
-
-        .btn-vertex-dark {
-            background: var(--accent-black);
-            color: #ffffff !important;
-            padding: 0.65rem 1.4rem;
-            border-radius: 10px;
+        .kinto-version-badge {
+            background: rgba(255, 255, 255, 0.08);
+            color: #a1a1aa;
+            font-size: 0.72rem;
             font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: background 0.2s ease;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            border: 1px solid var(--kinto-border);
         }
 
-        .btn-vertex-dark:hover {
-            background: #27272a;
-        }
-
-        /* Hero Section (Folio Style) */
-        .folio-hero {
-            padding: 5rem 3rem 4rem 3rem;
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hero-top-pill {
-            display: inline-flex;
+        /* Sidebar Quick Search Box */
+        .kinto-search-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--kinto-border);
+            border-radius: 10px;
+            padding: 0.6rem 0.85rem;
+            color: #a1a1aa;
+            font-size: 0.85rem;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            background: #f4f4f5;
-            border: 1px solid #e4e4e7;
-            padding: 0.4rem 1.1rem;
-            border-radius: 50px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: #3f3f46;
-            margin-bottom: 2rem;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .hero-top-pill:hover {
-            background: #e4e4e7;
-            color: var(--text-main);
+        .kinto-search-box:hover {
+            border-color: #52525b;
+            color: #ffffff;
         }
 
-        .folio-hero-title {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 4.2rem;
-            font-weight: 700;
-            line-height: 1.15;
-            color: var(--text-main);
+        .kinto-search-box kbd {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--kinto-border);
+            border-radius: 4px;
+            padding: 0.1rem 0.4rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            color: #d4d4d8;
+        }
+
+        /* Sidebar Navigation Groups */
+        .kinto-nav-group {
             margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
         }
 
-        .folio-hero-sub {
-            font-size: 1.2rem;
-            line-height: 1.7;
-            color: var(--text-sub);
-            margin-bottom: 2.5rem;
-            max-width: 750px;
-            margin-left: auto;
-            margin-right: auto;
+        .kinto-nav-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.6rem;
+            padding-left: 0.5rem;
         }
 
-        .folio-btn-group {
+        .kinto-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .kinto-nav-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .kinto-nav-link {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 4rem;
-        }
-
-        .btn-folio-black {
-            background: var(--accent-black);
-            color: #ffffff !important;
-            padding: 0.85rem 2rem;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            color: #a1a1aa;
             text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-folio-black:hover {
-            background: #27272a;
-            transform: translateY(-2px);
-        }
-
-        .btn-folio-outline {
-            background: #ffffff;
-            border: 1px solid #e4e4e7;
-            color: var(--text-main) !important;
-            padding: 0.85rem 2rem;
-            border-radius: 10px;
-            font-size: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
             font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .kinto-nav-link:hover, .kinto-nav-link.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .kinto-nav-link i {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .kinto-nav-link.active i {
+            color: #38bdf8;
+        }
+
+        /* Sidebar User Footer */
+        .kinto-user-footer {
+            padding-top: 1rem;
+            border-top: 1px solid var(--kinto-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .kinto-user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .kinto-user-avatar {
+            width: 34px;
+            height: 34px;
+            background: #27272a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .kinto-user-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .kinto-user-role {
+            font-size: 0.72rem;
+            color: #71717a;
+        }
+
+        /* Main Content Area (Right of Sidebar) */
+        .kinto-main-content {
+            margin-left: var(--kinto-sidebar-width);
+            flex-grow: 1;
+            min-height: 100vh;
+            background: #09090b;
+            padding: 1.5rem 2.5rem 3rem 2.5rem;
+        }
+
+        /* Top Bar Header inside Main Content */
+        .kinto-top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--kinto-border);
+            margin-bottom: 2rem;
+        }
+
+        .kinto-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #71717a;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .kinto-breadcrumb span.active {
+            color: #ffffff;
+        }
+
+        .kinto-top-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-pill-badge {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 30px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-kinto-dark {
+            background: #ffffff;
+            color: #09090b !important;
+            padding: 0.55rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.88rem;
             text-decoration: none;
             transition: all 0.2s ease;
         }
 
-        .btn-folio-outline:hover {
-            background: #f4f4f5;
-            border-color: #d4d4d8;
+        .btn-kinto-dark:hover {
+            background: #e4e4e7;
         }
 
-        /* 2x5 Grid of Academic Tiers (Vertex Screenshot 2 Style) */
-        .vertex-grid-container {
-            border: 1px dashed #e4e4e7;
-            margin: 2rem 4rem 5rem 4rem;
-            border-radius: 16px;
-            overflow: hidden;
+        .btn-kinto-outline {
+            background: transparent;
+            border: 1px solid var(--kinto-border);
+            color: #ffffff !important;
+            padding: 0.55rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
 
-        .vertex-grid-row {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            border-bottom: 1px dashed #e4e4e7;
+        .btn-kinto-outline:hover {
+            background: #18181b;
+            border-color: #3f3f46;
         }
 
-        .vertex-grid-row:last-child {
-            border-bottom: none;
-        }
-
-        .vertex-grid-cell {
-            padding: 1.75rem 1rem;
-            text-align: center;
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: #3f3f46;
-            letter-spacing: 0.05em;
-            border-right: 1px dashed #e4e4e7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+        /* Hero White Card Container (Shadcn UI Card) */
+        .kinto-hero-card {
             background: #ffffff;
-            transition: background 0.2s ease;
+            color: #09090b;
+            border-radius: 20px;
+            padding: 3rem 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2.5rem;
         }
 
-        .vertex-grid-cell:last-child {
-            border-right: none;
+        .kinto-badge-tag {
+            background: #f4f4f5;
+            color: #3f3f46;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e4e4e7;
         }
 
-        .vertex-grid-cell:hover {
-            background: #fafafa;
-            color: var(--text-main);
+        .kinto-hero-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.2;
+            color: #09090b;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.03em;
         }
 
-        /* 5 Core Intelligent Modules (Stacked Cards Screenshot 3 & 4 Style) */
-        .vertex-section {
-            padding: 4rem 4rem;
-            border-top: 1px solid #f4f4f5;
+        .kinto-hero-desc {
+            font-size: 1.15rem;
+            line-height: 1.75;
+            color: #52525b;
+            margin-bottom: 2.25rem;
+            max-width: 850px;
+            font-weight: 500;
         }
 
-        .vertex-section-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 0.75rem;
-            text-align: center;
+        /* Grid of 5 Intelligent Modules (Shadcn UI Grid) */
+        .kinto-modules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
         }
 
-        .vertex-section-sub {
-            font-size: 1.1rem;
-            color: var(--text-sub);
-            text-align: center;
-            max-width: 650px;
-            margin: 0 auto 3.5rem auto;
-        }
-
-        .stacked-cards-wrapper {
+        .kinto-module-card {
+            background: #ffffff;
+            color: #09090b;
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--kinto-border-light);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            justify-content: space-between;
+            transition: all 0.3s ease;
         }
 
-        .stacked-card-item {
-            background: #fafafa;
-            border: 1px solid #e4e4e7;
-            border-radius: 20px;
-            padding: 2.5rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+        .kinto-module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            border-color: #0284c7;
+        }
+
+        .module-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #f4f4f5;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #09090b;
+            margin-bottom: 1.25rem;
         }
 
-        .stacked-card-info h3 {
-            font-size: 1.6rem;
+        .module-card-title {
+            font-size: 1.25rem;
             font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 1rem;
+            color: #09090b;
+            margin-bottom: 0.75rem;
         }
 
-        .stacked-card-info p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: var(--text-sub);
+        .module-card-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #52525b;
             margin-bottom: 1.5rem;
         }
 
-        .feature-tags-group {
+        .module-tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .module-tag-chip {
+            background: #f4f4f5;
+            color: #27272a;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            border: 1px solid #e4e4e7;
+        }
+
+        /* Academic Tiers Bar */
+        .kinto-tiers-container {
+            background: #18181b;
+            border: 1px solid var(--kinto-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .tiers-header-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
+        }
+
+        .tiers-pills-flex {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
         }
 
-        .tag-pill-item {
-            background: #ffffff;
-            border: 1px solid #e4e4e7;
-            padding: 0.45rem 1rem;
+        .tier-pill-badge {
+            background: #27272a;
+            color: #ffffff;
+            padding: 0.55rem 1.1rem;
             border-radius: 30px;
             font-size: 0.88rem;
             font-weight: 700;
-            color: #27272a;
-        }
-
-        .stacked-preview-box {
-            background: #ffffff;
-            border: 1px solid #e4e4e7;
-            border-radius: 16px;
-            padding: 1.75rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Workflow Analytics & Insights (Vertex Screenshot 4 Style) */
-        .vertex-split-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .split-card-box {
-            background: #fafafa;
-            border: 1px solid #e4e4e7;
-            border-radius: 20px;
-            padding: 2.5rem;
-            text-align: center;
-        }
-
-        .split-card-box h4 {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 0.75rem;
-        }
-
-        .split-card-box p {
-            font-size: 0.98rem;
-            line-height: 1.6;
-            color: var(--text-sub);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Ultra-Sleek Dark Modern Footer (Vertex Screenshot 5 Style) */
-        .vertex-footer-dark {
-            background: #09090b;
-            color: #ffffff;
-            padding: 4.5rem 4rem 3rem 4rem;
-            border-top: 1px solid #27272a;
-        }
-
-        .footer-grid-layout {
-            display: grid;
-            grid-template-columns: 2fr repeat(4, 1fr);
-            gap: 3rem;
-            margin-bottom: 4rem;
-        }
-
-        .footer-brand-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .footer-brand-desc {
-            color: #a1a1aa;
-            font-size: 0.92rem;
-            line-height: 1.6;
-            max-width: 340px;
-        }
-
-        .footer-column h5 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 1.25rem;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-column ul li a {
-            color: #a1a1aa;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
+            border: 1px solid #3f3f46;
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
         }
 
-        .footer-column ul li a:hover {
-            color: #ffffff;
+        .tier-pill-badge:hover {
+            background: #0284c7;
+            border-color: #0284c7;
         }
 
-        .footer-bottom-bar {
+        /* Footer */
+        .kinto-app-footer {
+            padding-top: 2rem;
+            border-top: 1px solid var(--kinto-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: 2rem;
-            border-top: 1px solid #27272a;
             color: #71717a;
             font-size: 0.88rem;
         }
     </style>
 </head>
-<body class="template-landing">
+<body class="kinto-template-body">
 
-    <!-- 21st.dev Outer Frame Container -->
-    <div class="template-frame-container">
-
-        <!-- Top Minimalist Header Bar -->
-        <header class="vertex-header">
-            <a href="/" class="vertex-brand">
-                <div class="vertex-brand-icon">
-                    <i class="fa-solid fa-brain"></i>
-                </div>
-                <span>DocMind AI</span>
-            </a>
-
-            <ul class="vertex-nav-links d-none d-lg-flex">
-                <li><a href="#modules">5 Modules</a></li>
-                <li><a href="#academic-tiers">Academic Tiers</a></li>
-                <li><a href="#personas">Roles</a></li>
-                <li><a href="#architecture">Architecture</a></li>
-                <li><a href="#faq">FAQ</a></li>
-            </ul>
-
-            <div class="vertex-actions">
-                <a href="/login" class="btn-vertex-login">Login</a>
-                <a href="/login" class="btn-vertex-dark">Get Started</a>
-            </div>
-        </header>
-
-        <!-- Folio Hero Section -->
-        <section class="folio-hero">
-            <div class="hero-top-pill" onclick="window.location.href='/login'">
-                <span>Simplify Learning — AI-Powered RAG Engine</span>
-                <i class="fa-solid fa-chevron-right text-muted"></i>
+    <!-- Fixed Left Sidebar Layout (Kinto Template Style) -->
+    <aside class="kinto-sidebar">
+        <div>
+            <!-- Brand Header -->
+            <div class="kinto-brand-box">
+                <a href="/" class="kinto-brand-logo">
+                    <div class="kinto-logo-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <span>DocMind AI</span>
+                </a>
+                <span class="kinto-version-badge">v2.5</span>
             </div>
 
-            <h1 class="folio-hero-title">Making Academic Intelligence Accessible</h1>
-
-            <p class="folio-hero-sub">
-                DocMind AI builds AI-powered tools that help students, professors, and researchers query course textbooks, map multi-unit syllabi, and flip active recall study cards — without reading hundreds of pages.
-            </p>
-
-            <div class="folio-btn-group">
-                <a href="/login" class="btn-folio-black">Explore DocMind AI</a>
-                <a href="/login" class="btn-folio-outline">Get in Touch</a>
+            <!-- Quick Search Box -->
+            <div class="kinto-search-box" onclick="window.location.href='/chat'">
+                <span><i class="fa-solid fa-magnifying-glass me-2"></i>Search textbooks...</span>
+                <kbd>⌘K</kbd>
             </div>
-        </section>
 
-        <!-- 2x5 Grid of Academic Tiers (Vertex Screenshot 2 Style) -->
-        <section class="vertex-grid-container" id="academic-tiers">
-            <div class="vertex-grid-row">
-                <div class="vertex-grid-cell"><i class="fa-solid fa-book-bookmark text-primary"></i> Primary (Std 1 - 5)</div>
-                <div class="vertex-grid-cell"><i class="fa-solid fa-book-open text-primary"></i> Middle (Std 6 - 8)</div>
-                <div class="vertex-grid-cell"><i class="fa-solid fa-microscope text-primary"></i> High School (Std 9-10)</div>
-                <div class="vertex-grid-cell"><i class="fa-solid fa-flask text-primary"></i> Higher Sec (Std 11-12)</div>
-                <div class="vertex-grid-cell"><i class="fa-solid fa-laptop-code text-primary"></i> CSE & IT Dept</div>
+            <!-- Core Platform Nav -->
+            <div class="kinto-nav-group">
+                <div class="kinto-nav-title">CORE PLATFORM</div>
+                <ul class="kinto-nav-list">
+                    <li class="kinto-nav-item">
+                        <a href="/dashboard" class="kinto-nav-link active">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/library" class="kinto-nav-link">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <span>My Documents</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/chat" class="kinto-nav-link">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>Ask Questions</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/syllabus" class="kinto-nav-link">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>Syllabus Mapping</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/flashcards" class="kinto-nav-link">
+                            <i class="fa-solid fa-address-card"></i>
+                            <span>3D Flashcards</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/quiz" class="kinto-nav-link">
+                            <i class="fa-solid fa-circle-question"></i>
+                            <span>Practice Quiz</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/mindmap" class="kinto-nav-link">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            <span>Visual Mind Map</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="vertex-grid-row">
-                <div class="vertex-grid-cell"><i class="fa-solid fa-brain text-purple"></i> AI & Data Science</div>
-                <div class="vertex-grid-cell"><i class="fa-solid fa-microchip text-purple"></i> ECE & EEE Dept</div>
-                <div class="vertex-grid-cell"><i class="fa-solid fa-gears text-purple"></i> Mechanical Engg</div>
-                <div class="vertex-grid-cell"><i class="fa-solid fa-building text-purple"></i> Civil Engineering</div>
-                <div class="vertex-grid-cell"><i class="fa-solid fa-award text-success"></i> GATE & Group Exams</div>
+
+            <!-- Academic Portals Nav -->
+            <div class="kinto-nav-group">
+                <div class="kinto-nav-title">ACADEMIC TIERS</div>
+                <ul class="kinto-nav-list">
+                    <li class="kinto-nav-item">
+                        <a href="/school-portal" class="kinto-nav-link">
+                            <i class="fa-solid fa-school text-warning"></i>
+                            <span>School Portal (Std 1-12)</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/dashboard" class="kinto-nav-link">
+                            <i class="fa-solid fa-university text-info"></i>
+                            <span>College (B.E. Sem 1-8)</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/syllabus-auditor" class="kinto-nav-link">
+                            <i class="fa-solid fa-clipboard-check text-purple"></i>
+                            <span>Accreditation Auditor</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/analytics" class="kinto-nav-link">
+                            <i class="fa-solid fa-chart-line text-cyan"></i>
+                            <span>Academic Analytics</span>
+                        </a>
+                    </li>
+                    <li class="kinto-nav-item">
+                        <a href="/study-planner" class="kinto-nav-link">
+                            <i class="fa-solid fa-calendar-days text-success"></i>
+                            <span>Study Planner</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </section>
+        </div>
 
-        <!-- 5 Core Intelligent Modules (Stacked Cards Screenshot 3 Style) -->
-        <section class="vertex-section" id="modules">
-            <h2 class="vertex-section-title">5 Core Intelligent Modules</h2>
-            <p class="vertex-section-sub">DocMind AI transforms dense academic textbooks into interactive, page-cited learning workflows:</p>
-
-            <div class="stacked-cards-wrapper">
-                
-                <!-- Module 1 -->
-                <div class="stacked-card-item">
-                    <div class="stacked-card-info">
-                        <h3>1. Semantic Syllabus Mapping</h3>
-                        <p>Upload multi-unit course syllabi (B.E. Sem 1-8, GATE, Group Exams). DocMind AI's regex parser extracts unit boundaries, topics, and uses cosine vector similarity to map every topic to exact textbook pages.</p>
-                        <div class="feature-tags-group">
-                            <span class="tag-pill-item">Unit I - V Extractor</span>
-                            <span class="tag-pill-item">Cosine Vector Resolver</span>
-                            <span class="tag-pill-item">Direct Page Jump Links</span>
-                        </div>
-                    </div>
-                    <div class="stacked-preview-box">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="fw-bold text-dark"><i class="fa-solid fa-file-pdf text-danger me-2"></i>Syllabus_Mapping_Output.json</span>
-                            <span class="badge bg-dark text-white">100% Page Match</span>
-                        </div>
-                        <div class="p-3 bg-light rounded-3 font-monospace small text-dark">
-                            {"unit": "Unit I", "topic": "CPU Scheduling", "mapped_book": "OS_Silberschatz.pdf", "page": 42}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Module 2 -->
-                <div class="stacked-card-item">
-                    <div class="stacked-card-info">
-                        <h3>2. 3D Active Recall Flashcards</h3>
-                        <p>Boost memory retention with interactive 3D card-flipping decks. Automatically synthesizes crucial definitions, mathematical formulas, and key concepts into spaced-repetition study flashcards.</p>
-                        <div class="feature-tags-group">
-                            <span class="tag-pill-item">3D CSS Perspective Flip</span>
-                            <span class="tag-pill-item">Auto-Synthesized Decks</span>
-                            <span class="tag-pill-item">Spaced Repetition</span>
-                        </div>
-                    </div>
-                    <div class="stacked-preview-box text-center p-4">
-                        <div class="border rounded-3 p-4 bg-light shadow-sm">
-                            <div class="text-uppercase text-muted small fw-bold mb-2">Front Side</div>
-                            <div class="fw-bold fs-5 text-dark">What is Gradient Descent?</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Module 3 -->
-                <div class="stacked-card-item">
-                    <div class="stacked-card-info">
-                        <h3>3. Automated Practice Exams</h3>
-                        <p>Generate targeted multiple-choice question tests with detailed solution feedback. Classifies questions by Bloom's Taxonomy cognitive depth and logs attempts in scoreboards.</p>
-                        <div class="feature-tags-group">
-                            <span class="tag-pill-item">Bloom's Taxonomy Classification</span>
-                            <span class="tag-pill-item">Real-Time Verification</span>
-                            <span class="tag-pill-item">SQLite Scoreboards</span>
-                        </div>
-                    </div>
-                    <div class="stacked-preview-box">
-                        <div class="fw-bold text-dark mb-2">Sample Question [Applying]</div>
-                        <div class="small text-muted mb-3">Calculate the average time complexity of Binary Search Tree search operations?</div>
-                        <div class="badge bg-success text-white">Correct Answer: O(log n)</div>
-                    </div>
-                </div>
-
-                <!-- Module 4 & 5 Grid -->
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="stacked-card-item d-block h-100">
-                            <h3>4. Visual Concept Mind Maps</h3>
-                            <p>Visualize conceptual linkages between definitions, equations, and key terms in interactive, zoomable Vis.js SVG node network graphics.</p>
-                            <div class="feature-tags-group mt-3">
-                                <span class="tag-pill-item">Vis.js Physics Engine</span>
-                                <span class="tag-pill-item">Group Color Nodes</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="stacked-card-item d-block h-100">
-                            <h3>5. Role & Grade Hub</h3>
-                            <p>Filter materials and customize access criteria based on academic tier (Std 1-12, B.E. Sem 1-8, M.E., Competitive Exams) and target role (Student, Teacher, Professor, HOD, Dean).</p>
-                            <div class="feature-tags-group mt-3">
-                                <span class="tag-pill-item">Role Metadata Filters</span>
-                                <span class="tag-pill-item">NAAC / NBA Auditor</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Workflow Analytics & Insights (Vertex Screenshot 4 Style) -->
-        <section class="vertex-section">
-            <h2 class="vertex-section-title">Built for Modern Academic Workflows</h2>
-            <p class="vertex-section-sub">Empowering students and faculty with real-time memory analytics and automated document workflows:</p>
-
-            <div class="vertex-split-grid">
-                <div class="split-card-box">
-                    <h4>Workflow analytics & insights</h4>
-                    <p>Monitor memory retention performance with real-time Ebbinghaus decay metrics. Track readiness scores and identify weak topics instantly.</p>
-                    <a href="/login" class="btn-folio-outline btn-sm">View Analytics Dashboard</a>
-                </div>
-
-                <div class="split-card-box">
-                    <h4>Turn textbooks into workflows</h4>
-                    <p>Transcribe every PDF page, surface key formula insights, and trigger downstream flashcards and quizzes directly from course materials.</p>
-                    <a href="/login" class="btn-folio-black btn-sm">Start Processing PDFs</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Ultra-Sleek Dark Modern Footer (Vertex Screenshot 5 Style) -->
-        <footer class="vertex-footer-dark">
-            <div class="footer-grid-layout">
+        <!-- Sidebar User Profile Footer -->
+        <div class="kinto-user-footer">
+            <div class="kinto-user-info">
+                <div class="kinto-user-avatar">AI</div>
                 <div>
-                    <div class="footer-brand-title">
-                        <i class="fa-solid fa-brain text-cyan"></i>
-                        <span>DocMind AI</span>
-                    </div>
-                    <p class="footer-brand-desc">
-                        DocMind AI is an open-source educational platform designed to make academic intelligence accessible across school education, engineering semesters, and competitive exams.
+                    <div class="kinto-user-name">Academic User</div>
+                    <div class="kinto-user-role">Student / Faculty</div>
+                </div>
+            </div>
+            <a href="/login" class="text-muted" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area (Right of Kinto Sidebar) -->
+    <main class="kinto-main-content">
+
+        <!-- Top Breadcrumb & Actions Bar -->
+        <div class="kinto-top-header">
+            <div class="kinto-breadcrumb">
+                <span>DocMind AI</span>
+                <i class="fa-solid fa-chevron-right fs-6"></i>
+                <span class="active">Kinto App Shell & Academic Platform</span>
+            </div>
+
+            <div class="kinto-top-actions">
+                <div class="status-pill-badge">
+                    <i class="fa-solid fa-circle fs-6"></i> Llama 3.1 70B Active
+                </div>
+                <a href="/upload" class="btn-kinto-outline">+ Upload PDF</a>
+                <a href="/login" class="btn-kinto-dark">Faculty Sign In</a>
+            </div>
+        </div>
+
+        <!-- Kinto Hero White Card Container -->
+        <div class="kinto-hero-card">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="kinto-badge-tag">
+                        <i class="fa-solid fa-cubes me-1"></i> Shadcn UI App Shell Architecture
+                    </span>
+                    <h1 class="kinto-hero-title">Making Academic Intelligence Accessible</h1>
+                    <p class="kinto-hero-desc">
+                        DocMind AI is a comprehensive Artificial Intelligence educational tutor. Engineered for <strong>Students, School Teachers (Std 1-12), College Professors, HODs, Deans, and Competitive Aspirants (GATE & Group Exams)</strong>, it ingests multi-unit syllabi, maps chapter topics to exact textbook page numbers, flips 3D recall flashcards, and builds visual concept mind maps.
                     </p>
+                    <div class="d-flex gap-3">
+                        <a href="/login" class="btn-kinto-dark">Launch Student Portal <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        <a href="/school-portal" class="btn-kinto-outline text-dark border-dark">School Portal (Std 1-12)</a>
+                    </div>
                 </div>
-
-                <div class="footer-column">
-                    <h5>Platform</h5>
-                    <ul>
-                        <li><a href="#modules">Syllabus Mapper ↗</a></li>
-                        <li><a href="#modules">3D Flashcards ↗</a></li>
-                        <li><a href="#modules">Practice Quizzes ↗</a></li>
-                        <li><a href="#modules">Visual Mind Maps ↗</a></li>
-                        <li><a href="#modules">School Portal ↗</a></li>
-                    </ul>
+                <div class="col-lg-4 text-center d-none d-lg-block">
+                    <div class="p-4 bg-dark text-white rounded-4 shadow">
+                        <i class="fa-solid fa-brain display-4 text-info mb-3"></i>
+                        <h5 class="fw-bold mb-2">Groq Llama 3.1 70B</h5>
+                        <p class="small text-secondary mb-3">Vector RAG Search & MiniLM-L6 Embedding Engine</p>
+                        <span class="badge bg-primary text-white font-monospace">&lt; 10ms Latency</span>
+                    </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="footer-column">
-                    <h5>Integrations</h5>
-                    <ul>
-                        <li><a href="#">Python ↗</a></li>
-                        <li><a href="#">Flask ↗</a></li>
-                        <li><a href="#">Groq Llama 3.1 ↗</a></li>
-                        <li><a href="#">MiniLM Vector RAG ↗</a></li>
-                        <li><a href="#">Turso Cloud DB ↗</a></li>
-                    </ul>
+        <!-- 5 Core Modules Grid (Shadcn UI Grid) -->
+        <div class="kinto-modules-grid" id="modules">
+            
+            <!-- Module 1 -->
+            <div class="kinto-module-card">
+                <div>
+                    <div class="module-icon-box">
+                        <i class="fa-solid fa-diagram-project text-primary"></i>
+                    </div>
+                    <h3 class="module-card-title">1. Semantic Syllabus Mapping</h3>
+                    <p class="module-card-desc">Upload course syllabi (B.E. Sem 1-8, GATE, Group Exams). Regex parser extracts unit boundaries and uses cosine vector similarity to map every topic to exact textbook pages.</p>
                 </div>
-
-                <div class="footer-column">
-                    <h5>Tiers</h5>
-                    <ul>
-                        <li><a href="#">Std 1 - 5 Primary ↗</a></li>
-                        <li><a href="#">Std 6 - 8 Middle ↗</a></li>
-                        <li><a href="#">Std 9 - 10 High ↗</a></li>
-                        <li><a href="#">Std 11 - 12 Sec ↗</a></li>
-                        <li><a href="#">B.E. Sem 1 - 8 ↗</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column">
-                    <h5>Resources</h5>
-                    <ul>
-                        <li><a href="#">Documentation ↗</a></li>
-                        <li><a href="#">Help Center ↗</a></li>
-                        <li><a href="#">IEEE Research ↗</a></li>
-                        <li><a href="#">GitHub Repo ↗</a></li>
-                    </ul>
+                <div class="module-tags-list">
+                    <span class="module-tag-chip">Regex Boundary Extractor</span>
+                    <span class="module-tag-chip">Page Jump Mappings</span>
                 </div>
             </div>
 
-            <div class="footer-bottom-bar">
-                <span>© 2026 DocMind AI Inc. All rights reserved.</span>
-                <span>Built with Python, Flask, Groq Llama 3.1 70B, and SQLite / Turso.</span>
+            <!-- Module 2 -->
+            <div class="kinto-module-card">
+                <div>
+                    <div class="module-icon-box">
+                        <i class="fa-solid fa-clone text-purple"></i>
+                    </div>
+                    <h3 class="module-card-title">2. 3D Active Recall Flashcards</h3>
+                    <p class="module-card-desc">Boost memory retention with 3D card-flipping decks. Synthesizes key definitions, mathematical formulas, and concepts into spaced-repetition study flashcards.</p>
+                </div>
+                <div class="module-tags-list">
+                    <span class="module-tag-chip">3D CSS Perspective Flip</span>
+                    <span class="module-tag-chip">Auto-Synthesized Decks</span>
+                </div>
             </div>
+
+            <!-- Module 3 -->
+            <div class="kinto-module-card">
+                <div>
+                    <div class="module-icon-box">
+                        <i class="fa-solid fa-square-poll-vertical text-warning"></i>
+                    </div>
+                    <h3 class="module-card-title">3. Automated Practice Exams</h3>
+                    <p class="module-card-desc">Generate targeted multiple-choice question tests with solution feedback. Classifies questions by Bloom's Taxonomy cognitive levels and logs attempt scoreboards.</p>
+                </div>
+                <div class="module-tags-list">
+                    <span class="module-tag-chip">Bloom's Classification</span>
+                    <span class="module-tag-chip">SQLite Scoreboards</span>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="kinto-module-card">
+                <div>
+                    <div class="module-icon-box">
+                        <i class="fa-solid fa-circle-nodes text-success"></i>
+                    </div>
+                    <h3 class="module-card-title">4. Visual Concept Mind Maps</h3>
+                    <p class="module-card-desc">Visualize conceptual linkages between definitions, equations, and key terms in interactive, zoomable Vis.js SVG node network graphics with drag/pan controls.</p>
+                </div>
+                <div class="module-tags-list">
+                    <span class="module-tag-chip">Vis.js Physics Engine</span>
+                    <span class="module-tag-chip">Color-Coded Nodes</span>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="kinto-module-card">
+                <div>
+                    <div class="module-icon-box">
+                        <i class="fa-solid fa-users-gear text-danger"></i>
+                    </div>
+                    <h3 class="module-card-title">5. Role & Grade Hub</h3>
+                    <p class="module-card-desc">Filter materials and customize access criteria based on academic tier (Std 1-12, B.E. Sem 1-8, M.E., Competitive Exams) and target role (Student, Teacher, Professor, HOD, Dean).</p>
+                </div>
+                <div class="module-tags-list">
+                    <span class="module-tag-chip">Multi-Level Grade Filters</span>
+                    <span class="module-tag-chip">NAAC / NBA Auditor</span>
+                </div>
+            </div>
+
+            <!-- Module 6 Summary Action -->
+            <div class="kinto-module-card bg-dark text-white border-primary">
+                <div>
+                    <div class="module-icon-box bg-primary text-white">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+                    <h3 class="module-card-title text-white">Ready to Ingest Course Materials?</h3>
+                    <p class="module-card-desc text-secondary">Experience Groq Llama 3.1 70B & RAG vector search on your textbooks and syllabi today.</p>
+                </div>
+                <a href="/login" class="btn-kinto-dark text-center">Access Platform Now</a>
+            </div>
+
+        </div>
+
+        <!-- Academic Scope Bar -->
+        <div class="kinto-tiers-container">
+            <h3 class="tiers-header-title"><i class="fa-solid fa-graduation-cap me-2 text-primary"></i>Universal Academic Tiers Supported</h3>
+            <div class="tiers-pills-flex">
+                <span class="tier-pill-badge"><i class="fa-solid fa-book-bookmark text-warning"></i> Primary (Std 1 - 5)</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-book-open text-warning"></i> Middle (Std 6 - 8)</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-microscope text-warning"></i> High School (Std 9 - 10)</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-flask text-warning"></i> Higher Secondary (Std 11 - 12)</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-laptop-code text-info"></i> CSE & IT Dept</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-brain text-info"></i> AI & Data Science</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-microchip text-info"></i> ECE & EEE Dept</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-gears text-info"></i> Mechanical Engg</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-building text-info"></i> Civil Engineering</span>
+                <span class="tier-pill-badge"><i class="fa-solid fa-award text-success"></i> GATE & Group Exams</span>
+            </div>
+        </div>
+
+        <!-- Kinto App Shell Footer -->
+        <footer class="kinto-app-footer">
+            <div>© 2026 DocMind AI Inc. Kinto App Shell Template Architecture.</div>
+            <div>Built with Python, Flask, Groq Llama 3.1 70B, and Turso / SQLite.</div>
         </footer>
 
-    </div>
+    </main>
 
 </body>
 </html>
