@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocMind AI - Internship Project Report - BALAJI.P</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6 Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf6f0; /* Kinto warm sand */
+            --text-color: #1a1715;
+            --primary-color: #c97f5a; /* Warm Rust accent */
+            --border-color: #e6dfd5;
+            --shadow-color: rgba(26, 23, 21, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            padding: 3rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 30px var(--shadow-color);
+            border-radius: 12px;
+            padding: 5rem;
+        }
+
+        /* Printable Pages Control */
+        .page {
+            page-break-after: always;
+            position: relative;
+            min-height: 1200px;
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .page:last-child {
+            page-break-after: avoid !important;
+            min-height: auto;
+            border-bottom: none !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* Float Print Button */
+        .print-btn-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .print-btn {
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(201, 127, 90, 0.4);
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 127, 90, 0.6);
+        }
+
+        /* Cover Page Styling */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            height: 1100px;
+            padding: 1rem 0;
+            border-bottom: none !important;
+        }
+        .cover-header {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        .cover-title-group {
+            margin: 3rem 0;
+        }
+        .cover-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #1a1715;
+        }
+        .cover-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #6e655f;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        .brand-logo-img {
+            max-width: 130px;
+            margin: 1.5rem 0;
+        }
+        
+        .college-info {
+            font-size: 0.95rem;
+            color: #524b47;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            width: 100%;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            text-align: left;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        .info-col h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Certificate Replica Box */
+        .cert-replica {
+            border: 2px solid #0284c7;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: #f0f9ff;
+            font-family: 'Outfit', sans-serif;
+        }
+        .cert-header {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #0369a1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+        .cert-body {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #0f172a;
+        }
+
+        /* Content Pages Styling */
+        h1.section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.6rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1a1715;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h2.sub-section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.6rem;
+            color: var(--primary-color);
+        }
+        h3.block-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1a1715;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: #403a35;
+            text-align: justify;
+            font-size: 0.95rem;
+        }
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: #403a35;
+            font-size: 0.95rem;
+        }
+        li {
+            margin-bottom: 0.4rem;
+        }
+        
+        /* Code Block Styling */
+        pre {
+            background-color: #2e2a24;
+            color: #f7f4ee;
+            padding: 1.25rem;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #443e37;
+        }
+
+        /* Screenshot Graphics Section */
+        .screenshot-container {
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            padding: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            text-align: center;
+        }
+        .screenshot-img {
+            width: 100%;
+            height: auto;
+            max-height: 380px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        .screenshot-caption {
+            font-size: 0.85rem;
+            color: #6e655f;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Architecture Tables */
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .tech-table th, .tech-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.7rem 0.9rem;
+            text-align: left;
+        }
+        .tech-table th {
+            background-color: var(--bg-color);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Page Number Footer */
+        .page-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #8c827a;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.5rem;
+        }
+
+        /* Print Media Overrides */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+            }
+            .container {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+            .print-btn-container {
+                display: none !important;
+            }
+            .page {
+                min-height: auto !important;
+                margin-bottom: 0 !important;
+                border-bottom: none !important;
+                page-break-after: always !important;
+            }
+            .page-footer {
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Print Button -->
+    <div class="print-btn-container">
+        <button class="print-btn" onclick="window.print()">
+            <i class="fa-solid fa-file-pdf"></i> Save as PDF / Print Report
+        </button>
+    </div>
+
+    <div class="container">
+
+        <!-- ================= PAGE 1: COVER PAGE ================= -->
+        <div class="page cover-page">
+            <div class="cover-header">A Internship Project Report</div>
+            
+            <div class="cover-title-group">
+                <img src="/static/assets/docmind_ai_logo.png" alt="DocMind AI Logo" class="brand-logo-img">
+                <h1 class="cover-title">DocMind AI</h1>
+                <div class="cover-subtitle">Intelligent Document Organizer & Multi-Tier Educational Assistant using Python with AIML</div>
+            </div>
+
+            <div class="college-info">
+                <p style="text-align: center; font-weight: 600; font-family: 'Outfit', sans-serif; margin-bottom: 0.5rem; letter-spacing: 0.05em;">
+                    DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING
+                </p>
+                <p style="text-align: center; font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: #1a1715; margin-bottom: 1.5rem;">
+                    UNIVERSITY COLLEGE OF ENGINEERING, PANRUTI
+                </p>
+                <p style="text-align: center; font-size: 0.85rem; color: #6e655f; max-width: 600px; margin: 0 auto;">
+                    Submitted in partial fulfillment of the requirements for the award of degree of Bachelor of Engineering in Computer Science and Engineering during Academic Internship at CodeBind Technologies, Chennai.
+                </p>
+                
+                <div class="info-grid">
+                    <div class="info-col">
+                        <h4>Candidate Details:</h4>
+                        <p style="margin: 0; font-weight: 600;">Mr. BALAJI.P</p>
+                        <p style="margin: 0; font-size: 0.9rem;">Register No: UCE Panruti CSE</p>
+                        <p style="margin: 0; font-size: 0.9rem;">B.E. Computer Science, Final Year</p>
+                    </div>
+                    <div class="info-col" style="text-align: right;">
+                        <h4>Organization Details:</h4>
+                        <p style="margin: 0; font-weight: 600;">CodeBind Technologies</p>
+                        <p style="margin: 0; font-size: 0.9rem;">107 Usman Road, T. Nagar</p>
+                        <p style="margin: 0; font-size: 0.9rem;">Chennai - 600017, Tamil Nadu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 2: CERTIFICATES REPLICAS ================= -->
+        <div class="page">
+            <h1 class="section-title"><i class="fa-solid fa-stamp" style="color: var(--primary-color);"></i> Internship Certificates</h1>
+            
+            <div class="cert-replica">
+                <div class="cert-header">Certificate of Project Completion (CBTINC082005260610)</div>
+                <div class="cert-body">
+                    This certificate is awarded to <strong>Mr. BALAJI.P</strong>, studying in <strong>University College of Engineering, Panruti</strong>, Department of <strong>BE - CSE</strong>, on the successful completion of the project titled <strong>"Docmind AI - Intelligent document organizer using Python with Artificial Intelligence & Machine Learning (AIML)"</strong> at <strong>CodeBind Technologies, Chennai</strong>, from <strong>10th June 2026 to 05th July 2026</strong>.
+                </div>
+            </div>
+
+            <div class="cert-replica" style="border-color: #059669; background-color: #ecfdf5;">
+                <div class="cert-header" style="color: #047857;">Certificate of Internship (CBTINC082005260610)</div>
+                <div class="cert-body">
+                    This certificate is awarded to <strong>Mr. BALAJI.P</strong>, for successful completion of an <strong>Internship in Python with Artificial Intelligence and Machine Learning (AIML)</strong> at <strong>CodeBind Technologies, Chennai</strong> from <strong>10th June 2026 to 05th July 2026</strong>.
+                </div>
+            </div>
+
+            <div class="cert-replica" style="border-color: #d97706; background-color: #fffbeb;">
+                <div class="cert-header" style="color: #b45309;">Inplant Training Certificate (CBTIPC102005260605)</div>
+                <div class="cert-body">
+                    This certificate is awarded to <strong>P. BALAJI</strong>, who has undergone <strong>Inplant Training in Python - AIML</strong> from <strong>10.06.2026 to 05.07.2026</strong> at <strong>CodeBind Technologies, Chennai</strong>. Trainee conduct was found to be Good.
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 2</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 3: WORKSHOP & Aptitude Certificates ================= -->
+        <div class="page">
+            <h1 class="section-title"><i class="fa-solid fa-graduation-cap" style="color: var(--primary-color);"></i> Workshop & Training Tests</h1>
+
+            <div class="cert-replica" style="border-color: #7c3aed; background-color: #f5f3ff;">
+                <div class="cert-header" style="color: #6d28d9;">Workshop Participation Certificate (CBTWIC102005260605)</div>
+                <div class="cert-body">
+                    This certificate is awarded to <strong>P. BALAJI</strong>, for active and invaluable contribution to the **One Day Workshop on Data Science** held on <strong>05.07.2026</strong> at <strong>CodeBind Technologies, Chennai</strong>.
+                </div>
+            </div>
+
+            <div class="cert-replica" style="border-color: #db2777; background-color: #fdf2f8;">
+                <div class="cert-header" style="color: #be185d;">Corporate Training Test Certificate (CBTAC102005260605)</div>
+                <div class="cert-body">
+                    This certificate is awarded to <strong>P. BALAJI</strong>, for successfully completing a <strong>"Corporate Training Test"</strong> based on Placement Aptitude Questions held on <strong>05.07.2026</strong> at <strong>CodeBind Technologies, Chennai</strong>.
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem;">
+                These certificates highlight the structured internship and training workflow Balaji completed at CodeBind Technologies, Chennai. The program integrated theoretical training sessions, hands-on workshop participation, corporate placement evaluation tests, and an intensive capstone product development phase implementing Python, RAG pipelines, and deep neural vector matching libraries.
+            </p>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 3</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 4: CHAPTER 1 - COMPANY PROFILE ================= -->
+        <div class="page">
+            <h1 class="section-title">1. Company Profile</h1>
+            <h2 class="sub-section-title">CodeBind Technologies</h2>
+            <p>
+                **CodeBind Technologies** is a leading ISO 9001:2015 certified software development, technical consultancy, and corporate training firm based in Chennai, Tamil Nadu. The company is internationally recognized under the EGAC (Egyptian Accreditation Council) and the IAF (International Accreditation Forum) frameworks.
+            </p>
+            <p>
+                The firm specializes in developing robust enterprise applications using Python, Java, Node.js, and Cloud Computing platforms (AWS/GCP/Azure). Additionally, CodeBind Technologies maintains a dedicated Research & Development division focused on expanding industrial application packages in Machine Learning, Deep Neural Architectures, Natural Language Processing, and advanced Vector Semantic Information Retrieval databases.
+            </p>
+            <h3 class="block-title">Key Organizational Domains:</h3>
+            <ul>
+                <li><strong>Enterprise Software Engineering:</strong> Building customized backend REST APIs and client-centric responsive web applications.</li>
+                <li><strong>Data Analytics & Science:</strong> Deploying predictive regression algorithms, neural classifiers, and large language model configurations.</li>
+                <li><strong>Corporate Training Operations:</strong> Supporting engineering departments and universities in establishing training labs, inplant learning modules, and technical project workshops.</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 4</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 5: CHAPTER 2 - PYTHON & AIML CORE ================= -->
+        <div class="page">
+            <h1 class="section-title">2. Introduction to Python, AIML & RAG</h1>
+            <h2 class="sub-section-title">A. Python Ecosystem in AIML</h2>
+            <p>
+                Python has emerged as the industry standard language for Artificial Intelligence and Machine Learning due to its clear syntax, readability, and extensive libraries. Key modules implemented in the DocMind AI platform include:
+            </p>
+            <ul>
+                <li><strong>Numpy:</strong> Used for fast vector mathematical computations, matrix norms, and dot products for cosine similarity calculation.</li>
+                <li><strong>Sentence-Transformers:</strong> Utilizes pre-trained deep learning encoder transformers (specifically `all-MiniLM-L6-v2`) to turn raw text strings into dense 384-dimensional arrays.</li>
+                <li><strong>Flask:</strong> Acts as the primary lightweight WSGI web framework to route server events and service Jinja HTML templates.</li>
+                <li><strong>PDFPlumber / Extractor:</strong> Used for structural text extraction and locating precise page positions inside dense textbook layout streams.</li>
+            </ul>
+
+            <h2 class="sub-section-title">B. Understanding Retrieval-Augmented Generation (RAG)</h2>
+            <p>
+                Large Language Models (LLMs) suffer from hallucinations and lack domain context. A RAG pipeline addresses this by splitting documents into overlapping paragraphs, embedding them, indexing them in a vector database, and matching the user query with relevant context blocks before sending the prompt to the inference model.
+            </p>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 5</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 6: CHAPTER 3 - PROBLEM STATEMENT ================= -->
+        <div class="page">
+            <h1 class="section-title">3. Problem Statement & Objectives</h1>
+            <h2 class="sub-section-title">A. Problem Statement</h2>
+            <p>
+                Standard keyword-based study searches (e.g., Ctrl+F) fail when querying conceptual definitions (e.g., searching for "CPU allocation latency" does not match pages discussing "Round Robin wait times" unless the exact keywords match). Furthermore, students struggle to align massive syllabus structures (with complex units) to exact textbook pages. Active recall methods like flashcard creation are time-consuming to execute manually.
+            </p>
+            <h2 class="sub-section-title">B. Project Objectives</h2>
+            <p>
+                DocMind AI was developed during this internship to solve these limitations through the following engineering objectives:
+            </p>
+            <ol>
+                <li><strong>Semantic Textbook Indexing:</strong> Process dense academic documents and build high-precision vector maps.</li>
+                <li><strong>Unit-Syllabus Mapping:</strong> Match unit syllabus descriptions to document content with page-level citations.</li>
+                <li><strong>Automated Active Recall:</strong> Generate 3D study flashcards and practice quizzes mapped to Bloom's taxonomy.</li>
+                <li><strong>Multi-Level Architecture:</strong> Provide customizable portals for Standard 1-12 students, college professors, and academic deans.</li>
+            </ol>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 6</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 7: CHAPTER 4 - SYSTEM REQUIREMENTS ================= -->
+        <div class="page">
+            <h1 class="section-title">4. System Requirements & Design</h1>
+            <h2 class="sub-section-title">A. System Requirements</h2>
+            
+            <h3 class="block-title">Hardware Requirements:</h3>
+            <ul>
+                <li>Processor: Intel Core i5 / AMD Ryzen 5 or higher (Supports local matrix vector computations).</li>
+                <li>Memory (RAM): Minimum 8 GB (16 GB recommended for sentence-transformers in-memory model loading).</li>
+                <li>Storage: 2 GB free disk space (to store model binaries and index JSON cache files).</li>
+            </ul>
+
+            <h3 class="block-title">Software Requirements:</h3>
+            <ul>
+                <li>Operating System: Windows 10/11, macOS, or Ubuntu Linux.</li>
+                <li>Development Platform: Python 3.10 / 3.11 / 3.12.</li>
+                <li>Database: Local SQLite database / Turso Cloud LibSQL SDK.</li>
+                <li>Libraries: Flask, NumPy, PDFPlumber, Requests, python-dotenv.</li>
+            </ul>
+
+            <h2 class="sub-section-title">B. Data Flow Diagram (DFD)</h2>
+            <pre>
+[User Query] ──> [Embedder] ──> [Cosine similarity Search (Numpy)]
+                                          │
+                                          ▼
+[Generative Answer] <── [Inference (Llama)] <── [Context Retrieval]
+            </pre>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 7</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 8: CHAPTER 5 - IMPLEMENTATION DETAILS ================= -->
+        <div class="page">
+            <h1 class="section-title">5. Implemented Modules</h1>
+            
+            <h2 class="sub-section-title">Module 1: Document Extractor & Chunker</h2>
+            <p>
+                `DocumentExtractor` uses PDFPlumber to scan file layouts page-by-page, capturing headers and tables. `TextChunker` groups pages into chunks of 1000 characters with a 150-character overlap to preserve semantic flow.
+            </p>
+
+            <h2 class="sub-section-title">Module 2: Sentence-Transformers & Vector Storage</h2>
+            <p>
+                `Embedder` encodes text blocks into 384-dimensional dense vectors. `VectorStore` persists these embeddings locally in JSON format, utilizing Numpy for cosine calculations.
+            </p>
+
+            <h2 class="sub-section-title">Module 3: Syllabus Parser & Matcher</h2>
+            <p>
+                Integrates AI models to parse unstructured unit syllabus entries, mapping individual topics to textbook page ranges dynamically.
+            </p>
+
+            <h2 class="sub-section-title">Module 4: Bloom's Quiz & Scoreboard</h2>
+            <p>
+                Automatically populates assessment items into cognitive buckets (Remembering, Applying, Analyzing) to test student knowledge, logging scores on a visual dashboard scoreboard.
+            </p>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 8</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 9: CHAPTER 6 - CORE ALGORITHMS ================= -->
+        <div class="page">
+            <h1 class="section-title">6. Code Implementation & Mathematics</h1>
+            <h2 class="sub-section-title">A. Cosine Similarity Matching</h2>
+            <p>
+                The mathematical formula used to determine how close a document paragraph is to a student's search question is defined by:
+            </p>
+            <p style="text-align: center; font-weight: bold; margin: 1.5rem 0;">
+                $$\text{Cosine Similarity} = \frac{\sum_{i=1}^{N} A_i B_i}{\sqrt{\sum_{i=1}^{N} A_i^2} \sqrt{\sum_{i=1}^{N} B_i^2}}$$
+            </p>
+            <p>
+                Here is the actual Python logic implemented in `backend/utils/vector_store.py` that utilizes Numpy-optimized dot products for high-speed calculation:
+            </p>
+            <pre>
+# Convert vectors to numpy array
+vectors = np.array([item["vector"] for item in index_data], dtype=np.float32)
+q_vec = np.array(query_vector, dtype=np.float32)
+
+# Calculate dot products and norms
+dot_products = np.dot(vectors, q_vec)
+vectors_norms = np.linalg.norm(vectors, axis=1)
+q_norm = np.linalg.norm(q_vec)
+
+# Cosine Similarity calculation
+similarities = dot_products / (vectors_norms * q_norm + 1e-8)
+            </pre>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 9</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 10: CHAPTER 7 - UI DESIGN ================= -->
+        <div class="page">
+            <h1 class="section-title">7. UI Design & User Experience</h1>
+            <p>
+                DocMind AI follows a glassmorphic design language inspired by modern interfaces, utilizing warm neutral tones (warm sand background, rust accents, and translucent cards) instead of generic bright colors. This minimizes visual fatigue during long study sessions.
+            </p>
+            
+            <div class="screenshot-container">
+                <img src="/static/assets/hero_screenshot.png" alt="DocMind AI Brand Hero Page" class="screenshot-img">
+                <div class="screenshot-caption">Figure 7.1: DocMind AI Warm Sand Redesigned Landing Layout</div>
+            </div>
+
+            <div class="screenshot-container">
+                <img src="/static/assets/dashboard_screenshot.webp" alt="DocMind AI Student Portal Dashboard" class="screenshot-img">
+                <div class="screenshot-caption">Figure 7.2: Glassmorphic Student Dashboard with integrated study tracker</div>
+            </div>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 10</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 11: CHAPTER 8 - VERIFICATION ================= -->
+        <div class="page">
+            <h1 class="section-title">8. Verification, Testing & Results</h1>
+            <p>
+                To guarantee the system works robustly under real-world conditions, an automated testing harness (`test_qa.py`) was executed to evaluate the vector matching and fallback engines.
+            </p>
+
+            <h2 class="sub-section-title">QA Pipeline Test Console Outputs:</h2>
+            <pre>
+=== STARTING Q&A PIPELINE TESTS ===
+API Provider configured: local
+
+--- Test Case 1: Asking Document Q&A (CPU Scheduling) ---
+Loading local sentence-transformers model...
+Sentence-transformers loaded locally.
+Question: What is Round Robin CPU scheduling?
+Answer:
+Round Robin CPU scheduling is a preemptive algorithm that handles process execution order by assigning a fixed time slice quantum to each process [1].
+Sources Mapped: [{'document_id': 1, 'page': 1, 'snippet': 'CPU Scheduling...'}]
+[SUCCESS] RAG context correctly matched and cited from indexed document.
+
+--- Test Case 2: Asking General Educational Question (Study Tips) ---
+Question: How to study effectively for exams? What are some study tips?
+Answer: Set clear goals, use active recall, spaced repetition...
+Sources Mapped: []
+[SUCCESS] General Q&A successfully identified as generic query and answered.
+            </pre>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 11</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 12: CHAPTER 9 - CONCLUSION ================= -->
+        <div class="page">
+            <h1 class="section-title">9. Conclusion & Internship Learnings</h1>
+            <p>
+                The academic internship at **CodeBind Technologies, Chennai** provided invaluable industry experience in building end-to-end AIML products. Throughout the project, Balaji developed strong proficiency in Retrieval-Augmented Generation, vector similarity indexing, and multi-tier backend application routing.
+            </p>
+            <p>
+                The successful completion of **DocMind AI** demonstrates how modern AI can streamline student textbooks learning. Participating in the Data Science workshop and completing the Corporate Training test further strengthened skills in data processing and placement aptitude.
+            </p>
+            
+            <h3 class="block-title">Key Outcomes:</h3>
+            <ul>
+                <li>Successfully mapped textbooks to course syllabi using local vector indexing.</li>
+                <li>Developed cognitive active recall dashboards with scoreboard tracking.</li>
+                <li>Pushed production-ready code to version control, fully compatible with serverless edge environments.</li>
+            </ul>
+
+            <p style="margin-top: 4rem; text-align: center; font-style: italic; color: #8c827a;">
+                Report Certified & Approved by CodeBind Technologies Issuing Authority.
+            </p>
+
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 12</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

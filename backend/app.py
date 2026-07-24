@@ -796,6 +796,10 @@ def study_planner_page():
 def project_report_page():
     return render_template('project_report_print.html')
 
+@app.route('/internship-report')
+def internship_report_page():
+    return render_template('internship_report_print.html')
+
 # ----------------- School Education Portal (Std 1 - 12) Routes -----------------
 
 @app.route('/school-portal', methods=['GET', 'POST'])
