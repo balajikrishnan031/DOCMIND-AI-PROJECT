@@ -55,7 +55,7 @@ except Exception as e:
     print(f"[ERROR] Failed to create attendance placeholder PDF: {e}")
     sys.exit(1)
 
-# 4. Generate the HTML template for Chapters 1-8
+# 4. Generate the HTML template for Chapters 1-8 (Using Raw string to prevent escaping issues)
 html_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -226,6 +226,9 @@ html_content = r"""<!DOCTYPE html>
                 <li><strong>Interactive Study Decks:</strong> Generate 3D active recall flashcards and cognitive quizzes.</li>
                 <li><strong>Dynamic Network Mapping:</strong> Visualize textbook connections in interactive maps.</li>
             </ul>
+            <p>
+                By implementing this system, we bridge the gap between structured syllabus guidelines and unstructured textbook pages, saving time and improving active recall during exams.
+            </p>
 
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
@@ -242,9 +245,20 @@ html_content = r"""<!DOCTYPE html>
             
             <h2 class="sub-section-title">2.1 Python Collections & Data Handling</h2>
             <ul>
-                <li><strong>Lists:</strong> Used to maintain chronological page records and ordered text paragraphs.</li>
-                <li><strong>Dictionaries:</strong> Used to cache vector metadata mapping, key-value configurations, and JSON-based API payloads.</li>
-                <li><strong>Sets:</strong> Employed to filter unique keywords and remove stopwords.</li>
+                <li><strong>Lists:</strong> Mutable collections used to maintain chronological page records and ordered text paragraphs:
+                <pre>
+# Initializing lists of text chunks
+chunks = ["Paragraph 1", "Paragraph 2"]
+chunks.append("Paragraph 3")
+                </pre>
+                </li>
+                <li><strong>Dictionaries:</strong> Key-value collections used to cache vector metadata mapping, key-value configurations, and JSON-based API payloads:
+                <pre>
+# Metadata dict mapping
+metadata = {"doc_id": 1, "page_number": 3, "content": "Text"}
+                </pre>
+                </li>
+                <li><strong>Sets:</strong> Unordered collections of unique elements, employed to filter unique keywords and remove stopwords.</li>
             </ul>
 
             <h2 class="sub-section-title">2.2 Control Flow & Functions</h2>
@@ -272,16 +286,29 @@ for word in words:
                 DocMind AI uses a relational database schema to persist student credentials, document metadata, chunks, flashcards, quiz scores, and academic analytics.
             </p>
 
-            <h2 class="sub-section-title">3.1 Database Schema considerations</h2>
+            <h2 class="sub-section-title">3.1 Database Schema Table Configurations</h2>
             <p>
                 The schema includes:
             </p>
-            <ul>
-                <li><strong>users:</strong> Stores ID, username, email, and password hashes.</li>
-                <li><strong>documents:</strong> Maps user ID to specific filenames, paths, size, and status.</li>
-                <li><strong>document_chunks:</strong> Stores document chunks with page references.</li>
-                <li><strong>study_quizzes:</strong> Retains generated MCQ assessment question banks.</li>
-            </ul>
+            <pre>
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL
+);
+
+CREATE TABLE documents (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    filename TEXT NOT NULL,
+    file_path TEXT NOT NULL,
+    file_size INTEGER,
+    file_type TEXT,
+    status TEXT DEFAULT 'pending',
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
+            </pre>
 
             <h2 class="sub-section-title">3.2 SQL DDL & DQL Commands</h2>
             <p>
@@ -408,7 +435,7 @@ ORDER BY score DESC LIMIT 5;
 
         <!-- ================= PAGE 11: CHAPTER 7 - CONCLUSION & LEARNINGS ================= -->
         <div class="page">
-            <h1 class="section-title">7. Conclusion & Internship Learnings</h1>
+            <h1 class="section-title">7. Conclusion & Internship Outcomes</h1>
             <p>
                 The academic internship at <strong>CodeBind Technologies, Chennai</strong> provided practical experience in building AIML architectures and document search engines.
             </p>
