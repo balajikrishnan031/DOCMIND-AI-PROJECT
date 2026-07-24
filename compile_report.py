@@ -9,15 +9,51 @@ print("=== STARTING INTERNSHIP REPORT COMPILER ===")
 
 workspace_dir = "e:\\Docmind ai"
 first_page_path = os.path.join(workspace_dir, "Balaji_Report_FirstPage Copy.pdf")
-cert_image_path = os.path.join(workspace_dir, "cropped_IMG20260711205702.jpg")
+inplant_cert_path = os.path.join(workspace_dir, "cropped_IMG20260711205719.jpg")
+project_cert_path = os.path.join(workspace_dir, "cropped_IMG20260711205702.jpg")
+attendance_path = os.path.join(workspace_dir, "IMG_20260724_222927.jpg")
 final_output_path = os.path.join(workspace_dir, "Balaji_Internship_Report.pdf")
 
 # Temporary files paths
-temp_cert_pdf = os.path.join(workspace_dir, "temp_cert.pdf")
+temp_inplant_pdf = os.path.join(workspace_dir, "temp_inplant.pdf")
+temp_project_pdf = os.path.join(workspace_dir, "temp_project.pdf")
 temp_attendance_pdf = os.path.join(workspace_dir, "temp_attendance.pdf")
 temp_html_path = os.path.join(workspace_dir, "temp_report.html")
 temp_chapters_pdf = os.path.join(workspace_dir, "temp_chapters.pdf")
 edge_profile_dir = os.path.join(workspace_dir, "temp_edge_profile")
+
+# Helper function to convert image to A4 PDF with proper scaling
+def convert_img_to_a4_pdf(img_path, pdf_path):
+    if not os.path.exists(img_path):
+        print(f"[ERROR] Image not found: {img_path}")
+        sys.exit(1)
+    try:
+        img = Image.open(img_path)
+        a4_w, a4_h = 2480, 3508  # A4 size at 300 DPI
+        
+        # Calculate aspect ratio
+        img_ratio = img.width / img.height
+        a4_ratio = a4_w / a4_h
+        
+        if img_ratio > a4_ratio:
+            new_w = a4_w
+            new_h = int(a4_w / img_ratio)
+        else:
+            new_h = a4_h
+            new_w = int(a4_h * img_ratio)
+            
+        resized_img = img.resize((new_w, new_h), Image.Resampling.LANCZOS)
+        
+        # Paste centered on a white canvas
+        canvas = Image.new('RGB', (a4_w, a4_h), 'white')
+        x_offset = (a4_w - new_w) // 2
+        y_offset = (a4_h - new_h) // 2
+        canvas.paste(resized_img, (x_offset, y_offset))
+        canvas.save(pdf_path, 'PDF')
+        print(f"[OK] Converted {os.path.basename(img_path)} to A4 PDF: {pdf_path}")
+    except Exception as e:
+        print(f"[ERROR] Image conversion failed for {img_path}: {e}")
+        sys.exit(1)
 
 # 1. Check first page PDF exists
 if not os.path.exists(first_page_path):
@@ -25,37 +61,12 @@ if not os.path.exists(first_page_path):
     sys.exit(1)
 print(f"[OK] Found first page PDF: {first_page_path}")
 
-# 2. Convert Certificate Image to PDF using Pillow
-if not os.path.exists(cert_image_path):
-    print(f"[ERROR] Certificate image not found at {cert_image_path}")
-    sys.exit(1)
-try:
-    print("Converting certificate image to PDF...")
-    img = Image.open(cert_image_path)
-    img.convert('RGB').save(temp_cert_pdf, 'PDF')
-    print(f"[OK] Created temp certificate PDF: {temp_cert_pdf}")
-except Exception as e:
-    print(f"[ERROR] Failed to convert certificate image: {e}")
-    sys.exit(1)
+# 2. Convert JPEGs to PDFs
+convert_img_to_a4_pdf(inplant_cert_path, temp_inplant_pdf)
+convert_img_to_a4_pdf(project_cert_path, temp_project_pdf)
+convert_img_to_a4_pdf(attendance_path, temp_attendance_pdf)
 
-# 3. Create clean placeholder PDF for page 3 (Attendance Certificate)
-try:
-    print("Creating Attendance Certificate placeholder PDF...")
-    # Standard A4 size at 300 DPI is 2480 x 3508 pixels
-    att_img = Image.new('RGB', (2480, 3508), color='white')
-    draw = ImageDraw.Draw(att_img)
-    
-    draw.rectangle([100, 100, 2380, 3408], outline='#c97f5a', width=10) # Rust border
-    draw.rectangle([120, 120, 2360, 3388], outline='#e6dfd5', width=5)  # Light inner border
-    
-    # Save image directly as PDF
-    att_img.save(temp_attendance_pdf, 'PDF')
-    print(f"[OK] Created temp attendance placeholder PDF: {temp_attendance_pdf}")
-except Exception as e:
-    print(f"[ERROR] Failed to create attendance placeholder PDF: {e}")
-    sys.exit(1)
-
-# 4. Generate the HTML template for Chapters 1-8 (Using Raw string to prevent escaping issues)
+# 3. Generate the HTML template for Page 5 onwards (Acknowledgement, Abstract, Chapters 1-8)
 html_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -211,7 +222,46 @@ html_content = r"""<!DOCTYPE html>
 <body>
     <div class="container">
 
-        <!-- ================= PAGE 4 ================= -->
+        <!-- ================= PAGE 5: ACKNOWLEDGEMENT ================= -->
+        <div class="page">
+            <h1 class="section-title" style="text-align: center;">Acknowledgement</h1>
+            <p>
+                First and foremost, I would like to express my deep sense of gratitude and sincere thanks to the management of <strong>CodeBind Technologies, Chennai</strong>, for providing me with the wonderful opportunity to undergo my internship and in-plant training at their esteemed organization. I am highly obliged for the resources, facilities, and guidance made available to me during this period, which enabled a highly productive learning experience.
+            </p>
+            <p>
+                I express my sincere and deep gratitude to <strong>Dr. S. SIVANESH</strong>, Head of the Department of Computer Science and Engineering, <strong>University College of Engineering, Panruti</strong>, for his valuable support, encouragement, and for providing the academic permission to carry out this internship training program. His leadership and guidance have been a constant source of inspiration throughout my academic journey.
+            </p>
+            <p>
+                I am extremely grateful to my internship trainer and software engineering mentors at CodeBind Technologies, Chennai, for their expert guidance, constructive feedback, and invaluable mentoring throughout my training. Their practical insights into Python scripting, database administration, SQL querying, and vector similarity models have greatly enriched my technical skillset and analytical thinking.
+            </p>
+            <p>
+                Lastly, I extend my heartfelt thanks to my parents and friends for their continuous support, patience, and motivation, which helped me focus on completing this industrial internship successfully.
+            </p>
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 5</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 6: ABSTRACT ================= -->
+        <div class="page">
+            <h1 class="section-title" style="text-align: center;">Abstract</h1>
+            <p>
+                During my intensive industrial internship and in-plant training at <strong>CodeBind Technologies, Chennai</strong>, in the specialized domain of <strong>Python with Artificial Intelligence & Machine Learning (AIML)</strong>, I acquired comprehensive hands-on exposure and practical training spanning the complete pipeline lifecycle of semantic document indexers and educational assistants.
+            </p>
+            <p>
+                The curriculum of this training was designed to cover industry-standard tools, starting with foundational programming concepts in Python, moving to structured database administration with SQLite/SQL schemas, progressing to advanced vector semantic embedding structures using `Sentence-Transformers`, and concluding with interactive dashboard user interface visualizations using Vis.js and CSS 3D perspectives.
+            </p>
+            <p>
+                To apply these skills, I built a final end-to-end project on <strong>'DocMind AI'</strong>. This involved extracting clean text pages from PDFs, chunking paragraphs with overlap bounds, generating 384-dimensional dense embeddings vector indexes, executing cosine similarity checks with NumPy matrix math, and building portals for syllabus auditing, active recall scoreboards, and Standard 1-12 curriculum solvers. This project experience strengthened my technical capabilities, providing me with the essential tools required to extract, index, and query unstructured documents into strategic, educational retrieval assets.
+            </p>
+            <div class="page-footer">
+                <span>DocMind AI - Internship Report</span>
+                <span>Page 6</span>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 7: CHAPTER 1 ================= -->
         <div class="page">
             <h1 class="section-title">1. Introduction to Document Intelligence</h1>
             <p>
@@ -226,11 +276,11 @@ html_content = r"""<!DOCTYPE html>
             </div>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 4</span>
+                <span>Page 7</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 5 ================= -->
+        <!-- ================= PAGE 8 ================= -->
         <div class="page">
             <h1 class="section-title">1. Traditional vs Semantic Search</h1>
             <p>
@@ -245,11 +295,11 @@ html_content = r"""<!DOCTYPE html>
             </div>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 5</span>
+                <span>Page 8</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 6 ================= -->
+        <!-- ================= PAGE 9 ================= -->
         <div class="page">
             <h1 class="section-title">2. Python for AI & Data Manipulation</h1>
             <p>
@@ -261,11 +311,11 @@ html_content = r"""<!DOCTYPE html>
             </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 6</span>
+                <span>Page 9</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 7 ================= -->
+        <!-- ================= PAGE 10 ================= -->
         <div class="page">
             <h1 class="section-title">2. Variables, Data Types & Formatting</h1>
             <p>
@@ -286,11 +336,11 @@ is_completed = True
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 7</span>
+                <span>Page 10</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 8 ================= -->
+        <!-- ================= PAGE 11 ================= -->
         <div class="page">
             <h1 class="section-title">2. Control Flow & Conditional Statements</h1>
             <p>
@@ -309,11 +359,11 @@ else:
             </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 8</span>
+                <span>Page 11</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 9 ================= -->
+        <!-- ================= PAGE 12 ================= -->
         <div class="page">
             <h1 class="section-title">2. Loop Iterations & Logic Skips</h1>
             <p>
@@ -331,11 +381,11 @@ for p in paragraphs:
             </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 9</span>
+                <span>Page 12</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 10 ================= -->
+        <!-- ================= PAGE 13 ================= -->
         <div class="page">
             <h1 class="section-title">2. Functions & Advanced Lambda Expressions</h1>
             <p>
@@ -347,11 +397,11 @@ results.sort(key=lambda x: x["score"], reverse=True)
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 10</span>
+                <span>Page 13</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 11 ================= -->
+        <!-- ================= PAGE 14 ================= -->
         <div class="page">
             <h1 class="section-title">2. Lists & Ordered Data Handling</h1>
             <p>
@@ -365,11 +415,11 @@ chunks.remove("Paragraph 1")
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 11</span>
+                <span>Page 14</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 12 ================= -->
+        <!-- ================= PAGE 15 ================= -->
         <div class="page">
             <h1 class="section-title">2. Dictionaries & Key-Value Configurations</h1>
             <p>
@@ -386,11 +436,11 @@ metadata = {
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 12</span>
+                <span>Page 15</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 13 ================= -->
+        <!-- ================= PAGE 16 ================= -->
         <div class="page">
             <h1 class="section-title">2. Sets & Unique Term Filtering</h1>
             <p>
@@ -403,11 +453,11 @@ unique_keywords = set(words)  # {'cpu', 'memory', 'disk'}
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 13</span>
+                <span>Page 16</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 14 ================= -->
+        <!-- ================= PAGE 17 ================= -->
         <div class="page">
             <h1 class="section-title">3. Relational SQL Databases</h1>
             <p>
@@ -418,11 +468,11 @@ unique_keywords = set(words)  # {'cpu', 'memory', 'disk'}
             </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 14</span>
+                <span>Page 17</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 15 ================= -->
+        <!-- ================= PAGE 18 ================= -->
         <div class="page">
             <h1 class="section-title">3. Database Normalization & Relationships</h1>
             <p>
@@ -449,11 +499,11 @@ CREATE TABLE documents (
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 15</span>
+                <span>Page 18</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 16 ================= -->
+        <!-- ================= PAGE 19 ================= -->
         <div class="page">
             <h1 class="section-title">3. SQL Commands (DDL vs DML vs DQL)</h1>
             <p>
@@ -469,11 +519,11 @@ SELECT * FROM documents WHERE user_id = 1;
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 16</span>
+                <span>Page 19</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 17 ================= -->
+        <!-- ================= PAGE 20 ================= -->
         <div class="page">
             <h1 class="section-title">3. Advanced SQL Joins & Scoreboard Queries</h1>
             <p>
@@ -488,11 +538,11 @@ ORDER BY score DESC LIMIT 5;
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 17</span>
+                <span>Page 20</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 18 ================= -->
+        <!-- ================= PAGE 21 ================= -->
         <div class="page">
             <h1 class="section-title">4. Vector Spaces & Transformers</h1>
             <p>
@@ -503,11 +553,11 @@ ORDER BY score DESC LIMIT 5;
             </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 18</span>
+                <span>Page 21</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 19 ================= -->
+        <!-- ================= PAGE 22 ================= -->
         <div class="page">
             <h1 class="section-title">4. all-MiniLM-L6-v2 Embeddings</h1>
             <p>
@@ -521,11 +571,11 @@ embeddings = model.encode(["text chunk"])
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 19</span>
+                <span>Page 22</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 20 ================= -->
+        <!-- ================= PAGE 23 ================= -->
         <div class="page">
             <h1 class="section-title">4. Cosine Similarity & Matrix Math</h1>
             <p>
@@ -539,11 +589,11 @@ embeddings = model.encode(["text chunk"])
             </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 20</span>
+                <span>Page 23</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 21 ================= -->
+        <!-- ================= PAGE 24 ================= -->
         <div class="page">
             <h1 class="section-title">5. UI/UX & Visualizations</h1>
             <p>
@@ -555,11 +605,11 @@ embeddings = model.encode(["text chunk"])
             </div>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 21</span>
+                <span>Page 24</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 22 ================= -->
+        <!-- ================= PAGE 25 ================= -->
         <div class="page">
             <h1 class="section-title">5. Vis.js Physics Nodes Network</h1>
             <p>
@@ -567,11 +617,11 @@ embeddings = model.encode(["text chunk"])
             </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 22</span>
+                <span>Page 25</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 23 ================= -->
+        <!-- ================= PAGE 26 ================= -->
         <div class="page">
             <h1 class="section-title">5. CSS 3D active flip layouts</h1>
             <p>
@@ -592,11 +642,11 @@ embeddings = model.encode(["text chunk"])
             </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 23</span>
+                <span>Page 26</span>
             </div>
         </div>
 
-        <!-- ================= PAGE 24 ================= -->
+        <!-- ================= PAGE 27 ================= -->
         <div class="page">
             <h1 class="section-title">6. Capstone Project: DocMind AI</h1>
             <p>
@@ -608,51 +658,15 @@ embeddings = model.encode(["text chunk"])
             </div>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
-                <span>Page 24</span>
-            </div>
-        </div>
-
-        <!-- ================= PAGE 25 ================= -->
-        <div class="page">
-            <h1 class="section-title">6. Text Ingestion & Chunker</h1>
-            <p>
-                `DocumentExtractor` uses PDFPlumber to extract text page-by-page. `TextChunker` segments this text into 1000-character blocks with a 150-character overlap to preserve local context.
-            </p>
-            <div class="page-footer">
-                <span>DocMind AI - Internship Report</span>
-                <span>Page 25</span>
-            </div>
-        </div>
-
-        <!-- ================= PAGE 26 ================= -->
-        <div class="page">
-            <h1 class="section-title">6. Generative Prompting & LLM Fallback</h1>
-            <p>
-                We construct context-rich prompts using retrieved text chunks. If the similarity score falls below a 0.30 threshold, the query is routed to a general Q&A fallback path.
-            </p>
-            <div class="page-footer">
-                <span>DocMind AI - Internship Report</span>
-                <span>Page 26</span>
-            </div>
-        </div>
-
-        <!-- ================= PAGE 27 ================= -->
-        <div class="page">
-            <h1 class="section-title">6. Spaced Repetition Study Planner</h1>
-            <p>
-                The study planner helps students schedule review sessions based on Ebbinghaus spaced-repetition intervals, tracking progress on the dashboard scoreboard.
-            </p>
-            <div class="page-footer">
-                <span>DocMind AI - Internship Report</span>
                 <span>Page 27</span>
             </div>
         </div>
 
         <!-- ================= PAGE 28 ================= -->
         <div class="page">
-            <h1 class="section-title">6. Standard 1-12 School Portal</h1>
+            <h1 class="section-title">6. Text Ingestion & Chunker</h1>
             <p>
-                The school portal provides grade-appropriate subjects and tools, including a step-by-step math equation solver.
+                `DocumentExtractor` uses PDFPlumber to extract text page-by-page. `TextChunker` segments this text into 1000-character blocks with a 150-character overlap to preserve local context.
             </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
@@ -662,23 +676,10 @@ embeddings = model.encode(["text chunk"])
 
         <!-- ================= PAGE 29 ================= -->
         <div class="page">
-            <h1 class="section-title">7. Verification & Testing Results</h1>
+            <h1 class="section-title">6. Generative Prompting & LLM Fallback</h1>
             <p>
-                An automated regression suite verified document retrieval and general Q&A fallback:
+                We construct context-rich prompts using retrieved text chunks. If the similarity score falls below a 0.30 threshold, the query is routed to a general Q&A fallback path.
             </p>
-            <pre>
-=== STARTING Q&A PIPELINE TESTS ===
-API Provider configured: local
-
---- Test Case 1: Asking Document Q&A (CPU Scheduling) ---
-Loading local sentence-transformers model...
-Sentence-transformers loaded locally.
-Question: What is Round Robin CPU scheduling?
-Answer:
-Round Robin CPU scheduling is a preemptive algorithm that handles process execution order by assigning a fixed time slice quantum to each process [1].
-Sources Mapped: [{'document_id': 1, 'page': 1, 'snippet': 'CPU Scheduling...'}]
-[SUCCESS] RAG context correctly matched and cited from indexed document.
-            </pre>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
                 <span>Page 29</span>
@@ -687,33 +688,10 @@ Sources Mapped: [{'document_id': 1, 'page': 1, 'snippet': 'CPU Scheduling...'}]
 
         <!-- ================= PAGE 30 ================= -->
         <div class="page">
-            <h1 class="section-title">7. Latency Benchmarks</h1>
-            <table class="tech-table">
-                <thead>
-                    <tr>
-                        <th>Operation</th>
-                        <th>Execution Time (ms)</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Text Extraction (10 Pages)</td>
-                        <td>420 ms</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td>Embedding Generation (Per chunk)</td>
-                        <td>45 ms</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td>NumPy similarity matching</td>
-                        <td>8.2 ms</td>
-                        <td>Completed</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h1 class="section-title">6. Spaced Repetition Study Planner</h1>
+            <p>
+                The study planner helps students schedule review sessions based on Ebbinghaus spaced-repetition intervals, tracking progress on the dashboard scoreboard.
+            </p>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
                 <span>Page 30</span>
@@ -722,20 +700,10 @@ Sources Mapped: [{'document_id': 1, 'page': 1, 'snippet': 'CPU Scheduling...'}]
 
         <!-- ================= PAGE 31 ================= -->
         <div class="page">
-            <h1 class="section-title">8. Conclusion & References</h1>
+            <h1 class="section-title">6. Standard 1-12 School Portal</h1>
             <p>
-                The academic internship at <strong>CodeBind Technologies, Chennai</strong> provided practical experience in building RAG pipelines and modular backends.
+                The school portal provides grade-appropriate subjects and tools, including a step-by-step math equation solver.
             </p>
-            <p>
-                Developing **DocMind AI** successfully proved that RAG pipelines can automate textbook indexing and study support. Participating in the Data Science workshop and completing the Corporate Training test also improved skills in data structure design and engineering logic.
-            </p>
-            <h3 class="block-title">Key References:</h3>
-            <ul>
-                <li>SentenceTransformers. "all-MiniLM-L6-v2 model card." https://sbert.net/.</li>
-                <li>Pallets Projects. "Flask Documentation." https://flask.palletsprojects.com/.</li>
-                <li>NumPy. "Numpy Multi-Dimensional Arrays." https://numpy.org/.</li>
-                <li>PDFPlumber. "PDFPlumber Repository." https://github.com/jsvine/pdfplumber.</li>
-            </ul>
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
                 <span>Page 31</span>
@@ -791,22 +759,28 @@ try:
     for p in reader1.pages:
         writer.add_page(p)
         
-    # Page 2: Certificate of completion PDF
-    print(f"Appending Page 2: {temp_cert_pdf}")
-    reader2 = pypdf.PdfReader(temp_cert_pdf)
+    # Page 2: Inplant Certificate of completion PDF
+    print(f"Appending Page 2: {temp_inplant_pdf}")
+    reader2 = pypdf.PdfReader(temp_inplant_pdf)
     for p in reader2.pages:
         writer.add_page(p)
         
-    # Page 3: Attendance placeholder PDF
-    print(f"Appending Page 3: {temp_attendance_pdf}")
-    reader3 = pypdf.PdfReader(temp_attendance_pdf)
+    # Page 3: Project Certificate of completion PDF
+    print(f"Appending Page 3: {temp_project_pdf}")
+    reader3 = pypdf.PdfReader(temp_project_pdf)
     for p in reader3.pages:
         writer.add_page(p)
         
-    # Page 4 onwards: Generated Chapters PDF
-    print(f"Appending Page 4 onwards: {temp_chapters_pdf}")
-    reader4 = pypdf.PdfReader(temp_chapters_pdf)
+    # Page 4: Attendance PDF
+    print(f"Appending Page 4: {temp_attendance_pdf}")
+    reader4 = pypdf.PdfReader(temp_attendance_pdf)
     for p in reader4.pages:
+        writer.add_page(p)
+        
+    # Page 5 onwards: Generated Chapters PDF
+    print(f"Appending Page 5 onwards: {temp_chapters_pdf}")
+    reader5 = pypdf.PdfReader(temp_chapters_pdf)
+    for p in reader5.pages:
         writer.add_page(p)
         
     # Write output
@@ -820,7 +794,7 @@ except Exception as e:
 
 # 7. Cleanup temp files
 print("Cleaning up temporary files...")
-temp_files = [temp_cert_pdf, temp_attendance_pdf, temp_html_path, temp_chapters_pdf]
+temp_files = [temp_inplant_pdf, temp_project_pdf, temp_attendance_pdf, temp_html_path, temp_chapters_pdf]
 for path in temp_files:
     if os.path.exists(path):
         try:
