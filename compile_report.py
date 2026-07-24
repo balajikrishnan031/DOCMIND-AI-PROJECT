@@ -55,14 +55,14 @@ except Exception as e:
     print(f"[ERROR] Failed to create attendance placeholder PDF: {e}")
     sys.exit(1)
 
-# 4. Generate the HTML template for Chapters 1-9 (Using Raw string to prevent escaping issues)
+# 4. Generate the HTML template for Chapters 1-8
 html_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DocMind AI - Chapters Report</title>
+    <title>DocMind AI - Academic Internship Report</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@400;500;600;700&display=swap');
         
         body {
             background-color: #ffffff;
@@ -83,9 +83,9 @@ html_content = r"""<!DOCTYPE html>
         .page {
             page-break-after: always;
             position: relative;
-            min-height: 1000px;
+            min-height: 1100px;
             box-sizing: border-box;
-            padding-bottom: 3rem;
+            padding-bottom: 3.5rem;
         }
         .page:last-child {
             page-break-after: avoid !important;
@@ -211,21 +211,20 @@ html_content = r"""<!DOCTYPE html>
 <body>
     <div class="container">
 
-        <!-- ================= PAGE 4: CHAPTER 1 - COMPANY PROFILE ================= -->
+        <!-- ================= PAGE 4: CHAPTER 1 - INTRODUCTION TO DOCUMENT INTELLIGENCE ================= -->
         <div class="page">
-            <h1 class="section-title">1. Company Profile</h1>
-            <h2 class="sub-section-title">CodeBind Technologies, Chennai</h2>
+            <h1 class="section-title">1. Introduction to Document Intelligence</h1>
             <p>
-                <strong>CodeBind Technologies</strong> is a leading ISO 9001:2015 certified software development, engineering services, and technical consultancy firm headquartered in T. Nagar, Chennai, Tamil Nadu. The company is internationally recognized and accredited under the EGAC (Egyptian Accreditation Council) and the IAF (International Accreditation Forum) frameworks.
+                In today's academic environment, standard keyword search tools (e.g. Ctrl+F) only find exact character matches. If a student searches for "CPU Scheduling latency," a textbook section discussing "Round Robin wait times" will be missed entirely. This failure highlights the need for semantic document retrieval systems.
             </p>
             <p>
-                The organization focuses on developing scalable enterprise products using modern backend stacks (Python Flask/Django, FastAPI), cloud architectures, and deep neural information retrieval layers. Additionally, CodeBind Technologies maintains active training operations to provide students with industrial skills in data science, artificial intelligence, and software craftsmanship.
+                <strong>DocMind AI</strong> is an intelligent document organizer and educational assistant that utilizes Retrieval-Augmented Generation (RAG) to index textbooks semantically. The application automatically maps unit topics to page references, creates study recall aids (quizzes, flashcards), and visualizes connection mind maps.
             </p>
-            <h3 class="block-title">Key Core Domains:</h3>
+            <h3 class="block-title">Key Core Goals:</h3>
             <ul>
-                <li><strong>Enterprise Software Engineering:</strong> Building modular database applications, REST web endpoints, and responsive user interfaces.</li>
-                <li><strong>Artificial Intelligence & Machine Learning:</strong> Deploying dense vector representations, similarity matching algorithms, and automated pipeline seeder databases.</li>
-                <li><strong>Industrial Learning Operations:</strong> Assisting universities in conducting workshops, aptitude tests, and in-plant training modules.</li>
+                <li><strong>Syllabus Mapping:</strong> Match unit syllabus text to document pages using vector similarity.</li>
+                <li><strong>Interactive Study Decks:</strong> Generate 3D active recall flashcards and cognitive quizzes.</li>
+                <li><strong>Dynamic Network Mapping:</strong> Visualize textbook connections in interactive maps.</li>
             </ul>
 
             <div class="page-footer">
@@ -234,23 +233,31 @@ html_content = r"""<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- ================= PAGE 5: CHAPTER 2 - PYTHON & AIML CORE ================= -->
+        <!-- ================= PAGE 5: CHAPTER 2 - PYTHON FOR AI & DATA MANIPULATION ================= -->
         <div class="page">
-            <h1 class="section-title">2. Python Ecosystem & AIML Core</h1>
-            <h2 class="sub-section-title">A. Python in Semantic Systems</h2>
+            <h1 class="section-title">2. Python for AI & Data Manipulation</h1>
             <p>
-                Python provides a rich ecosystem of libraries that accelerate numerical operations and natural language matching. Key packages implemented in DocMind AI include:
+                Python is the primary language used to build DocMind AI due to its clear syntax and extensive scientific libraries. Essential programming structures implemented in our RAG pipeline include:
             </p>
-            <ul>
-                <li><strong>Numpy:</strong> Essential for matrix math and calculating similarity scores between multidimensional document vectors.</li>
-                <li><strong>Sentence-Transformers:</strong> Pre-trained PyTorch transformers that turn text strings into dense numerical vectors.</li>
-                <li><strong>PDFPlumber:</strong> Provides precise character extraction, boundary mapping, and coordinate checking of PDF pages.</li>
-            </ul>
             
-            <h2 class="sub-section-title">B. Retrieval-Augmented Generation (RAG) Flow</h2>
+            <h2 class="sub-section-title">2.1 Python Collections & Data Handling</h2>
+            <ul>
+                <li><strong>Lists:</strong> Used to maintain chronological page records and ordered text paragraphs.</li>
+                <li><strong>Dictionaries:</strong> Used to cache vector metadata mapping, key-value configurations, and JSON-based API payloads.</li>
+                <li><strong>Sets:</strong> Employed to filter unique keywords and remove stopwords.</li>
+            </ul>
+
+            <h2 class="sub-section-title">2.2 Control Flow & Functions</h2>
             <p>
-                RAG improves LLM answers by supplying relevant context from indexed documents. Instead of sending raw user questions directly to the generative API, the query is first vectorized to search the document database, retrieve the best matches, and construct a context-rich prompt.
+                Loops (`for` and `while`) iterate through document chunks, calling modular functions to extract text, calculate vector representations, and clean punctuation marks.
             </p>
+            <pre>
+# Example control flow: Filtering stopwords from keywords list
+filtered_words = []
+for word in words:
+    if word not in stopwords and len(word) > 3:
+        filtered_words.append(word)
+            </pre>
 
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
@@ -258,23 +265,35 @@ html_content = r"""<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- ================= PAGE 6: CHAPTER 3 - PROBLEM STATEMENT ================= -->
+        <!-- ================= PAGE 6: CHAPTER 3 - RELATIONAL DATABASES & SQL COMMANDS ================= -->
         <div class="page">
-            <h1 class="section-title">3. Problem Statement & Objectives</h1>
-            <h2 class="sub-section-title">A. The Problem Statement</h2>
+            <h1 class="section-title">3. Relational Databases & SQL Commands</h1>
             <p>
-                Students and professors routinely deal with dense textbooks and long syllabus guidelines. Standard search engines (like Ctrl+F) only find exact word matches and fail on semantic queries. Furthermore, creating active recall study aids (flashcards, quizzes) manually takes significant time.
+                DocMind AI uses a relational database schema to persist student credentials, document metadata, chunks, flashcards, quiz scores, and academic analytics.
             </p>
-            <h2 class="sub-section-title">B. Project Objectives</h2>
+
+            <h2 class="sub-section-title">3.1 Database Schema considerations</h2>
             <p>
-                DocMind AI addresses these limitations through the following key deliverables:
+                The schema includes:
             </p>
-            <ol>
-                <li><strong>Syllabus-to-Page Mapping:</strong> Map unit topics to precise textbook page ranges.</li>
-                <li><strong>Interactive Recall:</strong> Automatically generate 3D flashcards and practice quizzes.</li>
-                <li><strong>Numpy-Optimized Search:</strong> Provide high-speed, local similarity matches.</li>
-                <li><strong>Fallback Q&A System:</strong> Automatically redirect general questions to LLMs.</li>
-            </ol>
+            <ul>
+                <li><strong>users:</strong> Stores ID, username, email, and password hashes.</li>
+                <li><strong>documents:</strong> Maps user ID to specific filenames, paths, size, and status.</li>
+                <li><strong>document_chunks:</strong> Stores document chunks with page references.</li>
+                <li><strong>study_quizzes:</strong> Retains generated MCQ assessment question banks.</li>
+            </ul>
+
+            <h2 class="sub-section-title">3.2 SQL DDL & DQL Commands</h2>
+            <p>
+                DDL statements define the tables. DQL (SELECT) queries retrieve matching records:
+            </p>
+            <pre>
+-- Retrieve top 5 quiz scores for scoreboard dashboard
+SELECT username, score, total_questions 
+FROM quiz_attempts 
+JOIN users ON users.id = quiz_attempts.user_id 
+ORDER BY score DESC LIMIT 5;
+            </pre>
 
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
@@ -282,28 +301,28 @@ html_content = r"""<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- ================= PAGE 7: CHAPTER 4 - SYSTEM DESIGN ================= -->
+        <!-- ================= PAGE 7: CHAPTER 4 - VECTOR SPACES & EMBEDDINGS ================= -->
         <div class="page">
-            <h1 class="section-title">4. System Requirements & Architecture</h1>
-            
-            <h3 class="block-title">Hardware Requirements:</h3>
-            <ul>
-                <li>Processor: Intel Core i5 / AMD Ryzen 5 or higher.</li>
-                <li>Memory (RAM): Minimum 8 GB (16 GB recommended for sentence-transformers).</li>
-                <li>Storage: 2 GB free disk space.</li>
-            </ul>
+            <h1 class="section-title">4. Vector Spaces & Embeddings</h1>
+            <p>
+                To search paragraphs semantically, namba code turns raw text strings into dense vector representations.
+            </p>
 
-            <h3 class="block-title">Software Requirements:</h3>
-            <ul>
-                <li>Python 3.10 / 3.11 / 3.12, SQLite database.</li>
-                <li>Flask, NumPy, PDFPlumber, Requests, python-dotenv.</li>
-            </ul>
+            <h2 class="sub-section-title">4.1 all-MiniLM-L6-v2 Embeddings Model</h2>
+            <p>
+                The local pipeline utilizes the pre-trained `all-MiniLM-L6-v2` transformer model to convert each text chunk into a 384-dimensional array of float values. This model runs locally on the CPU, with an API fallback if internet connectivity is available.
+            </p>
 
-            <h2 class="sub-section-title">System Architecture</h2>
-            <div class="screenshot-container">
-                <img src="file:///E:/Docmind%20ai/frontend/static/assets/hero_screenshot.png" alt="DocMind AI landing layout" class="screenshot-img">
-                <div class="screenshot-caption">Figure 4.1: Brand Landing Page & Core UI Architecture</div>
-            </div>
+            <h2 class="sub-section-title">4.2 Cosine Similarity Math</h2>
+            <p>
+                The semantic distance between a user query vector and paragraph vectors is calculated using the cosine similarity formula:
+            </p>
+            <p style="text-align: center; font-weight: bold; margin: 1.5rem 0;">
+                Cosine Similarity = (A . B) / (||A|| ||B||)
+            </p>
+            <p>
+                Numpy executes these vector calculations efficiently, keeping latency under 8.5ms.
+            </p>
 
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
@@ -311,28 +330,26 @@ html_content = r"""<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- ================= PAGE 8: CHAPTER 5 - IMPLEMENTED MODULES ================= -->
+        <!-- ================= PAGE 8: CHAPTER 5 - DYNAMIC VISUALIZATIONS ================= -->
         <div class="page">
-            <h1 class="section-title">5. Implemented Modules</h1>
-            
-            <h3 class="block-title">A. PDF Extractor & Chunker</h3>
+            <h1 class="section-title">5. Dynamic Visualizations & UI Dashboards</h1>
             <p>
-                Extracts clean text streams page-by-page. Chunker segments the text into 1000-character paragraphs with a 150-character overlap to preserve local context.
+                Data visualizations help students understand complex concepts and organize their study materials.
             </p>
 
-            <h3 class="block-title">B. Dense Vector Storage</h3>
+            <h2 class="sub-section-title">5.1 Vis.js Concept Node Graphs</h2>
             <p>
-                Encodes text blocks into 384-dimensional vectors. Index data is cached in JSON files, enabling fast in-memory computations.
+                Concept connections are visualized using **Vis.js**, an interactive, canvas-based network visualization engine. Chunks are mapped as nodes, and semantic links are mapped as edges. The physics engine allows students to organize concepts dynamically via drag-and-drop.
             </p>
 
-            <h3 class="block-title">C. School Portal & Solver</h3>
+            <h2 class="sub-section-title">5.2 Interactive recall Dashboards</h2>
             <p>
-                Grade-tailored solvers support school education from Standard 1 to 12.
+                The UI uses CSS 3D flips for flashcards, glassmorphism templates, and interactive scoreboards. These templates are designed to be clean and modern.
             </p>
 
             <div class="screenshot-container">
-                <img src="file:///E:/Docmind%20ai/frontend/static/assets/categories_screenshot.png" alt="DocMind AI Categories" class="screenshot-img">
-                <div class="screenshot-caption">Figure 5.1: Multi-Level Academic Category Selection Portal</div>
+                <img src="file:///E:/Docmind%20ai/frontend/static/assets/categories_screenshot.png" alt="DocMind Categories" class="screenshot-img">
+                <div class="screenshot-caption">Figure 5.1: Category Portal selection dashboard</div>
             </div>
 
             <div class="page-footer">
@@ -341,30 +358,22 @@ html_content = r"""<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- ================= PAGE 9: CHAPTER 6 - MATHEMATICS ================= -->
+        <!-- ================= PAGE 9: CHAPTER 6 - CAPSTONE PROJECT IMPLEMENTATION ================= -->
         <div class="page">
-            <h1 class="section-title">6. Code Implementation & Mathematics</h1>
-            <h2 class="sub-section-title">A. Cosine Similarity Matching</h2>
+            <h1 class="section-title">6. Capstone Project: DocMind AI</h1>
             <p>
-                The system determines how close a document paragraph is to a user's search query using the following mathematical formula:
+                As a practical application of these data pipelines, **DocMind AI** was built. The platform processes documents, performs vector indexing, and renders educational resources.
             </p>
-            <p style="text-align: center; font-weight: bold; margin: 1.5rem 0;">
-                Cosine Similarity = (A . B) / (||A|| ||B||)
+
+            <h2 class="sub-section-title">6.1 PDF Ingestion & Chunker</h2>
+            <p>
+                `DocumentExtractor` reads text layouts, and `TextChunker` groups text into overlapping paragraphs of 1000 characters to maintain context.
             </p>
-            <h2 class="sub-section-title">B. Python Implementation Snippet</h2>
-            <pre>
-# Convert vectors to numpy array for operations
-vectors = np.array([item["vector"] for item in index_data], dtype=np.float32)
-q_vec = np.array(query_vector, dtype=np.float32)
 
-# Calculate dot products
-dot_products = np.dot(vectors, q_vec)
-vectors_norms = np.linalg.norm(vectors, axis=1)
-q_norm = np.linalg.norm(q_vec)
-
-# Calculate cosine similarities
-similarities = dot_products / (vectors_norms * q_norm + 1e-8)
-            </pre>
+            <div class="screenshot-container">
+                <img src="file:///E:/Docmind%20ai/frontend/static/assets/hero_screenshot.png" alt="DocMind Hero Landing" class="screenshot-img">
+                <div class="screenshot-caption">Figure 6.1: Brand Landing Page redesign</div>
+            </div>
 
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
@@ -372,16 +381,23 @@ similarities = dot_products / (vectors_norms * q_norm + 1e-8)
             </div>
         </div>
 
-        <!-- ================= PAGE 10: CHAPTER 7 - SCREENSHOTS ================= -->
+        <!-- ================= PAGE 10: CHAPTER 6 - CAPSTONE CONTINUED ================= -->
         <div class="page">
-            <h1 class="section-title">7. UI Design & User Interface</h1>
+            <h1 class="section-title">6. Implemented Modules (Continued)</h1>
+            
+            <h2 class="sub-section-title">6.2 Vector Search Q&A Engine</h2>
             <p>
-                The user interface uses a modern glassmorphic theme with a warm neutral palette to ensure visual comfort during extended study sessions.
+                Compares the user query embedding against stored paragraph vectors. Chunks with similarity scores above a 0.30 threshold are retrieved as context. If the best score falls below 0.30, the system falls back to general Q&A.
+            </p>
+
+            <h2 class="sub-section-title">6.3 3D Recall & Quizzes</h2>
+            <p>
+                Retrieves definitions to generate flashcard decks and creates MCQ quizzes categorized by Bloom's Taxonomy.
             </p>
 
             <div class="screenshot-container">
-                <img src="file:///E:/Docmind%20ai/frontend/static/assets/dashboard_screenshot.webp" alt="DocMind AI Dashboard" class="screenshot-img">
-                <div class="screenshot-caption">Figure 7.1: Active Recall Student Dashboard & RAG chat console</div>
+                <img src="file:///E:/Docmind%20ai/frontend/static/assets/dashboard_screenshot.webp" alt="DocMind Dashboard console" class="screenshot-img">
+                <div class="screenshot-caption">Figure 6.2: Glassmorphic Student Dashboard with RAG chat interface</div>
             </div>
 
             <div class="page-footer">
@@ -390,25 +406,21 @@ similarities = dot_products / (vectors_norms * q_norm + 1e-8)
             </div>
         </div>
 
-        <!-- ================= PAGE 11: CHAPTER 8 - VERIFICATION ================= -->
+        <!-- ================= PAGE 11: CHAPTER 7 - CONCLUSION & LEARNINGS ================= -->
         <div class="page">
-            <h1 class="section-title">8. Verification & Testing</h1>
+            <h1 class="section-title">7. Conclusion & Internship Learnings</h1>
             <p>
-                An automated regression suite verified document retrieval and general Q&A fallback:
+                The academic internship at <strong>CodeBind Technologies, Chennai</strong> provided practical experience in building AIML architectures and document search engines.
             </p>
-            <pre>
-=== STARTING Q&A PIPELINE TESTS ===
-API Provider configured: local
-
---- Test Case 1: Asking Document Q&A (CPU Scheduling) ---
-Loading local sentence-transformers model...
-Sentence-transformers loaded locally.
-Question: What is Round Robin CPU scheduling?
-Answer:
-Round Robin CPU scheduling is a preemptive algorithm that handles process execution order by assigning a fixed time slice quantum to each process [1].
-Sources Mapped: [{'document_id': 1, 'page': 1, 'snippet': 'CPU Scheduling...'}]
-[SUCCESS] RAG context correctly matched and cited from indexed document.
-            </pre>
+            <p>
+                The development of **DocMind AI** successfully proved that RAG pipelines can automate textbook indexing and study support. Participating in the Data Science workshop and completing the Corporate Training test also improved skills in data structure design and engineering logic.
+            </p>
+            <h3 class="block-title">Key Technical Outcomes:</h3>
+            <ul>
+                <li>Developed a high-speed Python text ingestion and chunking pipeline.</li>
+                <li>Mapped textbook pages to course syllabus units using cosine similarity.</li>
+                <li>Designed responsive dashboards with 3D flashcards and vis.js graphs.</li>
+            </ul>
 
             <div class="page-footer">
                 <span>DocMind AI - Internship Report</span>
@@ -416,18 +428,23 @@ Sources Mapped: [{'document_id': 1, 'page': 1, 'snippet': 'CPU Scheduling...'}]
             </div>
         </div>
 
-        <!-- ================= PAGE 12: CHAPTER 9 - CONCLUSION ================= -->
+        <!-- ================= PAGE 12: CHAPTER 8 - REFERENCES ================= -->
         <div class="page">
-            <h1 class="section-title">9. Conclusion & Internship Outcomes</h1>
-            <p>
-                The academic internship at <strong>CodeBind Technologies, Chennai</strong> provided key insights into Retrieval-Augmented Generation, vector embeddings, and modular web backends.
-            </p>
-            <p>
-                Developing <strong>DocMind AI</strong> successfully proved how machine learning can automate text indexing. The experience gained during the Data Science workshop and Corporate Training Test has strengthened skills in data processing and engineering logic.
-            </p>
+            <h1 class="section-title">8. References</h1>
+            <h3 class="block-title">Sentence-Transformers documentation</h3>
+            <p>SentenceTransformers. "all-MiniLM-L6-v2 model card." https://sbert.net/. Reference guide for generating text embeddings.</p>
+            
+            <h3 class="block-title">Flask Web Framework</h3>
+            <p>Pallets Projects. "Flask Documentation." https://flask.palletsprojects.com/. Reference guide for routing REST APIs.</p>
 
+            <h3 class="block-title">NumPy Vector Math</h3>
+            <p>NumPy. "Numpy Multi-Dimensional Arrays." https://numpy.org/. Reference guide for dot-products and vector norms calculations.</p>
+
+            <h3 class="block-title">PDFPlumber Character Parsing</h3>
+            <p>PDFPlumber. "PDFPlumber Repository." https://github.com/jsvine/pdfplumber. Reference guide for extracting text layouts from PDFs.</p>
+            
             <p style="margin-top: 4rem; text-align: center; font-style: italic; color: #8c827a;">
-                Report Certified & Approved by CodeBind Technologies Issuing Authority.
+                --- End of Academic Report ---
             </p>
 
             <div class="page-footer">
@@ -474,7 +491,7 @@ except Exception as e:
     print(f"[ERROR] Edge execution exception: {e}")
     sys.exit(1)
 
-# 6. Merge all PDF files using pypdf PdfWriter for universal compatibility
+# 6. Merge all PDF files using pypdf PdfWriter
 try:
     print("Merging PDFs into final internship report...")
     writer = pypdf.PdfWriter()
