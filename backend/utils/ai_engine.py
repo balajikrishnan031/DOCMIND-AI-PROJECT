@@ -437,6 +437,14 @@ class AIEngine:
         q_emb = Embedder.embed_text(question)
         matches = VectorStore.similarity_search(user_id, q_emb, doc_id=doc_id, top_k=4)
         
+        # Cosine similarity score threshold filtering for fallback to general Q&A
+        if matches:
+            top_score = matches[0]['score']
+            if doc_id is None and top_score < 0.30:
+                matches = []
+            elif doc_id is not None and top_score < 0.15:
+                matches = []
+        
         if not matches:
             if provider in ['gemini', 'openai', 'ollama', 'groq'] and api_key:
                 prompt = (
