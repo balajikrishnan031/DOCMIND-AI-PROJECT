@@ -245,6 +245,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/project-report" target="_blank" class="{% if active_page == 'project_report' %}active{% endif %}">
+                            <i class="fa-solid fa-file-pdf text-danger"></i>
+                            <span>Project Report (PDF)</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url_for('profile_page') }}" class="{% if active_page == 'profile' %}active{% endif %}">
                             <i class="fa-solid fa-gear"></i>
                             <span>Settings & Keys</span>

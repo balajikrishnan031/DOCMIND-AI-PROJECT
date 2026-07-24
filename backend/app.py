@@ -792,6 +792,10 @@ def study_planner_page():
         return redirect(url_for('login'))
     return render_template('study_planner.html')
 
+@app.route('/project-report')
+def project_report_page():
+    return render_template('project_report_print.html')
+
 # ----------------- School Education Portal (Std 1 - 12) Routes -----------------
 
 @app.route('/school-portal', methods=['GET', 'POST'])
